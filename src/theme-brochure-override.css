@@ -1,0 +1,69 @@
+/* ═══════════════════════════════════════════════════════════════════
+   THEME-BROCHURE-OVERRIDE.CSS
+   Site-wide override so every page (Home, About, Services, all 7
+   individual service pages, booking/report pages) matches the brochure:
+   - dark navy blue / yellow headings, bigger size
+   - professional font (Poppins headings, Inter body)
+   - no images anywhere
+   - no animations/transitions anywhere
+   Imported LAST in App.jsx so it wins the CSS cascade over every
+   page's own stylesheet without editing each one individually.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+/* kill every animation / transition site-wide */
+*, *::before, *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* remove all images / photo banners site-wide */
+img,
+canvas,
+video,
+.hero-photo,
+.hero-canvas,
+.cyber-bg,
+[class*="banner"] img,
+[class*="photo"] img,
+[class*="Photo"] {
+  display: none !important;
+}
+
+/* headings: dark navy blue, bigger, professional font */
+h1, h2, h3, h4,
+[class*="title"]:not(.section-title),
+[class*="Title"],
+[class*="heading"],
+[class*="Heading"] {
+  font-family: "Poppins", sans-serif !important;
+  color: #0D2F7F !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em;
+}
+
+h1 { font-size: clamp(2.8rem, 6.5vw, 5.6rem) !important; }
+h2 { font-size: clamp(2rem, 4.5vw, 3.6rem) !important; }
+h3 { font-size: clamp(1.3rem, 2.4vw, 1.9rem) !important; }
+
+/* yellow accent for emphasised words / underline bars */
+em, [class*="accent"] {
+  color: #F5B400 !important;
+  font-style: normal;
+}
+
+body, p, span, li, a, button, input, textarea {
+  font-family: "Inter", sans-serif !important;
+}
+
+/* light sky-blue / white backgrounds site-wide, matching the brochure */
+body {
+  background: #FFFFFF !important;
+}
+section, .section, [class*="section"] {
+  background-color: #EAF5FD;
+}
+section:nth-of-type(even) {
+  background-color: #FFFFFF;
+}

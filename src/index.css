@@ -1,0 +1,24 @@
+/* ── index.css ────────────────────────────────────────────────────────────
+   Minimal global reset only. Every page (HomePage.css, BookLawyerDay1Page.css,
+   ForensicExpertPage.css, etc.) defines and fully controls its own theme
+   tokens and colors, including for mobile breakpoints. This file must stay
+   out of their way — no color-scheme, no competing --text/--bg variables,
+   no fixed-width #root box — so the same font colors used on desktop are
+   guaranteed to carry over exactly on responsive/mobile views too.
+═══════════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}

@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.home-root{
+  --ink:#FFFFFF;
+  --panel:#EAF5FD;
+  --panel-2:#DBEEFC;
+  --line: rgba(13,47,127,0.15);
+  --gold:#F5B400;
+  --gold-soft:#D89A00;
+  --red:#E0483A;
+  --teal:#2fbfa6;
+  --text:#33404F;
+  --text-dim:#5B6B7C;
+  --text-faint:#6B7280;
+  --radius: 14px;
+}
+.home-root, .home-root *, .home-root *::before, .home-root *::after{ box-sizing:border-box; }
+.home-root{
+  position:relative;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,39,0.08), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(47,191,166,0.06), transparent 60%),
+    var(--ink);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+.home-root h1, .home-root h2, .home-root h3, .home-root h4{ font-family:'Fraunces', serif; margin:0; letter-spacing:-0.01em; }
+.home-root p{ margin:0; }
+.home-root .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+.home-root a{ color:inherit; }
+.home-root button{ font-family:'Inter', sans-serif; cursor:pointer; }
+
+.home-root nav.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 0; border-bottom:1px solid var(--line);
+  position:relative; z-index:1;
+}
+.home-root .brand{ display:flex; align-items:center; gap:12px; }
+.home-root .brand-mark{ width:34px; height:34px; flex-shrink:0; }
+.home-root .brand-name{ font-family:'Fraunces', serif; font-weight:700; font-size:20px; letter-spacing:0.01em; }
+.home-root .brand-name span{ color:var(--gold); }
+.home-root .back-link{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; color:var(--text-dim); text-decoration:none;
+  transition:color .2s;
+}
+.home-root .back-link:hover{ color:var(--gold-soft); }
+
+.home-root .eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--gold-soft);
+  margin-bottom:18px;
+}
+.home-root .eyebrow::before{ content:''; width:16px; height:1px; background:var(--gold); display:inline-block; }
+
+@media (max-width:520px){ .home-root .wrap{ padding:0 18px; } }
+.page-hero{ padding:56px 0 8px; }
+.page-hero .eyebrow{ margin-bottom:14px; }
+.page-hero h1{ font-size:clamp(28px,3.8vw,42px); font-weight:700; line-height:1.15; }
+.page-hero h1 em{ font-style:normal; color:var(--gold-soft); }
+.page-hero p{ margin-top:14px; color:var(--text-dim); font-size:16px; max-width:600px; }
+.page-body{ padding:32px 0 100px; }
+.station-list{ display:flex; flex-direction:column; gap:14px; }
+.station-card{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+  background:var(--panel); border:1px solid var(--line); border-radius:14px;
+  padding:20px 22px;
+  transition:transform .25s, border-color .25s, background .25s;
+}
+.station-card:hover{ transform:translateY(-3px); border-color:rgba(72,158,228,0.4); background:var(--panel-2); }
+.station-card .s-name{ font-weight:700; font-size:15.5px; margin-bottom:4px; }
+.station-card .s-addr{ font-size:13.5px; color:var(--text-dim); margin-bottom:8px; }
+.station-card .s-meta{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; }
+.station-card .s-dist{
+  flex-shrink:0; text-align:right; font-family:'JetBrains Mono',monospace;
+  font-size:13px; color:var(--teal); font-weight:700; white-space:nowrap;
+}
+.station-note{
+  margin-top:22px; font-size:12.5px; color:var(--text-faint); text-align:center;
+}

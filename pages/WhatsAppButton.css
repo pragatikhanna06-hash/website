@@ -1,0 +1,185 @@
+.wa-fab-wrap {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  font-family: "Inter", sans-serif;
+}
+
+/* ── the round floating button ───────────────────────────────────────── */
+
+.wa-fab {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.wa-fab:hover {
+  transform: scale(1.06);
+}
+
+.wa-fab:active {
+  transform: scale(0.96);
+}
+
+.wa-fab--open {
+  background: #1b1f23;
+}
+
+.wa-fab-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.wa-fab-icon-close {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* soft pulsing ring to draw attention, pauses politely, doesn't loop forever-fast */
+.wa-fab-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  animation: wa-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes wa-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* ── the quick-options panel ─────────────────────────────────────────── */
+
+.wa-panel {
+  width: min(300px, calc(100vw - 40px));
+  background: #FFFFFF;
+  border: 1px solid rgba(13,47,127,0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  padding: 16px;
+  animation: wa-panel-in 0.22s ease;
+  transform-origin: bottom right;
+}
+
+@keyframes wa-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wa-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.wa-panel-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.wa-panel-title {
+  color: #0D2F7F;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.wa-panel-sub {
+  color: rgba(51, 64, 79, 0.65);
+  font-size: 12px;
+}
+
+.wa-panel-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: rgba(51, 64, 79, 0.6);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+}
+
+.wa-panel-close:hover {
+  color: #0D2F7F;
+}
+
+.wa-panel-prompt {
+  color: rgba(51, 64, 79, 0.8);
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.wa-panel-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-option {
+  display: block;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(37, 211, 102, 0.1);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: #0D2F7F;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.wa-option:hover {
+  background: rgba(37, 211, 102, 0.18);
+  border-color: rgba(37, 211, 102, 0.4);
+}
+
+/* ── mobile tweaks ───────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .wa-fab-wrap {
+    right: 14px;
+    bottom: 14px;
+  }
+  .wa-fab {
+    width: 54px;
+    height: 54px;
+  }
+}
