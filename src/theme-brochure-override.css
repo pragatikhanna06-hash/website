@@ -61,9 +61,16 @@ body, p, span, li, a, button, input, textarea {
 body {
   background: #FFFFFF !important;
 }
-section, .section, [class*="section"] {
+section, .section {
   background-color: #EAF5FD;
 }
 section:nth-of-type(even) {
   background-color: #FFFFFF;
+}
+
+/* safety net: never allow any page to horizontally overflow, no matter
+   how long a heading/subheading's text is */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }

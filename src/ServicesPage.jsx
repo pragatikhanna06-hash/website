@@ -39,7 +39,7 @@ const GLOBAL_CSS = `
   .rv.vis,.rvl.vis,.rvr.vis { opacity:1; transform:none; }
 
   /* svc card gold sweep */
-  .sc { position:relative; overflow:hidden; transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease; }
+  .sc { position:relative; overflow:hidden; transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease; box-shadow:0 2px 10px rgba(13,47,127,.05); }
   .sc::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:#e8971a; transform:scaleX(0); transform-origin:left; transition:transform .4s ease; }
   .sc:hover::after { transform:scaleX(1); }
   .sc:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.4); }
@@ -333,7 +333,7 @@ function Hero() {
       <h1 className="au1" style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(3.6rem,9vw,7.4rem)",lineHeight:.95,letterSpacing:-1,textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20}}>
         DETECT. PROTECT. EVOLVE.
       </h1>
-      <p className="au2" style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(1.1rem,2.4vw,1.6rem)",letterSpacing:-.3,textTransform:"uppercase",color:BODY,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"92vw"}}>
+      <p className="au2" style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(1rem,2.2vw,1.5rem)",letterSpacing:-.3,textTransform:"uppercase",color:BODY,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"min(1000px, 92vw)"}}>
         EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
       </p>
       <p className="au3" style={{fontFamily:"'Inter',sans-serif",fontWeight:400,fontSize:"1.05rem",color:BODY,maxWidth:560,margin:"28px auto 0",lineHeight:1.7}}>
@@ -484,10 +484,10 @@ export default function ServicesPage() {
       {/* OVERVIEW */}
       <section id="overview" className="sp" style={{background:"var(--sp-page)",padding:"100px 48px",position:"relative",zIndex:1}}>
         <Rev style={{maxWidth:1300,margin:"0 auto 64px"}}>
-          <span style={{fontFamily:"'Inter',sans-serif",fontSize:".75rem",fontWeight:700,letterSpacing:4,textTransform:"uppercase",color:G,marginBottom:12,display:"block"}}>OUR SERVICES</span>
-          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2.4rem,5vw,4.2rem)",textTransform:"uppercase",lineHeight:1,color:"var(--sp-text)"}}>
+          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2rem,4.2vw,3.4rem)",textTransform:"uppercase",lineHeight:1.1,color:"var(--sp-text)",marginBottom:10}}>OUR SERVICES</h2>
+          <p style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(.95rem,2vw,1.3rem)",textTransform:"uppercase",color:BODY,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"min(700px, 90vw)"}}>
             EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
-          </h2>
+          </p>
         </Rev>
         <div ref={cardsRef} className="g1" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20,maxWidth:1300,margin:"0 auto"}}>
           {CARDS.map(c=><SvcCard key={c.num} d={c}/>)}

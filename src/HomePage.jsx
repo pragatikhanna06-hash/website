@@ -223,20 +223,6 @@ function HeroSection() {
   return (
     <section className="hero hero--nyay" id="hero">
       <div className="home-root hero-nyay-embed">
-        <div className="shield-bg" aria-hidden="true">
-          <svg viewBox="0 0 200 220" fill="none">
-            <path
-              d="M100 6 L20 34 V96 c0 62 34 104 80 118 46-14 80-56 80-118 V34 Z"
-              stroke="#c9a227" strokeWidth="3" fill="rgba(201,162,39,0.05)"
-            />
-            <path
-              d="M100 46v128M66 68l34-20 34 20M66 68c0 16-9 30-18 30h72c-9 0-18-14-18-30"
-              stroke="#c9a227" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
-            />
-            <circle cx="100" cy="112" r="10" stroke="#e6c85c" strokeWidth="2" />
-          </svg>
-        </div>
-
         <section className="quick-actions">
           <div className="wrap">
             <div className="quick-actions-head">
