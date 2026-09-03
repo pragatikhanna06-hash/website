@@ -31,6 +31,13 @@ video,
   display: none !important;
 }
 
+/* exception: the Forfra Solutions navbar logo should stay visible even
+   though images are hidden site-wide everywhere else */
+.brand-logo,
+.navbar-brand img {
+  display: inline-block !important;
+}
+
 /* headings: dark navy blue, bigger, professional font */
 h1, h2, h3, h4,
 [class*="title"]:not(.section-title),
@@ -46,6 +53,29 @@ h1, h2, h3, h4,
 h1 { font-size: clamp(2.8rem, 6.5vw, 5.6rem) !important; }
 h2 { font-size: clamp(2rem, 4.5vw, 3.6rem) !important; }
 h3 { font-size: clamp(1.3rem, 2.4vw, 1.9rem) !important; }
+
+/* content: every page's body copy (hero subtext, descriptions, card text)
+   was set to a different size (12px–16px) in its own stylesheet. Force
+   one consistent "small" size site-wide so paragraphs read the same on
+   every page, regardless of which page's CSS they came from. */
+p,
+.detail-desc,
+.govt-desc,
+[class*="desc"],
+[class*="Desc"] {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+/* services pages: "OUR ... SERVICES" kicker bigger, the big heading
+   below it ("Five layers, one uncompromising vault" etc.) smaller —
+   applies to every /services/* page since they share .fa-kicker/.fa-h2 */
+.fa-kicker {
+  font-size: 16px !important;
+}
+.fa-h2 {
+  font-size: clamp(2rem, 3vw, 2.8rem) !important;
+}
 
 /* yellow accent for emphasised words / underline bars */
 em, [class*="accent"] {

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShieldCheck, FileCheck2, Heart, Target } from "lucide-react";
 import { useSiteTheme } from "./useSiteTheme";
+import logo from "./assets/logo.png";
 
 /* ══════════════════════════════════════════
    GLOBAL STYLES (same design system as ServicesPage)
@@ -212,7 +213,7 @@ function Nav({ T }) {
   return (<>
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: sc ? T.navBgScrolled : T.navBg, backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 48px", height: 64, transition: "background .3s" }}>
       <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }} onClick={(e) => { e.preventDefault(); navigate("/"); }}>
-        
+        <img src={logo} alt="Forfra Solutions" className="brand-logo" style={{ width: 34, height: 34, objectFit: "contain" }} />
         <span style={{ fontFamily: "'Inter',sans-serif", fontWeight: 800, fontSize: "1.15rem", letterSpacing: 2, textTransform: "uppercase", color: T.text }}>FORFRA<span style={{ color: T.text, fontWeight: 800, fontSize: "1.15rem", letterSpacing: 2, marginLeft: 6 }}>SOLUTIONS</span></span>
       </a>
       <ul className="dn" id="dnav" style={{ display: "flex", gap: 34, listStyle: "none" }}>

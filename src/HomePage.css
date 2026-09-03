@@ -1528,6 +1528,107 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   FOOTER (v2 — dark, multi-column, matches reference design)
+   ═══════════════════════════════════════════════════════════════════ */
+.footer-v2 {
+  background: #0D2F7F;
+  padding: 3.5rem 1.5rem 2rem;
+}
+.footer-v2-top {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 2.5rem;
+}
+.footer-v2-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+.footer-v2-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+.footer-v2-brand-main {
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+.footer-v2-brand-sub {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-top: 2px;
+}
+.footer-v2-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #A9B4C4;
+  max-width: 420px;
+}
+.footer-v2-col h4 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+.footer-v2-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.footer-v2-col a {
+  color: #A9B4C4;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.2s ease;
+}
+.footer-v2-col a:hover {
+  color: var(--gold);
+}
+.footer-v2-divider {
+  max-width: var(--max-w);
+  margin: 2.5rem auto 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.footer-v2-bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: #7C8AA0;
+}
+.footer-v2-bottom a {
+  color: #7C8AA0;
+  text-decoration: none;
+}
+.footer-v2-bottom a:hover {
+  color: var(--gold);
+}
+@media (max-width: 800px) {
+  .footer-v2-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: left;
+  }
+  .footer-v2-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {

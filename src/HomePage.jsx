@@ -4,6 +4,7 @@ import { Siren, Scale, Microscope, FileText, ShieldCheck, FileCheck2, Fingerprin
 import "./HomePage.css";
 import "./pages/NyayShieldPage.css"; // adjust this path to wherever NyayShieldPage.css actually sits relative to HomePage.jsx (per your App.jsx, it's in "./pages/")
 import { useLanguage } from "./pages/LanguageContext";
+import logo from "./assets/logo.png";
 // useSiteTheme import removed — theme toggle retired, site stays on brochure light theme.
 // All photo imports removed — theme now matches the brochure (no images).
 
@@ -165,6 +166,7 @@ function Navbar({ scrolled }) {
           navigate("/");
         }}
       >
+        <img src={logo} alt="Forfra Solutions" className="brand-logo" />
         <span className="brand-name">FORFRA</span>
         <span className="brand-sub">SOLUTIONS</span>
       </a>
@@ -583,13 +585,47 @@ function ContactSection() {
 function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="footer">
-      <div className="footer-inner">
-        <div className="footer-brand">
-          <span className="brand-icon"></span>
-          <span>FORFRA SOLUTIONS</span>
+    <footer className="footer-v2">
+      <div className="footer-v2-top">
+        <div className="footer-v2-brand-col">
+          <div className="footer-v2-brand">
+            <img src={logo} alt="Forfra Solutions" className="brand-logo" />
+            <div className="footer-v2-brand-text">
+              <span className="footer-v2-brand-main">FORFRA SOLUTIONS</span>
+              <span className="footer-v2-brand-sub">{t.footer.tagline}</span>
+            </div>
+          </div>
+          <p className="footer-v2-desc">
+            {t.servicesPage.hero.subtitle}
+          </p>
         </div>
-        <p className="footer-tagline">{t.footer.tagline}</p>
+
+        <div className="footer-v2-col">
+          <h4>Company</h4>
+          <Link to="/about">About Us</Link>
+          <Link to="/services">Services</Link>
+          <a href="mailto:hello@forfrasolutions.com">Apply Now</a>
+          <a href="mailto:hello@forfrasolutions.com">Contact Us</a>
+        </div>
+
+        <div className="footer-v2-col">
+          <h4>Services</h4>
+          <Link to="/services/data-security">Data Security</Link>
+          <Link to="/services/forensic-audit">Forensic Audit</Link>
+          <Link to="/services/digital-forensics">Digital Forensics</Link>
+          <Link to="/services/fraud-investigation">Fraud Investigation</Link>
+          <Link to="/services/investigations">Investigations</Link>
+          <Link to="/services/legal-consultation">Legal Consultation</Link>
+          <Link to="/services/document-examination">Document Examination</Link>
+          <Link to="/services/cyber-investigation">Cyber Investigation</Link>
+        </div>
+      </div>
+
+      <div className="footer-v2-divider" />
+
+      <div className="footer-v2-bottom">
+        <span>© 2026 Forfra Solutions. {t.footer.rights}</span>
+        <a href="mailto:hello@forfrasolutions.com">hello@forfrasolutions.com</a>
       </div>
     </footer>
   );

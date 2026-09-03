@@ -127,6 +127,15 @@ button { font-family: var(--ff-body); cursor: pointer; border: none; background:
   font-size: 19px;
   color: var(--navy);
   letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: inline-block !important;
 }
 .main-nav { display: flex; align-items: center; gap: 26px; }
 .main-nav a { font-weight: 600; font-size: 14px; color: var(--navy); }
@@ -139,4 +148,19 @@ button { font-family: var(--ff-body); cursor: pointer; border: none; background:
   text-align: center;
   padding: 26px 0;
   font-size: 12.5px;
+}
+.hiring-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.hiring-banner span {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
 }

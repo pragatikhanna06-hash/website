@@ -9,6 +9,7 @@ import {
 import { sendFormToWhatsApp } from "../utils/whatsapp";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
+import logo from "../assets/logo.png";
 
 /* ══════════════════════════════════════════════════════════════════
    FORFRA SOLUTIONS — REPORT A CRIME
@@ -657,7 +658,7 @@ export default function ReportCrimePage() {
         </Link>
         <div className="rc-topbar-right">
           <div className="rc-topbar-brand">
-            
+            <img src={logo} alt="Forfra Solutions" className="brand-logo" />
             FORFRA <span>SOLUTIONS</span>
           </div>
           <LangToggle />

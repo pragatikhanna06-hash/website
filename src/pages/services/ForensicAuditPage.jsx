@@ -5,6 +5,7 @@ import {
 import { Link } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import LanguageToggle from "../LanguageToggle";
+import logo from "../../assets/logo.png";
 
 /* ----------------------------------------------------------------------
    FORFRA SOLUTIONS — FORENSIC AUDIT PAGE
@@ -582,7 +583,7 @@ export default function ForensicAuditPage() {
       {/* NAV */}
       <nav className={`fa-nav ${navSolid ? "solid" : ""}`}>
         <Link to="/" className="fa-nav-brand" style={{ textDecoration: "none" }}>
-          
+          <img src={logo} alt="Forfra Solutions" className="brand-logo" style={{ width: 30, height: 30, objectFit: "contain" }} />
           FORFRA SOLUTIONS
         </Link>
         <div className="fa-nav-links" style={{ alignItems: "center" }}>
