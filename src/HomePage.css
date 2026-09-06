@@ -78,7 +78,11 @@
 /* ── reset / base ────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
 body {
   background: var(--navy);
@@ -88,8 +92,7 @@ body {
   transition: background var(--trans-slow), color var(--trans-slow);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  width: 100vw;
-  
+  width: 100%;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -114,6 +117,12 @@ img { display: block; max-width: 100%; }
    page (Hero/About/Services/Capabilities/Differentiator/Clients/
    Programs/Contact all use this one class). Font kept small enough
    to fit on one line; ellipsis is a safety net for extreme cases. */
+/* NOTE: intentionally NOT forced to a single line — some sections
+   (About, Contact) use this class for full sentence-length headings.
+   Forcing nowrap here made those headings overflow past the viewport
+   on mobile (and, via a CSS Grid sizing quirk, also blew out their
+   parent grid column far past 100% width). Short kicker-style titles
+   elsewhere still render on one line naturally since they're short. */
 .section-title {
   position: relative;
   display: block;
@@ -126,9 +135,6 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   margin-bottom: 1.4rem;
   padding-bottom: 0.5rem;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
   max-width: 100%;
 }
 .section-title::after {
@@ -145,6 +151,18 @@ img { display: block; max-width: 100%; }
   font-style: normal;
   color: var(--gold);
   padding: 0 0.15em;
+}
+
+/* Prevent any section-grid column from being force-widened past its
+   track by a child's intrinsic content size (the classic CSS Grid
+   "min-width: auto" overflow trap — a wide/unbreakable descendant can
+   otherwise blow a 1fr column out past 100% of its container). Safe
+   no-op when content already fits; only kicks in to stop overflow. */
+.about-inner > *,
+.contact-inner > *,
+.cap-inner > *,
+.diff-grid > * {
+  min-width: 0;
 }
 h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 
@@ -1591,6 +1609,21 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   transition: color 0.2s ease;
 }
 .footer-v2-col a:hover {
+  color: var(--gold);
+}
+.footer-v2-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: #A9B4C4;
+  font-family: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.footer-v2-link-btn:hover {
   color: var(--gold);
 }
 .footer-v2-divider {

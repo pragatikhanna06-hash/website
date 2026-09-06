@@ -243,7 +243,7 @@ function Hero({ T, isLight }) {
       <h1 className="au1" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 900, fontSize: "clamp(3.4rem,8.5vw,7.2rem)", lineHeight: 1.05, letterSpacing: -1, textTransform: "uppercase", color: T.text, marginBottom: 18 }}>
         ABOUT US
       </h1>
-      <p className="au2" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: "clamp(1rem,2vw,1.4rem)", lineHeight: 1.4, color: T.body, width: "min(900px, 92vw)", margin: "0 auto", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+      <p className="au2" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: "clamp(1rem,2vw,1.4rem)", lineHeight: 1.4, color: T.body, width: "min(900px, 92vw)", margin: "0 auto" }}>
         Education, technology, and <span style={{ color: G, fontWeight: 700 }}>justice</span> — united.
       </p>
     </section>

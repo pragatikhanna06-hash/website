@@ -4,6 +4,7 @@ import { Siren, Scale, Microscope, FileText, ShieldCheck, FileCheck2, Fingerprin
 import "./HomePage.css";
 import "./pages/NyayShieldPage.css"; // adjust this path to wherever NyayShieldPage.css actually sits relative to HomePage.jsx (per your App.jsx, it's in "./pages/")
 import { useLanguage } from "./pages/LanguageContext";
+import ApplyNowModal from "./pages/ApplyNowModal";
 import logo from "./assets/logo.png";
 // useSiteTheme import removed — theme toggle retired, site stays on brochure light theme.
 // All photo imports removed — theme now matches the brochure (no images).
@@ -140,10 +141,10 @@ function ContactDropdown({ className = "", onItemClick }) {
   );
 }
 
-function Navbar({ scrolled }) {
+function Navbar({ scrolled, onApplyClick }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, tr } = useLanguage();
 
   const handleLinkClick = (e, linkKey) => {
     if (linkKey === "about") {
@@ -183,6 +184,19 @@ function Navbar({ scrolled }) {
             </a>
           </li>
         ))}
+
+        <li>
+          <button
+            type="button"
+            className="nav-cta"
+            onClick={() => {
+              setOpen(false);
+              onApplyClick && onApplyClick();
+            }}
+          >
+            {tr("Apply Now")}
+          </button>
+        </li>
 
         <li>
           <ContactDropdown onItemClick={() => setOpen(false)} />
@@ -582,7 +596,7 @@ function ContactSection() {
   );
 }
 
-function Footer() {
+function Footer({ onApplyClick }) {
   const { t } = useLanguage();
   return (
     <footer className="footer-v2">
@@ -604,7 +618,7 @@ function Footer() {
           <h4>Company</h4>
           <Link to="/about">About Us</Link>
           <Link to="/services">Services</Link>
-          <a href="mailto:hello@forfrasolutions.com">Apply Now</a>
+          <button type="button" className="footer-v2-link-btn" onClick={onApplyClick}>Apply Now</button>
           <a href="mailto:hello@forfrasolutions.com">Contact Us</a>
         </div>
 
@@ -635,6 +649,7 @@ function Footer() {
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
+  const [applyOpen, setApplyOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -644,7 +659,7 @@ export default function HomePage() {
 
   return (
     <div className="page">
-      <Navbar scrolled={scrolled} />
+      <Navbar scrolled={scrolled} onApplyClick={() => setApplyOpen(true)} />
       <HeroSection />
       <AboutSection />
       <ServicesSection />
@@ -653,7 +668,8 @@ export default function HomePage() {
       <ClientsSection />
       <ProgramsSection />
       <ContactSection />
-      <Footer />
+      <Footer onApplyClick={() => setApplyOpen(true)} />
+      <ApplyNowModal isOpen={applyOpen} onClose={() => setApplyOpen(false)} />
     </div>
   );
 }

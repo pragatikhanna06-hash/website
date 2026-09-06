@@ -334,7 +334,7 @@ function Hero() {
       <h1 className="au1" style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(3.6rem,9vw,7.4rem)",lineHeight:.95,letterSpacing:-1,textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20}}>
         DETECT. PROTECT. EVOLVE.
       </h1>
-      <p className="au2" style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(1rem,2.2vw,1.5rem)",letterSpacing:-.3,textTransform:"uppercase",color:BODY,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"min(1000px, 92vw)"}}>
+      <p className="au2" style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(1rem,2.2vw,1.5rem)",letterSpacing:-.3,textTransform:"uppercase",color:BODY,width:"min(1000px, 92vw)",margin:"0 auto"}}>
         EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
       </p>
       <p className="au3" style={{fontFamily:"'Inter',sans-serif",fontWeight:400,fontSize:"1.05rem",color:BODY,maxWidth:560,margin:"28px auto 0",lineHeight:1.7}}>
@@ -486,7 +486,7 @@ export default function ServicesPage() {
       <section id="overview" className="sp" style={{background:"var(--sp-page)",padding:"100px 48px",position:"relative",zIndex:1}}>
         <Rev style={{maxWidth:1300,margin:"0 auto 64px"}}>
           <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2rem,4.2vw,3.4rem)",textTransform:"uppercase",lineHeight:1.1,color:"var(--sp-text)",marginBottom:10}}>OUR SERVICES</h2>
-          <p style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(.95rem,2vw,1.3rem)",textTransform:"uppercase",color:BODY,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"min(700px, 90vw)"}}>
+          <p style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(.95rem,2vw,1.3rem)",textTransform:"uppercase",color:BODY,width:"min(700px, 90vw)"}}>
             EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
           </p>
         </Rev>

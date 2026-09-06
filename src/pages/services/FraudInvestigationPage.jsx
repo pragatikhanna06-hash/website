@@ -279,7 +279,7 @@ export default function FraudInvestigationPage() {
         .fa-hero .fa-subhead-oneline {
           color: rgba(51,64,79,0.85); font-size: clamp(1.1rem, 2.4vw, 1.6rem);
           font-weight:700; letter-spacing:-0.01em; text-transform:uppercase;
-          white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:92vw;
+          max-width:92vw; overflow-wrap:break-word;
           margin: 0 0 22px;
         }
         .fa-hero .fa-subhead-oneline em { color: var(--gold); font-style:normal; }
