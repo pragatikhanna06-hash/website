@@ -839,8 +839,8 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 
 .service-card {
   flex: 0 0 300px;
-  background: linear-gradient(135deg, var(--navy-mid) 0%, rgba(27,58,107,0.4) 100%);
-  border: 1px solid rgba(232,151,26,0.12);
+  background: #FFFFFF;
+  border: 1px solid rgba(232,151,26,0.18);
   border-radius: var(--radius-lg);
   padding: 2rem 1.6rem;
   scroll-snap-align: start;
@@ -848,6 +848,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(13,47,127,0.08);
 }
 .service-card::before {
   content: "";
@@ -861,7 +862,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 .service-card:hover {
   transform: translateY(-6px);
   border-color: rgba(232,151,26,0.4);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 45px rgba(13,47,127,0.14);
 }
 .service-card:hover::before { opacity: 1; }
 .service-card:focus-visible {
