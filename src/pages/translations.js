@@ -90,7 +90,7 @@ export const translations = {
       programsSection: { eyebrow: "Awareness Programs", titleLine1: "Education Is the ", titleLine2: "First Defense.", subtitle: "We extend our expertise beyond investigations into proactive crime prevention through structured awareness programs." },
       programs: [
         { title: "Corporate Crime Awareness", sub: "Equipping organizations to detect, prevent, and respond to modern financial and digital threats.", items: ["Payment gateway manipulation & refund scams", "Business Email Compromise (BEC) attacks", "CEO/CFO impersonation & social engineering", "Insider data theft & confidential leaks", "Legal & regulatory compliance obligations", "POSH Act awareness & workplace ethics"] },
-        { title: "School Crime Awareness", sub: "Building safer schools by educating students, teachers, and parents about digital safety and protection.", items: ["Cyberbullying, phishing & online scams", "Social media safety & privacy protection", "Stranger danger & substance abuse awareness", "Juvenile laws & student responsibilities", "Mental health & peer pressure management", "POSH & safe school environment"] },
+        { title: "Crime Awareness for Students", sub: "Building safer schools by educating students, teachers, and parents about digital safety and protection.", items: ["Cyberbullying, phishing & online scams", "Social media safety & privacy protection", "Stranger danger & substance abuse awareness", "Juvenile laws & student responsibilities", "Mental health & peer pressure management", "POSH & safe school environment"] },
       ],
       cta: {
         titleLine1: "Ready to Protect", titleLine2: "What Matters?",
@@ -900,7 +900,7 @@ export const translations = {
           points: ["FinTech & corporate fraud detection", "Digital exploitation & cyber abuse", "Internal threats & employee risks", "Legal & regulatory awareness"],
         },
         {
-          title: "School Crime Awareness",
+          title: "Crime Awareness for Students",
           subtitle: "For Educational Institutions",
           points: ["Cyber safety & digital awareness", "Student safety & crime prevention", "POSH & safe school environment", "Mental health & social responsibility"],
         },

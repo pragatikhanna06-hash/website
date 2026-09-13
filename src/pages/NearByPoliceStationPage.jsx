@@ -28,7 +28,7 @@ export default function NearbyPoliceStationPage() {
             </svg>
             <div className="brand-name">Nyay<span>Shield</span></div>
           </div>
-          <Link className="back-link" to="/">← Back to Home Page</Link>
+          <Link className="back-link" to="/">← Back</Link>
         </div>
       </nav>
 

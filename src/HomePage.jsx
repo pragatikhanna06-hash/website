@@ -297,6 +297,45 @@ function AboutSection() {
             Learn More
           </button>
         </div>
+
+        <div className="about-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 320" className="justice-scale-svg" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="160" cy="160" r="150" fill="#0D2F7F" opacity="0.05" />
+            <circle cx="160" cy="160" r="112" fill="none" stroke="var(--gold)" strokeOpacity="0.25" strokeWidth="1.5" strokeDasharray="4 7" />
+
+            {/* base */}
+            <rect x="110" y="266" width="100" height="10" rx="3" fill="#0D2F7F" />
+            <rect x="132" y="252" width="56" height="14" rx="3" fill="#0D2F7F" />
+            {/* central post */}
+            <rect x="156" y="88" width="8" height="168" rx="2" fill="#0D2F7F" />
+            {/* top finial */}
+            <circle cx="160" cy="78" r="12" fill="var(--gold)" />
+            {/* beam */}
+            <rect x="70" y="94" width="180" height="7" rx="3.5" fill="#0D2F7F" />
+            {/* beam pivot */}
+            <circle cx="160" cy="97.5" r="9" fill="var(--gold)" />
+
+            {/* left chain */}
+            <line x1="80" y1="99" x2="80" y2="150" stroke="#0D2F7F" strokeWidth="2" />
+            <line x1="60" y1="150" x2="100" y2="150" stroke="#0D2F7F" strokeWidth="2" />
+            <line x1="60" y1="150" x2="80" y2="99" stroke="#0D2F7F" strokeWidth="1.5" />
+            <line x1="100" y1="150" x2="80" y2="99" stroke="#0D2F7F" strokeWidth="1.5" />
+            {/* left pan */}
+            <path d="M50 150 Q80 182 110 150" fill="none" stroke="var(--gold)" strokeWidth="6" strokeLinecap="round" />
+
+            {/* right chain */}
+            <line x1="240" y1="99" x2="240" y2="150" stroke="#0D2F7F" strokeWidth="2" />
+            <line x1="220" y1="150" x2="260" y2="150" stroke="#0D2F7F" strokeWidth="2" />
+            <line x1="220" y1="150" x2="240" y2="99" stroke="#0D2F7F" strokeWidth="1.5" />
+            <line x1="260" y1="150" x2="240" y2="99" stroke="#0D2F7F" strokeWidth="1.5" />
+            {/* right pan */}
+            <path d="M210 150 Q240 182 270 150" fill="none" stroke="var(--gold)" strokeWidth="6" strokeLinecap="round" />
+          </svg>
+          <div className="justice-scale-caption">
+            <span className="justice-scale-caption-title">Justice, Weighed Precisely</span>
+            <span className="justice-scale-caption-sub">Every case handled with balance &amp; integrity</span>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -316,12 +355,6 @@ function ServicesSection() {
             <span className="section-eyebrow">{t.services.eyebrow}</span>
             <h2 className="section-title">{t.services.title}</h2>
           </div>
-          <button
-            className="btn-primary services-learn-more"
-            onClick={() => navigate("/services")}
-          >
-            {t.services.learnMore}
-          </button>
         </div>
       </div>
       <div className="services-strip">

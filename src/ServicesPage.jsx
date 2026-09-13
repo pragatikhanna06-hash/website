@@ -193,7 +193,7 @@ const PROGRAMS = [
   {title:"Corporate Crime Awareness",
    sub:"Equipping organizations to detect, prevent, and respond to modern financial and digital threats.",
    items:["Payment gateway manipulation & refund scams","Business Email Compromise (BEC) attacks","CEO/CFO impersonation & social engineering","Insider data theft & confidential leaks","Legal & regulatory compliance obligations","POSH Act awareness & workplace ethics"]},
-  {title:"School Crime Awareness",
+  {title:"Crime Awareness for Students",
    sub:"Building safer schools by educating students, teachers, and parents about digital safety and protection.",
    items:["Cyberbullying, phishing & online scams","Social media safety & privacy protection","Stranger danger & substance abuse awareness","Juvenile laws & student responsibilities","Mental health & peer pressure management","POSH & safe school environment"]},
 ];

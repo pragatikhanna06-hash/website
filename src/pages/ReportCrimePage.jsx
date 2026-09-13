@@ -654,7 +654,7 @@ export default function ReportCrimePage() {
       {/* TOP BAR */}
       <div className="rc-topbar">
         <Link to="/" className="rc-back">
-          <ArrowLeft size={16} /> {tr("Back to Home")}
+          <ArrowLeft size={16} /> {tr("Back")}
         </Link>
         <div className="rc-topbar-right">
           <div className="rc-topbar-brand">
@@ -884,7 +884,7 @@ export default function ReportCrimePage() {
                 <RotateCcw size={16} /> {tr("File Another Report")}
               </button>
               <Link to="/" className="rc-btn-primary" style={{ textDecoration: "none" }}>
-                {tr("Back to Home")}
+                {tr("Back")}
               </Link>
             </div>
           </div>

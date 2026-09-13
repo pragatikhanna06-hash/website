@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Briefcase, X, User, Phone, Mail, FileText, Send,
-  CheckCircle2, Info, Clock,
+  CheckCircle2, Info, Clock, Upload, Share2, Paperclip,
 } from "lucide-react";
 import { sendFormToWhatsApp } from "../utils/whatsapp";
 import { useLanguage } from "./LanguageContext";
@@ -9,12 +9,17 @@ import { useLanguage } from "./LanguageContext";
 /* ══════════════════════════════════════════════════════════════════
    FORFRA SOLUTIONS — APPLY NOW MODAL
    Opens from the navbar / footer "Apply Now" button. Same theme as
-   ReportCrimePage (navy + gold, Inter). On submit, the form's data is
-   sent to the business WhatsApp number via sendFormToWhatsApp — same
-   free wa.me deep-link mechanism used by the Report a Crime form.
-   No backend, no file upload: since wa.me can't attach a resume file,
-   the success screen asks the applicant to attach their CV directly
-   inside the WhatsApp chat that opens.
+   ReportCrimePage (navy + gold, Inter). On submit, the form's text
+   data is sent to the business WhatsApp number via sendFormToWhatsApp
+   — same free wa.me deep-link mechanism used by the Report a Crime
+   form (wa.me links can only pre-fill text, never attach a file).
+
+   For the resume itself, we use the native Web Share API
+   (navigator.share with a files array) where the browser supports it
+   — this opens the OS share sheet so the applicant can pick WhatsApp
+   and send the actual resume file in one tap. Where that API isn't
+   available (most desktop browsers), we fall back to a clear
+   instruction to attach the file manually in the chat that opens.
 ══════════════════════════════════════════════════════════════════ */
 
 const NAVY = "#0D2F7F";
@@ -23,6 +28,13 @@ const GOLD = "#F5B400";
 const GOLD_DIM = "#D89A00";
 const ALERT = "#E0483A";
 const SLATE = "#5B6B7C";
+
+const MAX_RESUME_MB = 10;
+const ACCEPTED_RESUME_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
 
 const EMPTY_FORM = {
   name: "",
@@ -38,6 +50,9 @@ export default function ApplyNowModal({ isOpen, onClose }) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeError, setResumeError] = useState("");
+  const [shareState, setShareState] = useState("idle"); // idle | sharing | shared | unsupported
 
   // Lock background scroll + allow Escape-to-close while the modal is open.
   useEffect(() => {
@@ -62,6 +77,60 @@ export default function ApplyNowModal({ isOpen, onClose }) {
     setErrors((er) => ({ ...er, [field]: undefined }));
   };
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    setShareState("idle");
+    if (!file) {
+      setResumeFile(null);
+      setResumeError("");
+      return;
+    }
+    const isAcceptedType =
+      ACCEPTED_RESUME_TYPES.includes(file.type) ||
+      /\.(pdf|doc|docx)$/i.test(file.name);
+    if (!isAcceptedType) {
+      setResumeFile(null);
+      setResumeError("Please upload a PDF or Word document.");
+      return;
+    }
+    if (file.size > MAX_RESUME_MB * 1024 * 1024) {
+      setResumeFile(null);
+      setResumeError(`File is too large — please keep it under ${MAX_RESUME_MB}MB.`);
+      return;
+    }
+    setResumeFile(file);
+    setResumeError("");
+  };
+
+  const canUseFileShare =
+    typeof navigator !== "undefined" &&
+    typeof navigator.share === "function" &&
+    typeof navigator.canShare === "function";
+
+  const handleShareResume = async () => {
+    if (!resumeFile) return;
+    if (!canUseFileShare || !navigator.canShare({ files: [resumeFile] })) {
+      setShareState("unsupported");
+      return;
+    }
+    try {
+      setShareState("sharing");
+      await navigator.share({
+        files: [resumeFile],
+        title: "Resume — Forfra Solutions Application",
+        text: `Resume for ${form.role || "job application"} — ${form.name}`,
+      });
+      setShareState("shared");
+    } catch (err) {
+      // AbortError = user simply cancelled the share sheet, not a real failure
+      if (err && err.name === "AbortError") {
+        setShareState("idle");
+      } else {
+        setShareState("unsupported");
+      }
+    }
+  };
+
   const validate = () => {
     const er = {};
     if (!form.name.trim()) er.name = "Please enter your name.";
@@ -83,6 +152,7 @@ export default function ApplyNowModal({ isOpen, onClose }) {
       ["Role Applying For", form.role],
       ["Experience", form.experience],
       ["Message", form.message],
+      ["Resume", resumeFile ? `${resumeFile.name} (will be shared separately)` : "Not attached"],
     ]);
 
     setSubmitted(true);
@@ -92,6 +162,9 @@ export default function ApplyNowModal({ isOpen, onClose }) {
     setForm(EMPTY_FORM);
     setErrors({});
     setSubmitted(false);
+    setResumeFile(null);
+    setResumeError("");
+    setShareState("idle");
     onClose();
   };
 
@@ -172,6 +245,35 @@ export default function ApplyNowModal({ isOpen, onClose }) {
         .anm-error-msg { font-size: 0.74rem; color: ${ALERT}; display: flex; align-items: center; gap: 0.3rem; }
         .anm-field textarea { resize: vertical; min-height: 80px; }
 
+        .anm-file-input {
+          position: absolute;
+          width: 1px; height: 1px;
+          padding: 0; margin: -1px;
+          overflow: hidden;
+          clip: rect(0,0,0,0);
+          white-space: nowrap;
+          border: 0;
+        }
+        .anm-file-drop {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          width: 100%;
+          background: rgba(13,47,127,0.04);
+          border: 1.5px dashed rgba(13,47,127,0.3);
+          border-radius: 8px;
+          padding: 0.75rem 0.85rem;
+          color: rgba(51,64,79,0.75);
+          font-size: 0.85rem;
+          cursor: pointer;
+        }
+        .anm-file-drop:hover { border-color: ${GOLD}; background: rgba(245,166,35,0.06); }
+        .anm-file-drop svg { color: ${GOLD_DIM}; flex-shrink: 0; }
+        .anm-file-input:focus-visible + .anm-file-drop {
+          outline: 2px solid ${GOLD};
+          outline-offset: 2px;
+        }
+
         .anm-submit-row { margin-top: 1.6rem; display: flex; justify-content: center; }
         .anm-submit {
           display: inline-flex; align-items: center; gap: 0.55rem;
@@ -198,6 +300,44 @@ export default function ApplyNowModal({ isOpen, onClose }) {
         .anm-success svg { color: #22C55E; margin-bottom: 1rem; }
         .anm-success h3 { font-size: 1.5rem; color: ${NAVY}; margin-bottom: 0.7rem; font-weight: 800; }
         .anm-success p { color: rgba(51,64,79,0.8); font-size: 0.92rem; line-height: 1.6; max-width: 420px; margin: 0 auto 1.6rem; }
+
+        .anm-resume-share {
+          background: rgba(13,47,127,0.04);
+          border: 1px solid rgba(13,47,127,0.12);
+          border-radius: 10px;
+          padding: 1.1rem 1rem;
+          margin-bottom: 1rem;
+        }
+        .anm-resume-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: ${NAVY_MID};
+          border: 1px solid rgba(13,47,127,0.15);
+          border-radius: 20px;
+          padding: 0.35rem 0.85rem;
+          font-size: 0.78rem;
+          color: ${NAVY};
+          font-weight: 600;
+          margin-bottom: 0.9rem;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .anm-share-btn { width: 100%; justify-content: center; }
+        .anm-share-btn:disabled { opacity: 0.65; cursor: wait; }
+        .anm-share-fallback {
+          font-size: 0.8rem;
+          color: rgba(51,64,79,0.85);
+          line-height: 1.55;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.4rem;
+          text-align: left;
+          margin: 0;
+        }
+        .anm-share-fallback svg { flex-shrink: 0; margin-top: 2px; color: ${GOLD_DIM}; }
 
         @media (max-width: 560px) {
           .anm-card { padding: 1.8rem 1.3rem; border-radius: 14px; }
@@ -284,6 +424,22 @@ export default function ApplyNowModal({ isOpen, onClose }) {
                     onChange={handleChange("message")}
                   />
                 </div>
+
+                <div className={`anm-field full ${resumeError ? "error" : ""}`}>
+                  <label><Paperclip size={13} /> {tr("Resume / CV (optional)")}</label>
+                  <input
+                    id="anm-resume-input"
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    onChange={handleResumeChange}
+                    className="anm-file-input"
+                  />
+                  <label className="anm-file-drop" htmlFor="anm-resume-input">
+                    <Upload size={18} />
+                    <span>{resumeFile ? resumeFile.name : tr("Tap to choose a PDF or Word file")}</span>
+                  </label>
+                  {resumeError && <span className="anm-error-msg"><Info size={12} /> {tr(resumeError)}</span>}
+                </div>
               </div>
 
               <div className="anm-submit-row">
@@ -295,15 +451,44 @@ export default function ApplyNowModal({ isOpen, onClose }) {
 
             <div className="anm-note">
               <Info size={16} />
-              <p>{tr("Your details will open in WhatsApp addressed to our team — please attach your resume/CV there before hitting send.")}</p>
+              <p>
+                {resumeFile
+                  ? tr("Your details will open in WhatsApp. On the next screen, tap \"Share Resume\" to send your file too (or attach it manually if your device doesn't support direct sharing).")
+                  : tr("Your details will open in WhatsApp addressed to our team — please attach your resume/CV there before hitting send.")}
+              </p>
             </div>
           </>
         ) : (
           <div className="anm-success">
             <CheckCircle2 size={44} />
             <h3>{tr("Thank You!")}</h3>
-            <p>{tr("Your details were sent to WhatsApp. Please attach your resume/CV in the chat and hit send — our team will get back to you soon.")}</p>
-            <button className="anm-submit" onClick={handleClose}>{tr("Close")}</button>
+            <p>{tr("Your details were sent to WhatsApp.")} {resumeFile ? tr("Now share your resume below so our team has it too.") : tr("Please attach your resume/CV in the chat and hit send — our team will get back to you soon.")}</p>
+
+            {resumeFile && (
+              <div className="anm-resume-share">
+                <div className="anm-resume-chip">
+                  <Paperclip size={14} /> {resumeFile.name}
+                </div>
+
+                {shareState !== "unsupported" ? (
+                  <button
+                    type="button"
+                    className="anm-submit anm-share-btn"
+                    onClick={handleShareResume}
+                    disabled={shareState === "sharing"}
+                  >
+                    <Share2 size={16} />
+                    {shareState === "shared" ? tr("Shared! Share again?") : tr("Share Resume via WhatsApp")}
+                  </button>
+                ) : (
+                  <p className="anm-share-fallback">
+                    <Info size={13} /> {tr("Direct sharing isn't supported on this browser — please attach")} <b>{resumeFile.name}</b> {tr("manually in the WhatsApp chat.")}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <button className="anm-submit" style={{ marginTop: resumeFile ? "1rem" : 0 }} onClick={handleClose}>{tr("Close")}</button>
           </div>
         )}
       </div>

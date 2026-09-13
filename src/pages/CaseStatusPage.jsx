@@ -175,7 +175,7 @@ export default function CaseStatusPage() {
             <div className="brand-name">Nyay<span>Shield</span></div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-            <Link className="back-link" to="/">← {tr("Back to Home Page")}</Link>
+            <Link className="back-link" to="/">← {tr("Back")}</Link>
             <LangToggle />
           </div>
         </div>
@@ -373,7 +373,7 @@ export default function CaseStatusPage() {
                 {tr("Track on Official eCourts Portal")}
               </a>
               <button className="cs-ghost-btn" onClick={resetForm}><RotateCcw size={15} style={{ verticalAlign: -2, marginRight: 6 }} />{tr("Check Another Case")}</button>
-              <Link className="cs-ghost-btn" to="/">{tr("Back to Home")}</Link>
+              <Link className="cs-ghost-btn" to="/">{tr("Back")}</Link>
             </div>
           </div>
         )}

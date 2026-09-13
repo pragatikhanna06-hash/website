@@ -58,10 +58,10 @@ export default function SchoolCrimeAwarenessPage() {
       {/* NAV */}
       <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(234,245,253,.95)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${BORD}`, padding: "18px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, color: "#0D2F7F", textDecoration: "none", fontWeight: 700, letterSpacing: 1 }}>
-          <ArrowLeft size={18} color={G} /> Back to Home
+          <ArrowLeft size={18} color={G} /> Back
         </Link>
-        <Link to="/services" style={{ color: G, textDecoration: "none", fontSize: ".85rem", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
-          All Services
+        <Link to="/services" style={{ background: G, color: "#000", textDecoration: "none", fontSize: ".8rem", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", padding: "10px 20px", borderRadius: 6 }}>
+          View All Services
         </Link>
       </nav>
 
@@ -71,7 +71,7 @@ export default function SchoolCrimeAwarenessPage() {
           Awareness Program
         </span>
         <h1 style={{ fontWeight: 900, fontSize: "clamp(2.4rem,6vw,4.2rem)", lineHeight: 1.05, textTransform: "uppercase", margin: "0 0 20px" }}>
-          School Crime <span style={{ color: G }}>Awareness</span>
+          Crime Awareness <span style={{ color: G }}>for Students</span>
         </h1>
         <p style={{ maxWidth: 680, margin: "0 auto", color: BODY, fontSize: "1.05rem", lineHeight: 1.75 }}>
           We don't just teach about crimes — we teach how to stay safe, smart, and responsible. Our mission is to

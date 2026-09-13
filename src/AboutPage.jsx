@@ -246,6 +246,29 @@ function Hero({ T, isLight }) {
       <p className="au2" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: "clamp(1rem,2vw,1.4rem)", lineHeight: 1.4, color: T.body, width: "min(900px, 92vw)", margin: "0 auto" }}>
         Education, technology, and <span style={{ color: G, fontWeight: 700 }}>justice</span> — united.
       </p>
+      <a
+        href="/forfra-solutions-brochure.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          marginTop: 28,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 8,
+          background: G,
+          color: "#08215C",
+          fontFamily: "'Inter',sans-serif",
+          fontWeight: 800,
+          fontSize: ".85rem",
+          letterSpacing: 0.5,
+          textTransform: "uppercase",
+          textDecoration: "none",
+          padding: "14px 30px",
+          borderRadius: 6,
+        }}
+      >
+        Forfra Solutions Brochure
+      </a>
     </section>
   );
 }
