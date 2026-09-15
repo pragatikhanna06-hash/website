@@ -306,7 +306,7 @@ function Nav() {
   return(<>
     <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:sc?"var(--sp-nav-scrolled)":"var(--sp-nav)",backdropFilter:"blur(12px)",borderBottom:`1px solid ${BORD}`,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 48px",height:64,transition:"background .3s"}}>
       <a href="/" style={{display:"flex",alignItems:"center",gap:10,textDecoration:"none"}} onClick={(e)=>{e.preventDefault();navigate("/");}}>
-        <img src={logo} alt="Forfra Solutions" className="brand-logo" style={{width:34,height:34,objectFit:"contain"}} />
+        <img src={logo} alt="Forfra Solutions" className="brand-logo" />
         <span style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.15rem",letterSpacing:2,textTransform:"uppercase",color:"var(--sp-text)"}}>FORFRA<span style={{color:"var(--sp-text)",fontWeight:800,fontSize:"1.15rem",letterSpacing:2,marginLeft:6}}>SOLUTIONS</span></span>
       </a>
       <ul className="dn" id="dnav" style={{display:"flex",gap:34,listStyle:"none"}}>

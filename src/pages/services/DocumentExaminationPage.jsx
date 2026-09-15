@@ -583,7 +583,7 @@ export default function DocumentExaminationPage() {
       {/* NAV */}
       <nav className={`fa-nav ${navSolid ? "solid" : ""}`}>
         <Link to="/" className="fa-nav-brand" style={{ textDecoration: "none" }}>
-          <img src={logo} alt="Forfra Solutions" className="brand-logo" style={{ width: 30, height: 30, objectFit: "contain" }} />
+          <img src={logo} alt="Forfra Solutions" className="brand-logo" />
           FORFRA SOLUTIONS
         </Link>
         <div className="fa-nav-links" style={{ alignItems: "center" }}>

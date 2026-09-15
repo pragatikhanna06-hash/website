@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   ClipboardList, User, Hash, Scale, Send, Info, RotateCcw,
   Gavel, BarChart3, BookOpen, Landmark, ScrollText, ShieldCheck, ExternalLink,
-  Mail, Phone, MapPin, Paperclip,
+  Mail, Phone, MapPin,
 } from "lucide-react";
 import "./CaseStatusPage.css";
 import { sendFormToWhatsApp } from "../utils/whatsapp";
@@ -114,7 +114,6 @@ const ECOURTS_CASE_STATUS_URL = "https://services.ecourts.gov.in/ecourtindia_v6/
 export default function CaseStatusPage() {
   const { tr } = useLanguage();
   const [form, setForm] = useState(EMPTY_FORM);
-  const [caseDoc, setCaseDoc] = useState(null);
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState(null);
 
@@ -150,7 +149,6 @@ export default function CaseStatusPage() {
       ["Case / FIR Number", form.caseNumber],
       ["Case Type", form.caseType],
       ["City", form.city],
-      ["Case Document", caseDoc ? caseDoc.name + " (please attach this file in the chat)" : ""],
     ]);
 
     setResult(fetchCaseStatus(form));
@@ -253,11 +251,6 @@ export default function CaseStatusPage() {
                   <label><Hash size={14} style={{ verticalAlign: -2, marginRight: 6 }} />{tr("Case / FIR Number")}</label>
                   <input type="text" placeholder={tr("e.g. FIR-2026-00231")} value={form.caseNumber} onChange={handleChange("caseNumber")} />
                   {errors.caseNumber && <div className="cs-error"><Info size={12} /> {tr(errors.caseNumber)}</div>}
-                </div>
-
-                <div className="cs-field full">
-                  <label><Paperclip size={14} style={{ verticalAlign: -2, marginRight: 6 }} />{tr("Case Document (optional)")}</label>
-                  <input type="file" onChange={(e) => setCaseDoc(e.target.files?.[0] || null)} />
                 </div>
 
                 <div className="cs-field full">

@@ -29,9 +29,6 @@ export default function LegalDraftingPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [crimeLocation, setCrimeLocation] = useState("");
-  const [firNumber, setFirNumber] = useState("");
-  const [caseDoc, setCaseDoc] = useState(null);
   const [requirements, setRequirements] = useState("");
   const [match, setMatch] = useState(null);
 
@@ -53,9 +50,6 @@ export default function LegalDraftingPage() {
       ["Email", email],
       ["Phone Number", phone],
       ["Address", address],
-      ["Location of Crime / Incident", crimeLocation],
-      ["FIR Number", firNumber],
-      ["Case Document", caseDoc ? caseDoc.name + " (please attach this file in the chat)" : ""],
       ["Requirements", requirements],
       ["Booking ID", newMatch.bookingId],
     ]);
@@ -138,18 +132,6 @@ export default function LegalDraftingPage() {
               <div className="field">
                 <label htmlFor="ldaddress">{tr("Address")}</label>
                 <input id="ldaddress" type="text" required value={address} onChange={(e) => setAddress(e.target.value)} placeholder={tr("Your current / registered address")} />
-              </div>
-              <div className="field">
-                <label htmlFor="ldlocation">{tr("Location of Crime / Incident (if applicable)")}</label>
-                <input id="ldlocation" type="text" value={crimeLocation} onChange={(e) => setCrimeLocation(e.target.value)} placeholder={tr("Where did it happen?")} />
-              </div>
-              <div className="field">
-                <label htmlFor="ldfir">{tr("FIR Number (if applicable)")}</label>
-                <input id="ldfir" type="text" value={firNumber} onChange={(e) => setFirNumber(e.target.value)} placeholder={tr("e.g. FIR-2026-00231")} />
-              </div>
-              <div className="field">
-                <label htmlFor="lddoc">{tr("Case Document")}</label>
-                <input id="lddoc" type="file" onChange={(e) => setCaseDoc(e.target.files?.[0] || null)} />
               </div>
               <div className="field">
                 <label htmlFor="ldreq">{tr("What Should the Document Cover?")}</label>

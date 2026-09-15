@@ -29,9 +29,6 @@ export default function ForensicExpertPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [crimeLocation, setCrimeLocation] = useState("");
-  const [firNumber, setFirNumber] = useState("");
-  const [caseDoc, setCaseDoc] = useState(null);
   const [notes, setNotes] = useState("");
   const [match, setMatch] = useState(null);
 
@@ -53,9 +50,6 @@ export default function ForensicExpertPage() {
       ["Email", email],
       ["Phone Number", phone],
       ["Address", address],
-      ["Location of Crime", crimeLocation],
-      ["FIR Number", firNumber],
-      ["Case Document", caseDoc ? caseDoc.name + " (please attach this file in the chat)" : ""],
       ["Notes", notes],
       ["Booking ID", newMatch.bookingId],
     ]);
@@ -139,18 +133,6 @@ export default function ForensicExpertPage() {
               <div className="field">
                 <label htmlFor="fxaddress">{tr("Address")}</label>
                 <input id="fxaddress" type="text" required value={address} onChange={(e) => setAddress(e.target.value)} placeholder={tr("Your current address")} />
-              </div>
-              <div className="field">
-                <label htmlFor="fxlocation">{tr("Location of Crime")}</label>
-                <input id="fxlocation" type="text" required value={crimeLocation} onChange={(e) => setCrimeLocation(e.target.value)} placeholder={tr("Where did it happen?")} />
-              </div>
-              <div className="field">
-                <label htmlFor="fxfir">{tr("FIR Number (if any)")}</label>
-                <input id="fxfir" type="text" value={firNumber} onChange={(e) => setFirNumber(e.target.value)} placeholder={tr("e.g. FIR-2026-00231")} />
-              </div>
-              <div className="field">
-                <label htmlFor="fxdoc">{tr("Case Document")}</label>
-                <input id="fxdoc" type="file" onChange={(e) => setCaseDoc(e.target.files?.[0] || null)} />
               </div>
               <div className="field">
                 <label htmlFor="fxnotes">{tr("What Needs to Be Preserved?")}</label>

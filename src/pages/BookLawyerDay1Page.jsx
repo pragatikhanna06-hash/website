@@ -29,7 +29,6 @@ export default function BookLawyerDay1Page() {
   const [address, setAddress] = useState("");
   const [crimeLocation, setCrimeLocation] = useState("");
   const [firNumber, setFirNumber] = useState("");
-  const [caseDoc, setCaseDoc] = useState(null);
   const [caseDesc, setCaseDesc] = useState("");
   const [match, setMatch] = useState(null);
 
@@ -51,7 +50,6 @@ export default function BookLawyerDay1Page() {
       ["Address", address],
       ["Location of Crime", crimeLocation],
       ["FIR Number", firNumber],
-      ["Case Document", caseDoc ? caseDoc.name + " (please attach this file in the chat)" : ""],
       ["Case Description", caseDesc],
       ["Booking ID", newMatch.bookingId],
     ]);
@@ -109,10 +107,6 @@ export default function BookLawyerDay1Page() {
             <div className="field">
               <label htmlFor="d1fir">{tr("FIR Number (if already filed)")}</label>
               <input id="d1fir" type="text" value={firNumber} onChange={(e) => setFirNumber(e.target.value)} placeholder={tr("e.g. FIR-2026-00231")} />
-            </div>
-            <div className="field">
-              <label htmlFor="d1doc">{tr("Case Document")}</label>
-              <input id="d1doc" type="file" onChange={(e) => setCaseDoc(e.target.files?.[0] || null)} />
             </div>
             <div className="field">
               <label htmlFor="d1desc">{tr("Briefly Describe the Case")}</label>

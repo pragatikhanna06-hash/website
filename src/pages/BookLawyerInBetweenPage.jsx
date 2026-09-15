@@ -29,7 +29,6 @@ export default function BookLawyerInBetweenPage() {
   const [address, setAddress] = useState("");
   const [crimeLocation, setCrimeLocation] = useState("");
   const [firNumber, setFirNumber] = useState("");
-  const [caseDoc, setCaseDoc] = useState(null);
   const [stage, setStage] = useState("");
   const [caseDesc, setCaseDesc] = useState("");
   const [match, setMatch] = useState(null);
@@ -52,7 +51,6 @@ export default function BookLawyerInBetweenPage() {
       ["Address", address],
       ["Location of Crime", crimeLocation],
       ["FIR Number", firNumber],
-      ["Case Document", caseDoc ? caseDoc.name + " (please attach this file in the chat)" : ""],
       ["Current Stage", stage],
       ["Case Description", caseDesc],
       ["Booking ID", newMatch.bookingId],
@@ -111,10 +109,6 @@ export default function BookLawyerInBetweenPage() {
             <div className="field">
               <label htmlFor="mcfir">{tr("FIR Number")}</label>
               <input id="mcfir" type="text" value={firNumber} onChange={(e) => setFirNumber(e.target.value)} placeholder={tr("e.g. FIR-2026-00231")} />
-            </div>
-            <div className="field">
-              <label htmlFor="mcdoc">{tr("Case Document")}</label>
-              <input id="mcdoc" type="file" onChange={(e) => setCaseDoc(e.target.files?.[0] || null)} />
             </div>
             <div className="field">
               <label htmlFor="mcstage">{tr("Current Stage of the Case")}</label>
