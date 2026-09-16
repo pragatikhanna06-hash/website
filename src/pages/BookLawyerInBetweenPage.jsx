@@ -75,10 +75,10 @@ export default function BookLawyerInBetweenPage() {
         </div>
       </nav>
 
-      <section className="page-hero">
+      <section className="page-hero ib-hero">
         <div className="wrap">
           <div className="eyebrow">{tr("Lawyer · In Between the Case")}</div>
-          <h1>{tr("Bring in a lawyer")} <em>{tr("wherever your case currently stands.")}</em></h1>
+          <h1>{tr("Bring in a lawyer")}<br /><em>{tr("wherever your case currently stands.")}</em></h1>
           <p>{tr("Whether you're mid-investigation, awaiting a hearing, or switching representation, tell us the current stage and we'll match someone who can step in without losing time.")}</p>
         </div>
       </section>

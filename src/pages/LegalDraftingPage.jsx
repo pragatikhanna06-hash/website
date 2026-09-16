@@ -76,7 +76,7 @@ export default function LegalDraftingPage() {
       <section className="page-hero">
         <div className="wrap">
           <div className="eyebrow">{tr("Legal & Corporate Drafting")}</div>
-          <h1>{tr("Notices, contracts, policies —")} <em>{tr("drafted right, drafted fast.")}</em></h1>
+          <h1>{tr("Notices, contracts, policies —")}<br /><em>{tr("drafted right, drafted fast.")}</em></h1>
           <p>{tr("Get legal notices, agreements, compliance reports, and corporate policy documents drafted by a qualified legal professional, ready for review or filing.")}</p>
         </div>
       </section>

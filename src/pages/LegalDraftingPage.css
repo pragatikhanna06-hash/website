@@ -64,7 +64,7 @@
 }
 
 .page-hero{ padding:56px 0 40px; }
-.page-hero h1{ font-size:clamp(30px, 4.4vw, 46px); font-weight:700; max-width:760px; }
+.page-hero h1{ font-size:clamp(2rem, 4.4vw, 3.4rem) !important; font-weight:700; max-width:1100px; }
 .page-hero h1 em{ font-style:normal; color:var(--gold-soft); }
 .page-hero p{ margin-top:16px; max-width:600px; color:var(--text-dim); font-size:16px; }
 

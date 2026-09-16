@@ -76,7 +76,7 @@ export default function BookLawyerDay1Page() {
       <section className="page-hero">
         <div className="wrap">
           <div className="eyebrow">{tr("Lawyer · Day 1")}</div>
-          <h1>{tr("Get a lawyer assigned")} <em>{tr("the same day you report.")}</em></h1>
+          <h1>{tr("Get a lawyer assigned")}<br /><em>{tr("the same day you report.")}</em></h1>
           <p>{tr("Tell us the basics and a criminal defence lawyer from our Day-1 response team is matched to your case immediately.")}</p>
         </div>
       </section>

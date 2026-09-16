@@ -74,13 +74,10 @@ export default function ForensicExpertPage() {
       </nav>
 
       <section className="page-hero">
-        <div className="wrap fx-hero-grid">
-          <div>
-            <div className="eyebrow">{tr("Forensic Services")}</div>
-            <h1>{tr("Evidence fades fast —")} <em>{tr("secure it before it does.")}</em></h1>
-            <p>{tr("Certified forensic experts document and preserve digital and physical evidence so it holds up in court, however long the case takes to conclude.")}</p>
-          </div>
-          
+        <div className="wrap">
+          <div className="eyebrow">{tr("Forensic Services")}</div>
+          <h1 className="fx-h1">{tr("Evidence fades fast — ")}<em>{tr("secure it before it does.")}</em></h1>
+          <p>{tr("Certified forensic experts document and preserve digital and physical evidence so it holds up in court, however long the case takes to conclude.")}</p>
         </div>
       </section>
 

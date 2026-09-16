@@ -24,11 +24,11 @@ export default function BookLawyerPage() {
         </div>
       </nav>
 
-      <section className="page-hero">
+      <section className="page-hero bl-hero">
         <div className="wrap">
           <div className="eyebrow">{tr("Book a Lawyer")}</div>
-          <h1>{tr("When does your case need a lawyer —")} <em>{tr("now, or already underway?")}</em></h1>
-          <p>{tr("Pick the path that matches where you are. Both connect you to a verified criminal lawyer — the only difference is where in the case they step in.")}</p>
+          <h1 className="bl-h1">{tr("When does your case need a lawyer —")}<br /><em>{tr("now, or already underway?")}</em></h1>
+          <p className="bl-p">{tr("Pick the path that matches where you are. Both connect you to a verified criminal lawyer — the only difference is where in the case they step in.")}</p>
         </div>
       </section>
 
