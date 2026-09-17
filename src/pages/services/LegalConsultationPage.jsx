@@ -272,6 +272,7 @@ export default function LegalConsultationPage() {
         .fa-eyebrow {
           display:flex; align-items:center; gap:14px;
           color: var(--navy); font-weight:900;
+          font-size: clamp(0.95rem, 1.6vw, 1.3rem) !important;
           text-transform:uppercase; margin-bottom: 18px; max-width: 880px;
         }
         .fa-hero .fa-subhead-oneline {
@@ -401,7 +402,7 @@ export default function LegalConsultationPage() {
           transition: background .3s ease, border-color .3s ease, transform .3s ease;
         }
         .fa-ind-card:hover { background: rgba(216,169,59,0.1); border-color: var(--gold); transform: translateY(-5px); }
-        .fa-ind-card svg { color: var(--gold); flex-shrink:0; margin-top:2px; }
+        .fa-ind-card svg { color: var(--navy); flex-shrink:0; margin-top:2px; }
         .fa-ind-card span.fa-ind-label { color: rgba(51,64,79,0.85); font-size:0.92rem; font-weight:500; line-height:1.45; display:block; }
 
         /* ---------- CTA ---------- */
@@ -631,26 +632,6 @@ export default function LegalConsultationPage() {
           <StatCounter value={100} suffix="%" label={lc.stats[2].label} />
         </div>
       </header>
-
-      {/* MARQUEE */}
-      <div className="fa-marquee-wrap">
-        <div className="fa-marquee-track">
-          {Array.from({ length: 2 }).flatMap((_, dup) =>
-            [
-              [lc.marquee[0], FileSearch],
-              [lc.marquee[1], Briefcase],
-              [lc.marquee[2], BookOpen],
-              [lc.marquee[3], Landmark],
-              [lc.marquee[4], Gavel],
-              [lc.marquee[5], Scale],
-            ].map(([label, Icon], i) => (
-              <span key={`${dup}-${i}`}>
-                <Icon size={15} /> {label}
-              </span>
-            ))
-          )}
-        </div>
-      </div>
 
       {/* INTRO */}
       <section className="fa-section" id="about">
