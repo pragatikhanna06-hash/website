@@ -173,7 +173,6 @@ export default function CaseStatusPage() {
             <div className="brand-name">Nyay<span>Shield</span></div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-            <Link className="back-link" to="/">← {tr("Back")}</Link>
             <LangToggle />
           </div>
         </div>

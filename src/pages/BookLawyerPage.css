@@ -63,7 +63,7 @@
 .bl-hero.bl-hero{ padding:64px 0 48px; text-align:center; }
 .bl-hero .wrap > .eyebrow{ justify-content:center; animation: bl-rise .6s .05s cubic-bezier(.2,.7,.3,1) both; }
 .bl-hero h1.bl-h1{
-  font-size:clamp(2rem, 4.2vw, 3.2rem) !important;
+  font-size:2rem !important;
   font-weight:700;
   max-width:1100px;
   margin:0 auto;

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "./LanguageContext";
+import LangToggle from "./LangToggle";
 import { Phone, MapPin } from "lucide-react";
 import "./NearByPoliceStationPage.css";
 
@@ -15,6 +17,7 @@ const STATIONS = [
 ];
 
 export default function NearbyPoliceStationPage() {
+  const { tr } = useLanguage();
   const [city, setCity] = useState("current");
 
   return (
@@ -28,24 +31,24 @@ export default function NearbyPoliceStationPage() {
             </svg>
             <div className="brand-name">Nyay<span>Shield</span></div>
           </div>
-          <Link className="back-link" to="/">← Back</Link>
+          <LangToggle />
         </div>
       </nav>
 
       <section className="page-hero">
         <div className="wrap">
-          <div className="eyebrow">Nearby Police Station</div>
-          <h1>Find the station closest to you.</h1>
-          <p>A quick list of nearby stations with address and phone, so you know exactly where to go or who to call.</p>
+          <div className="eyebrow">{tr("Nearby Police Station")}</div>
+          <h1>{tr("Find the station closest to you.")}</h1>
+          <p>{tr("A quick list of nearby stations with address and phone, so you know exactly where to go or who to call.")}</p>
         </div>
       </section>
 
       <section className="page-body">
         <div className="wrap" style={{ maxWidth: 720 }}>
           <div className="field" style={{ maxWidth: 320, marginBottom: 28 }}>
-            <label htmlFor="cityPick">Area</label>
+            <label htmlFor="cityPick">{tr("Area")}</label>
             <select id="cityPick" value={city} onChange={(e) => setCity(e.target.value)}>
-              <option value="current">Near Me (sample list)</option>
+              <option value="current">{tr("Near Me (sample list)")}</option>
             </select>
           </div>
 
@@ -53,20 +56,19 @@ export default function NearbyPoliceStationPage() {
             {STATIONS.map((s) => (
               <div className="station-card" key={s.name}>
                 <div>
-                  <div className="s-name">{s.name}</div>
-                  <div className="s-addr"><MapPin size={13} style={{ marginRight: 6, verticalAlign: -2 }} />{s.address}</div>
+                  <div className="s-name">{tr(s.name)}</div>
+                  <div className="s-addr"><MapPin size={13} style={{ marginRight: 6, verticalAlign: -2 }} />{tr(s.address)}</div>
                   <div className="s-meta">
                     <span><Phone size={12} style={{ marginRight: 5, verticalAlign: -2 }} />{s.phone}</span>
                   </div>
                 </div>
-                <div className="s-dist">{s.dist}</div>
+                <div className="s-dist">{tr(s.dist)}</div>
               </div>
             ))}
           </div>
 
           <p className="station-note">
-            📍 Sample listing shown for demo purposes — not live location data, no tracking involved.
-            Contact your local station directly, or dial <b style={{ color: "var(--text)" }}>112</b> for emergencies.
+            {tr("📍 Sample listing shown for demo purposes — not live location data, no tracking involved. Contact your local station directly, or dial")} <b style={{ color: "var(--text)" }}>112</b> {tr("for emergencies.")}
           </p>
         </div>
       </section>

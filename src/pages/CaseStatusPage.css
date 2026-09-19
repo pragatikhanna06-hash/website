@@ -65,7 +65,7 @@
 .cs-wrap{ max-width:820px; margin:0 auto; padding:0 28px 90px; position:relative; z-index:1; }
 
 .cs-hero{ padding:56px 0 8px; text-align:center; }
-.cs-hero h1{ font-size:clamp(30px,4.4vw,46px); font-weight:700; line-height:1.1; animation: cs-rise .6s .1s cubic-bezier(.2,.7,.3,1) both; }
+.cs-hero h1{ font-size:clamp(30px, 4.4vw, 32px); font-weight:700; line-height:1.1; animation: cs-rise .6s .1s cubic-bezier(.2,.7,.3,1) both; }
 .cs-hero h1 em{ font-style:normal; color:var(--teal); }
 .cs-hero p{ color:var(--text-dim); max-width:520px; margin:16px auto 0; font-size:15.5px; animation: cs-rise .6s .18s cubic-bezier(.2,.7,.3,1) both; }
 .cs-hero .eyebrow{ animation: cs-rise .6s .04s cubic-bezier(.2,.7,.3,1) both; }

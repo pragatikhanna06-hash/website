@@ -105,7 +105,7 @@ img { display: block; max-width: 100%; }
 .section-eyebrow {
   display: block;
   font-family: var(--ff-display);
-  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
   font-weight: 800;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -275,13 +275,14 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 .navbar--scrolled::after { opacity: 1; }
 
 .navbar-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
+  /* full-width bar so the logo + FORFRA SOLUTIONS sit at the far left edge */
+  max-width: none;
+  margin: 0;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .navbar-brand {
@@ -545,7 +546,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 /* hero heading — sized to match the approved preview exactly (scoped
    selector wins over the sitewide h1 override regardless of import order) */
 .quick-actions-head h1 {
-  font-size: clamp(32px, 5.5vw, 50px) !important;
+  font-size: 32px !important;
   line-height: 1.15 !important;
 }
 
@@ -622,7 +623,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 
 .hero-headline {
   font-family: var(--ff-display);
-  font-size: clamp(3.6rem, 9.5vw, 7.8rem);
+  font-size: 2rem;
   line-height: 1.02;
   letter-spacing: 0.01em;
   color: var(--heading);
@@ -1104,7 +1105,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 }
 .panel-title {
   font-family: var(--ff-display);
-  font-size: 2.2rem;
+  font-size: 2rem;
   letter-spacing: 0.03em;
   color: var(--white);
   margin-bottom: 1rem;
@@ -1281,6 +1282,8 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   color: rgba(var(--fg-rgb), 0.75);
   background: rgba(232,151,26,0.05);
   transition: border-color var(--trans), color var(--trans);
+  text-decoration: none;
+  cursor: pointer;
 }
 .cat-pill:hover { border-color: var(--gold); color: var(--white); }
 
@@ -1292,7 +1295,12 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   background: var(--navy);
 }
 .programs-inner { max-width: var(--max-w); margin: 0 auto; }
-.programs-inner > .section-title { margin-bottom: 3.5rem; }
+.programs-inner > .section-title {
+  margin-bottom: 3.5rem;
+  font-size: clamp(1.8rem, 3.7vw, 2rem) !important;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
 
 .programs-grid {
   display: grid;
@@ -1348,7 +1356,7 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
 }
 .program-card h3 {
   font-family: var(--ff-display);
-  font-size: 2.05rem;
+  font-size: 1.7rem !important;
   letter-spacing: 0.04em;
   color: var(--white);
   margin-bottom: 0.4rem;
@@ -1713,14 +1721,8 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   .cap-panel:not(.cap-panel--active) { display: none; }
 }
 
-/* tablet: tighten spacing before the layout has to collapse to a hamburger */
-@media (max-width: 900px) and (min-width: 861px) {
-  .navbar-links { gap: 1.2rem; }
-  .navbar-links a { font-size: 0.8rem; }
-  .brand-name, .brand-sub { font-size: 1.1rem; }
-}
-
-@media (max-width: 860px) {
+/* below this width, the nav collapses to the hamburger menu */
+@media (max-width: 900px) {
   :root { --nav-h: 60px; }
 
   .navbar-inner { padding: 0 1rem; }
@@ -1762,24 +1764,44 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
     overflow: hidden;
     transition: max-height var(--trans-slow), padding var(--trans-slow);
   }
-  .navbar-links--open { max-height: 520px; padding: 0.5rem 0 1.25rem; }
+  .navbar-links--open { max-height: 560px; padding: 0.5rem 0 1.25rem; }
   .navbar-links li { border-bottom: 1px solid rgba(var(--fg-rgb), 0.06); }
   .navbar-links li:last-child,
   .navbar-links li:nth-last-child(2) { border-bottom: none; }
   .navbar-links a {
     display: block;
-    padding: 0.9rem 1.5rem;
+    padding: 1rem 1.5rem;
     font-size: 1rem;
   }
   .navbar-links li:not(:last-child):not(:nth-last-child(2)) > a::after { display: none; }
-  .nav-cta { display: inline-block; margin: 0.75rem 1.5rem 0.25rem; text-align: center; }
+
+  /* Apply Now + Contact Us become clear, full-width stacked buttons with
+     visible spacing between them, instead of small side-by-side pills */
+  .nav-cta {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 0.85rem auto 0;
+    text-align: center;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  .contact-dd-wrap {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 0.85rem auto 0;
+  }
+  .contact-dd-trigger { width: 100%; }
+  .contact-dd-menu {
+    width: 100%;
+    box-sizing: border-box;
+  }
   .nav-cta-urgent { margin: 0.5rem 1.5rem; width: calc(100% - 3rem); }
   .navbar-lang-item { display: none; }
 
   .hamburger { display: flex; }
   .navbar-mobile-controls { display: flex; }
 
-  .hero-headline { font-size: clamp(2.4rem, 11vw, 4rem); }
+  .hero-headline { font-size: 2rem; }
   .hero-actions { flex-direction: column; align-items: center; }
   .hero-isos { flex-direction: column; align-items: center; }
 

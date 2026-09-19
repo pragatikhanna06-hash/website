@@ -738,6 +738,7 @@ export const translations = {
       },
     },
     nav: {
+      home: "Home",
       about: "About",
       services: "Services",
       clients: "Clients",
@@ -1656,6 +1657,7 @@ export const translations = {
       },
     },
     nav: {
+      home: "होम",
       about: "परिचय",
       services: "सेवाएँ",
       clients: "ग्राहक",

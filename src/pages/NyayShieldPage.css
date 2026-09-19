@@ -90,7 +90,7 @@
   position:relative;
   display:inline-block;
   font-weight:900;
-  font-size:clamp(30px, 5.2vw, 52px);
+  font-size:clamp(30px, 5.2vw, 32px);
   text-transform:uppercase;
   color:var(--text);
   padding-bottom:16px;

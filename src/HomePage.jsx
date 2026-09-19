@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Siren, Scale, Microscope, FileText, ShieldCheck, FileCheck2, Fingerprint, Landmark, Building2, Briefcase, Globe, Mail, Phone } from "lucide-react";
 import "./HomePage.css";
 import "./pages/NyayShieldPage.css"; // adjust this path to wherever NyayShieldPage.css actually sits relative to HomePage.jsx (per your App.jsx, it's in "./pages/")
 import { useLanguage } from "./pages/LanguageContext";
-import ApplyNowModal from "./pages/ApplyNowModal";
 import logo from "./assets/logo.png";
+import Navbar from "./SiteNavbar";
 // useSiteTheme import removed — theme toggle retired, site stays on brochure light theme.
 // All photo imports removed — theme now matches the brochure (no images).
 
@@ -29,15 +29,6 @@ function LinkedinIcon({ size = 17 }) {
 }
 
 // ── data ──────────────────────────────────────────────────────────────────────
-// NAV_LINKS keeps stable English keys (used for #anchors and translation lookup);
-// the visible label is pulled from t.nav[key] at render time.
-const NAV_LINKS = [
-  { key: "about", href: "/about" },
-  { key: "services", href: "#services" },
-  { key: "clients", href: "#clients" },
-  { key: "programs", href: "#programs" },
-];
-
 // SERVICES, CAPABILITIES, CLIENTS text now lives in src/i18n/translations.js
 // and is read via useLanguage() inside each section component below.
 
@@ -67,166 +58,6 @@ function useInView(threshold = 0.15) {
 }
 
 // ── sub-components ────────────────────────────────────────────────────────────
-
-function LanguageToggle({ className = "" }) {
-  const { lang, toggleLang } = useLanguage();
-  return (
-    <button
-      type="button"
-      className={`lang-toggle ${className}`}
-      onClick={toggleLang}
-      aria-label={lang === "en" ? "Switch to Hindi" : "अंग्रेज़ी में बदलें"}
-      title={lang === "en" ? "हिंदी में देखें" : "View in English"}
-    >
-      <span className={`lang-toggle-opt ${lang === "en" ? "lang-toggle-opt--active" : ""}`}>EN</span>
-      <span className="lang-toggle-sep">/</span>
-      <span className={`lang-toggle-opt ${lang === "hi" ? "lang-toggle-opt--active" : ""}`}>हिं</span>
-    </button>
-  );
-}
-
-// Theme toggle removed — site is locked to the brochure's light theme.
-
-const CONTACT_PLATFORMS = [
-  { label: "Email", value: "hello@forfrasolutions.com", href: "mailto:hello@forfrasolutions.com" },
-  { label: "Call", value: "+91 97110 15337", href: "tel:+919711015337" },
-  { label: "Call", value: "+91 89823 07608", href: "tel:+918982307608" },
-  { label: "Instagram", value: "@forfrasolutions", href: "https://instagram.com/forfrasolutions", external: true },
-  { label: "LinkedIn", value: "Forfra Solutions", href: "https://www.linkedin.com/company/forfra-solutions/", external: true },
-];
-
-function ContactDropdown({ className = "", onItemClick }) {
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onDocClick = (e) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
-  }, [open]);
-
-  return (
-    <div className={`contact-dd-wrap ${className}`} ref={wrapRef}>
-      <button
-        type="button"
-        className="nav-cta contact-dd-trigger"
-        onClick={() => setOpen((o) => !o)}
-        aria-haspopup="true"
-        aria-expanded={open}
-      >
-        Contact Us
-      </button>
-      {open && (
-        <div className="contact-dd-menu" role="menu">
-          {CONTACT_PLATFORMS.map((p, i) => (
-            <a
-              key={p.label + i}
-              href={p.href}
-              className="contact-dd-item"
-              target={p.external ? "_blank" : undefined}
-              rel={p.external ? "noopener noreferrer" : undefined}
-              role="menuitem"
-              onClick={() => { setOpen(false); onItemClick && onItemClick(); }}
-            >
-              <span className="contact-dd-label">{p.label}</span>
-              <span className="contact-dd-value">{p.value}</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Navbar({ scrolled, onApplyClick }) {
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  const { t, tr } = useLanguage();
-
-  const handleLinkClick = (e, linkKey) => {
-    if (linkKey === "about") {
-      e.preventDefault();
-      navigate("/about");
-    }
-    setOpen(false);
-  };
-
-  return (
-  <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
-    <div className="navbar-inner">
-
-      {/* Brand */}
-      <a
-        href="/"
-        className="navbar-brand"
-        onClick={(e) => {
-          e.preventDefault();
-          navigate("/");
-        }}
-      >
-        <img src={logo} alt="Forfra Solutions" className="brand-logo" />
-        <span className="brand-name">FORFRA</span>
-        <span className="brand-sub">SOLUTIONS</span>
-      </a>
-
-      {/* Navigation Links */}
-      <ul className={`navbar-links ${open ? "navbar-links--open" : ""}`}>
-        {NAV_LINKS.map((l) => (
-          <li key={l.key}>
-            <a
-              href={l.href}
-              onClick={(e) => handleLinkClick(e, l.key)}
-            >
-              {t.nav[l.key]}
-            </a>
-          </li>
-        ))}
-
-        <li>
-          <button
-            type="button"
-            className="nav-cta"
-            onClick={() => {
-              setOpen(false);
-              onApplyClick && onApplyClick();
-            }}
-          >
-            {tr("Apply Now")}
-          </button>
-        </li>
-
-        <li>
-          <ContactDropdown onItemClick={() => setOpen(false)} />
-        </li>
-
-        <li className="navbar-lang-item">
-          <LanguageToggle />
-        </li>
-      </ul>
-
-      {/* Mobile Controls */}
-      <div className="navbar-mobile-controls">
-        <LanguageToggle className="lang-toggle--compact" />
-
-        <button
-          className={`hamburger ${open ? "hamburger--open" : ""}`}
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-    </div>
-  </nav>
-);
-}
-
 const HERO_ACTION_META = [
   { to: "/report-crime", icon: Siren, className: "qa-btn qa-report" },
   { to: "/book-lawyer", icon: Scale, className: "qa-btn qa-lawyer" },
@@ -273,7 +104,7 @@ function HeroSection() {
 
 function AboutSection() {
   const [ref, inView] = useInView();
-  const { t } = useLanguage();
+  const { t, tr } = useLanguage();
   const navigate = useNavigate();
   return (
     <section className="about" id="about" ref={ref}>
@@ -294,7 +125,7 @@ function AboutSection() {
             ))}
           </div>
           <button className="btn-primary" style={{ marginTop: 28 }} onClick={() => navigate("/about")}>
-            Learn More
+            {tr("Learn More")}
           </button>
         </div>
 
@@ -332,8 +163,8 @@ function AboutSection() {
             <path d="M210 150 Q240 182 270 150" fill="none" stroke="var(--gold)" strokeWidth="6" strokeLinecap="round" />
           </svg>
           <div className="justice-scale-caption">
-            <span className="justice-scale-caption-title">Justice, Weighed Precisely</span>
-            <span className="justice-scale-caption-sub">Every case handled with balance &amp; integrity</span>
+            <span className="justice-scale-caption-title">{tr("Justice, Weighed Precisely")}</span>
+            <span className="justice-scale-caption-sub">{tr("Every case handled with balance & integrity")}</span>
           </div>
         </div>
       </div>
@@ -525,9 +356,9 @@ function ClientsSection() {
         {t.clients.categories.map((cat, i) => {
           const Icon = CLIENT_CATEGORY_ICONS[i];
           return (
-            <div key={cat.label} className="cat-pill">
+            <Link key={cat.label} to="/services#clients" className="cat-pill" style={{ cursor: "pointer" }}>
               <span><Icon size={16} /></span> {cat.label}
-            </div>
+            </Link>
           );
         })}
       </div>
@@ -541,7 +372,7 @@ const PROGRAM_LINKS = ["/corporate-crime-awareness", "/school-crime-awareness"];
 
 function ProgramsSection() {
   const [ref, inView] = useInView();
-  const { t } = useLanguage();
+  const { t, tr } = useLanguage();
   const navigate = useNavigate();
   const programs = t.programs.items.map((p, i) => ({ ...p, color: PROGRAM_COLORS[i], to: PROGRAM_LINKS[i] }));
   return (
@@ -570,7 +401,7 @@ function ProgramsSection() {
                   <li key={pt}><span className="prog-dot" />  {pt}</li>
                 ))}
               </ul>
-              {p.to && <span className="prog-more">{t.programs.learnMore || "Learn more →"}</span>}
+              {p.to && <span className="prog-more">{t.programs.learnMore || tr("Learn more →")}</span>}
             </div>
           ))}
         </div>
@@ -581,12 +412,12 @@ function ProgramsSection() {
 
 function ContactSection() {
   const [ref, inView] = useInView();
-  const { t } = useLanguage();
+  const { t, tr } = useLanguage();
 
   const links = [
-    { icon: Mail, label: "Email", value: "hello@forfrasolutions.com", href: "mailto:hello@forfrasolutions.com" },
-    { icon: Phone, label: "Call Us", value: "+91 97110 15337", href: "tel:+919711015337" },
-    { icon: Phone, label: "Call Us", value: "+91 89823 07608", href: "tel:+918982307608" },
+    { icon: Mail, label: tr("Email"), value: "hello@forfrasolutions.com", href: "mailto:hello@forfrasolutions.com" },
+    { icon: Phone, label: tr("Call Us"), value: "+91 97110 15337", href: "tel:+919711015337" },
+    { icon: Phone, label: tr("Call Us"), value: "+91 89823 07608", href: "tel:+918982307608" },
     { icon: InstagramIcon, label: "Instagram", value: "@forfrasolutions", href: "https://instagram.com/forfrasolutions", external: true },
     { icon: LinkedinIcon, label: "LinkedIn", value: "Forfra Solutions", href: "https://www.linkedin.com/company/forfra-solutions/", external: true },
   ];
@@ -629,8 +460,8 @@ function ContactSection() {
   );
 }
 
-function Footer({ onApplyClick }) {
-  const { t } = useLanguage();
+function Footer() {
+  const { t, tr } = useLanguage();
   return (
     <footer className="footer-v2">
       <div className="footer-v2-top">
@@ -648,23 +479,23 @@ function Footer({ onApplyClick }) {
         </div>
 
         <div className="footer-v2-col">
-          <h4>Company</h4>
-          <Link to="/about">About Us</Link>
-          <Link to="/services">Services</Link>
-          <button type="button" className="footer-v2-link-btn" onClick={onApplyClick}>Apply Now</button>
-          <a href="mailto:hello@forfrasolutions.com">Contact Us</a>
+          <h4>{tr("Company")}</h4>
+          <Link to="/about">{tr("About Us")}</Link>
+          <Link to="/services">{tr("Services")}</Link>
+          <a href="mailto:hello@forfrasolutions.com" className="footer-v2-link-btn">{tr("Apply Now")}</a>
+          <a href="mailto:hello@forfrasolutions.com">{tr("Contact Us")}</a>
         </div>
 
         <div className="footer-v2-col">
-          <h4>Services</h4>
-          <Link to="/services/data-security">Data Security</Link>
-          <Link to="/services/forensic-audit">Forensic Audit</Link>
-          <Link to="/services/digital-forensics">Digital Forensics</Link>
-          <Link to="/services/fraud-investigation">Fraud Investigation</Link>
-          <Link to="/services/investigations">Investigations</Link>
-          <Link to="/services/legal-consultation">Legal Consultation</Link>
-          <Link to="/services/document-examination">Document Examination</Link>
-          <Link to="/services/cyber-investigation">Cyber Investigation</Link>
+          <h4>{tr("Services")}</h4>
+          <Link to="/services/data-security">{tr("Data Security")}</Link>
+          <Link to="/services/forensic-audit">{tr("Forensic Audit")}</Link>
+          <Link to="/services/digital-forensics">{tr("Digital Forensics")}</Link>
+          <Link to="/services/fraud-investigation">{tr("Fraud Investigation")}</Link>
+          <Link to="/services/investigations">{tr("Investigations")}</Link>
+          <Link to="/services/legal-consultation">{tr("Legal Consultation")}</Link>
+          <Link to="/services/document-examination">{tr("Document Examination")}</Link>
+          <Link to="/services/cyber-investigation">{tr("Cyber Investigation")}</Link>
         </div>
       </div>
 
@@ -681,18 +512,24 @@ function Footer({ onApplyClick }) {
 // ── HomePage ──────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  const [scrolled, setScrolled] = useState(false);
-  const [applyOpen, setApplyOpen] = useState(false);
+  const { hash } = useLocation();
 
+  // Reliably scroll to the right section when arriving here via a
+  // "/#services" (or similar) link from another page — client-side route
+  // changes don't always trigger the browser's native hash-scroll.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (!hash) return;
+    const id = hash.replace("#", "");
+    // small delay lets the page's sections finish mounting first
+    const t = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+    return () => clearTimeout(t);
+  }, [hash]);
 
   return (
     <div className="page">
-      <Navbar scrolled={scrolled} onApplyClick={() => setApplyOpen(true)} />
+      <Navbar />
       <HeroSection />
       <AboutSection />
       <ServicesSection />
@@ -701,8 +538,7 @@ export default function HomePage() {
       <ClientsSection />
       <ProgramsSection />
       <ContactSection />
-      <Footer onApplyClick={() => setApplyOpen(true)} />
-      <ApplyNowModal isOpen={applyOpen} onClose={() => setApplyOpen(false)} />
+      <Footer />
     </div>
   );
 }

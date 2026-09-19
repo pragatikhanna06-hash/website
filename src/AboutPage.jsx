@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { ShieldCheck, FileCheck2, Heart, Target } from "lucide-react";
 import { useSiteTheme } from "./useSiteTheme";
-import logo from "./assets/logo.png";
+import Navbar from "./SiteNavbar";
+import { useLanguage } from "./pages/LanguageContext";
 
 /* ══════════════════════════════════════════
    GLOBAL STYLES (same design system as ServicesPage)
@@ -180,7 +180,7 @@ function Eyebrow({ children, center }) {
    same way in every section on this page. */
 function SectionHeading({ children, T, center }) {
   return (
-    <h2 style={{ fontFamily: "'Inter',sans-serif", fontWeight: 900, fontSize: "clamp(2.1rem,4.6vw,3.4rem)", textTransform: "uppercase", color: T.text, position: "relative", display: "inline-block", paddingBottom: 14, textAlign: center ? "center" : "left" }}>
+    <h2 style={{ fontFamily: "'Inter',sans-serif", fontWeight: 900, fontSize: "2rem", textTransform: "uppercase", color: T.text, position: "relative", display: "inline-block", paddingBottom: 14, textAlign: center ? "center" : "left" }}>
       {children}
       <span style={{ position: "absolute", left: center ? "50%" : 0, transform: center ? "translateX(-50%)" : "none", bottom: 0, width: 60, height: 4, borderRadius: 999, background: `linear-gradient(90deg, ${G}, #c47d0e)`, boxShadow: "0 0 14px rgba(232,151,26,.55)" }} />
     </h2>
@@ -188,63 +188,17 @@ function SectionHeading({ children, T, center }) {
 }
 
 /* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-function Nav({ T }) {
-  const [open, setOpen] = useState(false);
-  const [sc, setSc] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const fn = () => setSc(scrollY > 8);
-    addEventListener("scroll", fn);
-    return () => removeEventListener("scroll", fn);
-  }, []);
-
-  const links = [
-    ["Home", "/", false],
-    ["About", "/about", true],
-    ["Services", "/#services", false],
-    ["Clients", "/#clients", false],
-    ["Programs", "/#programs", false],
-  ];
-
-  const go = (href) => { navigate(href); setOpen(false); };
-
-  return (<>
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: sc ? T.navBgScrolled : T.navBg, backdropFilter: "blur(12px)", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 48px", height: 64, transition: "background .3s" }}>
-      <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }} onClick={(e) => { e.preventDefault(); navigate("/"); }}>
-        <img src={logo} alt="Forfra Solutions" className="brand-logo" />
-        <span style={{ fontFamily: "'Inter',sans-serif", fontWeight: 800, fontSize: "1.15rem", letterSpacing: 2, textTransform: "uppercase", color: T.text }}>FORFRA<span style={{ color: T.text, fontWeight: 800, fontSize: "1.15rem", letterSpacing: 2, marginLeft: 6 }}>SOLUTIONS</span></span>
-      </a>
-      <ul className="dn" id="dnav" style={{ display: "flex", gap: 34, listStyle: "none" }}>
-        {links.map(([l, href, active]) => (
-          <li key={l}><button className={`nbtn ${active ? "active" : ""}`} style={{ color: active ? G : T.body }} onClick={() => go(href)}>{l}</button></li>
-        ))}
-      </ul>
-      <button className="ncta dn" id="dcta" onClick={() => go("/#contact")}>Get in Touch</button>
-      <button onClick={() => setOpen((o) => !o)} aria-label="Menu" style={{ display: "none", flexDirection: "column", gap: 5, background: "none", border: "none", cursor: "pointer", padding: 4 }} className="dfl" id="hambtn">
-        {[0, 1, 2].map((i) => <span key={i} style={{ display: "block", width: 22, height: 2, background: T.hamburger, borderRadius: 2 }} />)}
-      </button>
-    </nav>
-    {open && <div style={{ position: "fixed", top: 64, left: 0, right: 0, zIndex: 99, background: T.page, padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 0, borderBottom: `1px solid ${T.border}` }}>
-      {links.map(([l, href]) => <button key={l} className="moba" style={{ color: T.body, borderBottom: `1px solid ${T.border}` }} onClick={() => go(href)}>{l}</button>)}
-      <button className="ncta" onClick={() => go("/#contact")} style={{ marginTop: 16 }}>Get in Touch</button>
-    </div>}
-    <style>{`@media(min-width:961px){#dnav{display:flex!important}#dcta{display:block!important}#hambtn{display:none!important}}`}</style>
-  </>);
-}
-
-/* ══════════════════════════════════════════
    HERO — no photo behind the headline, so text never merges with an image
 ══════════════════════════════════════════ */
 function Hero({ T, isLight }) {
+  const { tr } = useLanguage();
   return (
     <section className="hpad" style={{ minHeight: "56vh", background: isLight ? "linear-gradient(160deg,#FFFFFF 0%,#E7F0FB 60%,#DCEAFB 100%)" : "linear-gradient(160deg,#090f1e 0%,#0d1635 50%,#0a1a42 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "150px 48px 70px", position: "relative", overflow: "hidden" }}>
-      <h1 className="au1" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 900, fontSize: "clamp(3.4rem,8.5vw,7.2rem)", lineHeight: 1.05, letterSpacing: -1, textTransform: "uppercase", color: T.text, marginBottom: 18 }}>
-        ABOUT US
+      <h1 className="au1" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 900, fontSize: "2rem", lineHeight: 1.05, letterSpacing: -1, textTransform: "uppercase", color: T.text, marginBottom: 18 }}>
+        {tr("ABOUT US")}
       </h1>
       <p className="au2" style={{ fontFamily: "'Inter',sans-serif", fontWeight: 600, fontSize: "clamp(1rem,2vw,1.4rem)", lineHeight: 1.4, color: T.body, width: "min(900px, 92vw)", margin: "0 auto" }}>
-        Education, technology, and <span style={{ color: G, fontWeight: 700 }}>justice</span> — united.
+        {tr("Education, technology, and")} <span style={{ color: G, fontWeight: 700 }}>{tr("justice")}</span> {tr("— united.")}
       </p>
       <a
         href="/forfra-solutions-brochure.pdf"
@@ -267,7 +221,7 @@ function Hero({ T, isLight }) {
           borderRadius: 6,
         }}
       >
-        Forfra Solutions Brochure
+        {tr("Forfra Solutions Brochure")}
       </a>
     </section>
   );
@@ -277,6 +231,7 @@ function Hero({ T, isLight }) {
    PAGE
 ══════════════════════════════════════════ */
 export default function AboutPage() {
+  const { tr } = useLanguage();
   const { isLight } = useSiteTheme();
   const T = tokens(isLight);
 
@@ -294,21 +249,21 @@ export default function AboutPage() {
 
   return (
     <div style={{ background: T.page, minHeight: "100vh", position: "relative", transition: "background .4s" }}>
-      <Nav T={T} />
+      <Navbar showHome />
       <Hero T={T} isLight={isLight} />
 
       {/* WHO WE ARE */}
       <section className="sp" style={{ background: T.page, padding: "20px 48px 80px", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <Rev style={{ marginBottom: 24 }}>
-            <Eyebrow>Who We Are?</Eyebrow>
+            <Eyebrow>{tr("Who We Are?")}</Eyebrow>
           </Rev>
           <Rev>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
               {WHO_WE_ARE.map((line) => (
                 <li key={line} style={{ display: "flex", gap: 14, alignItems: "flex-start", fontSize: "1rem", color: T.body, lineHeight: 1.7 }}>
                   <span style={{ flexShrink: 0, width: 6, height: 6, background: G, borderRadius: "50%", marginTop: 10 }} />
-                  {line}
+                  {tr(line)}
                 </li>
               ))}
             </ul>
@@ -320,9 +275,9 @@ export default function AboutPage() {
       <section className="sp" style={{ background: T.alt, padding: "70px 48px", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <Rev style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Eyebrow center>Our Approach</Eyebrow>
+            <Eyebrow center>{tr("Our Approach")}</Eyebrow>
             <p style={{ fontFamily: "'Inter',sans-serif", fontSize: "1.05rem", color: T.body, lineHeight: 1.8, marginTop: 18 }}>
-              At the crossroads of science and technology, Forfra Solutions redefines modern forensic practices — integrating advanced methodologies with innovative tools to accelerate investigations.
+              {tr("At the crossroads of science and technology, Forfra Solutions redefines modern forensic practices — integrating advanced methodologies with innovative tools to accelerate investigations.")}
             </p>
           </Rev>
         </div>
@@ -332,8 +287,8 @@ export default function AboutPage() {
       <section className="sp" style={{ background: T.page, padding: "80px 48px", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Rev style={{ marginBottom: 44, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Eyebrow center>Credentials</Eyebrow>
-            <SectionHeading T={T} center>Our ISO <span style={{ color: G }}>Certifications</span></SectionHeading>
+            <Eyebrow center>{tr("Credentials")}</Eyebrow>
+            <SectionHeading T={T} center>{tr("Our ISO")} <span style={{ color: G }}>{tr("Certifications")}</span></SectionHeading>
           </Rev>
           <div ref={certRef} className="g1" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 24 }}>
             {CERTIFICATIONS.map((c) => {
@@ -344,9 +299,9 @@ export default function AboutPage() {
                   <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 46, height: 46, borderRadius: 10, background: "rgba(232,151,26,.12)", color: G, marginBottom: 18 }}>
                     <Icon size={22} />
                   </span>
-                  <h3 style={{ fontFamily: "'Inter',sans-serif", fontWeight: 800, fontSize: "1.25rem", color: T.text, marginBottom: 4 }}>{c.title}</h3>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: ".72rem", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: G, display: "block", marginBottom: 14 }}>{c.sub}</span>
-                  <p style={{ fontSize: ".9rem", color: T.body, lineHeight: 1.7 }}>{c.body}</p>
+                  <h3 style={{ fontFamily: "'Inter',sans-serif", fontWeight: 800, fontSize: "1.25rem", color: T.text, marginBottom: 4 }}>{tr(c.title)}</h3>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: ".72rem", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: G, display: "block", marginBottom: 14 }}>{tr(c.sub)}</span>
+                  <p style={{ fontSize: ".9rem", color: T.body, lineHeight: 1.7 }}>{tr(c.body)}</p>
                 </div>
               );
             })}
@@ -358,7 +313,7 @@ export default function AboutPage() {
       <section className="sp" style={{ background: T.alt, padding: "70px 48px", position: "relative", zIndex: 1 }}>
         <div ref={promiseRef} style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(200px,320px) 1fr", gap: 48 }} className="dg1">
           <div>
-            <Eyebrow>Our Promise</Eyebrow>
+            <Eyebrow>{tr("Our Promise")}</Eyebrow>
             <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 46, height: 46, borderRadius: 10, background: "rgba(232,151,26,.12)", color: G, marginTop: 14 }}>
               <Heart size={22} />
             </span>
@@ -367,7 +322,7 @@ export default function AboutPage() {
             {PROMISE.map((line) => (
               <li key={line} style={{ display: "flex", gap: 14, alignItems: "flex-start", fontSize: "1rem", color: T.body, lineHeight: 1.7 }}>
                 <span style={{ flexShrink: 0, width: 6, height: 6, background: G, borderRadius: "50%", marginTop: 10 }} />
-                {line}
+                {tr(line)}
               </li>
             ))}
           </ul>
@@ -378,7 +333,7 @@ export default function AboutPage() {
       <section className="sp" style={{ background: T.page, padding: "70px 48px", position: "relative", zIndex: 1 }}>
         <div ref={missionRef} style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(200px,320px) 1fr", gap: 48 }} className="dg1">
           <div>
-            <Eyebrow>Our Mission</Eyebrow>
+            <Eyebrow>{tr("Our Mission")}</Eyebrow>
             <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 46, height: 46, borderRadius: 10, background: "rgba(232,151,26,.12)", color: G, marginTop: 14 }}>
               <Target size={22} />
             </span>
@@ -387,7 +342,7 @@ export default function AboutPage() {
             {MISSION.map((line) => (
               <li key={line} style={{ display: "flex", gap: 14, alignItems: "flex-start", fontSize: "1rem", color: T.body, lineHeight: 1.7 }}>
                 <span style={{ flexShrink: 0, width: 6, height: 6, background: G, borderRadius: "50%", marginTop: 10 }} />
-                {line}
+                {tr(line)}
               </li>
             ))}
           </ul>
@@ -399,10 +354,10 @@ export default function AboutPage() {
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 600, background: "radial-gradient(circle,rgba(232,151,26,.09) 0%,transparent 65%)", pointerEvents: "none" }} />
         <Rev style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <SectionHeading T={T} center>
-            Ready to work with <span style={{ color: G }}>certified experts?</span>
+            {tr("Ready to work with")} <span style={{ color: G }}>{tr("certified experts?")}</span>
           </SectionHeading>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", position: "relative", marginTop: 12 }}>
-            <a href="mailto:hello@forfrasolutions.com" className="bgold">Email Us</a>
+            <a href="mailto:hello@forfrasolutions.com" className="bgold">{tr("Email Us")}</a>
             <a href="tel:+919711015337" className="bgh" style={{ color: T.text, border: `1px solid ${T.border}` }}>+91 97110 15337</a>
           </div>
         </Rev>
@@ -410,7 +365,7 @@ export default function AboutPage() {
 
       {/* FOOTER */}
       <footer style={{ background: T.footer, borderTop: `1px solid ${T.border}`, padding: "28px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, position: "relative", zIndex: 1 }}>
-        <p style={{ color: T.body, fontSize: ".8rem" }}>© 2025 Forfra Solutions. ISO 9001:2015 &amp; ISO 27001:2022 Certified.</p>
+        <p style={{ color: T.body, fontSize: ".8rem" }}>{tr("© 2025 Forfra Solutions. ISO 9001:2015 & ISO 27001:2022 Certified.")}</p>
       </footer>
     </div>
   );

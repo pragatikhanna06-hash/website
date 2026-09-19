@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Landmark, Siren, Building2, Briefcase, FileText } from "lucide-react";
-// Photo imports removed — no images per brochure-match theme.
 import { useSiteTheme } from "./useSiteTheme";
-import logo from "./assets/logo.png";
+import Navbar from "./SiteNavbar";
+import { useLanguage } from "./pages/LanguageContext";
 
 /* ══════════════════════════════════════════
    GLOBAL STYLES
@@ -51,6 +51,7 @@ const GLOBAL_CSS = `
   .cli:hover  { border-color:rgba(232,151,26,.35) !important; transform:translateY(-3px); }
   .prog:hover { transform:translateY(-5px); border-color:rgba(232,151,26,.3) !important; box-shadow:0 20px 50px rgba(0,0,0,.3); }
 
+  .prog h3 { font-size:1.25rem !important; }
   .nbtn { background:none; border:none; cursor:pointer; padding:0; color:rgba(var(--sp-fg-rgb), .78); font-family:'Inter',sans-serif; font-size:.9rem; font-weight:500; letter-spacing:.3px; transition:color .2s; }
   .nbtn:hover { color:#fff; }
 
@@ -63,7 +64,7 @@ const GLOBAL_CSS = `
   .bgold { background:#e8971a; color:#000; font-family:'Inter',sans-serif; font-weight:800; font-size:.95rem; letter-spacing:1.5px; text-transform:uppercase; padding:14px 34px; border-radius:4px; text-decoration:none; display:inline-block; transition:background .2s,transform .2s; }
   .bgold:hover { background:#f5a623; transform:translateY(-2px); }
 
-  .bgh { background:transparent; color:#fff; border:1px solid rgba(var(--sp-fg-rgb), .3); font-family:'Inter',sans-serif; font-weight:700; font-size:.95rem; letter-spacing:1.5px; text-transform:uppercase; padding:14px 34px; border-radius:4px; text-decoration:none; display:inline-block; transition:border-color .2s,background .2s,transform .2s; }
+  .bgh { background:transparent; color:var(--sp-text); border:1px solid rgba(var(--sp-fg-rgb), .3); font-family:'Inter',sans-serif; font-weight:700; font-size:.95rem; letter-spacing:1.5px; text-transform:uppercase; padding:14px 34px; border-radius:4px; text-decoration:none; display:inline-block; transition:border-color .2s,background .2s,transform .2s; }
   .bgh:hover { border-color:#e8971a; background:rgba(232,151,26,.08); transform:translateY(-2px); }
 
   .flink { color:rgba(var(--sp-fg-rgb), .45); font-size:.8rem; text-decoration:none; transition:color .2s; }
@@ -241,110 +242,26 @@ function useStagger() {
 // Stars canvas animation removed — no animations, per brochure-match theme.
 
 /* ══════════════════════════════════════════
-   CONTACT DROPDOWN — all platforms, one click away
-══════════════════════════════════════════ */
-const CONTACT_PLATFORMS=[
-  {label:"Website", value:"www.forfrasolutions.com", href:"https://www.forfrasolutions.com", external:true},
-  {label:"Email",    value:"hello@forfrasolutions.com", href:"mailto:hello@forfrasolutions.com"},
-  {label:"Call",     value:"+91 97110 15337", href:"tel:+919711015337"},
-  {label:"Call",     value:"+91 89823 07608", href:"tel:+918982307608"},
-  {label:"Instagram",value:"@forfrasolutions", href:"https://instagram.com/forfrasolutions", external:true},
-  {label:"LinkedIn", value:"Forfra Solutions", href:"https://www.linkedin.com/company/forfra-solutions/", external:true},
-];
-
-function ContactDropdown({triggerClass,triggerStyle,onItemClick}) {
-  const [open,setOpen]=useState(false);
-  const ref=useRef(null);
-  useEffect(()=>{
-    if(!open)return;
-    const onDoc=(e)=>{ if(ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener("mousedown",onDoc);
-    return()=>document.removeEventListener("mousedown",onDoc);
-  },[open]);
-  return(
-    <div ref={ref} style={{position:"relative",display:"inline-block"}}>
-      <button className={triggerClass} style={{...triggerStyle,border:"none",cursor:"pointer"}} onClick={()=>setOpen(o=>!o)} aria-haspopup="true" aria-expanded={open}>Contact Us</button>
-      {open && (
-        <div role="menu" style={{position:"absolute",top:"calc(100% + 10px)",right:0,minWidth:230,background:"var(--sp-card)",border:"1px solid rgba(232,151,26,.3)",borderRadius:12,boxShadow:"0 20px 50px rgba(0,0,0,.45)",padding:8,zIndex:1200,display:"flex",flexDirection:"column",gap:2}}>
-          {CONTACT_PLATFORMS.map((p,i)=>(
-            <a key={p.label+i} href={p.href} target={p.external?"_blank":undefined} rel={p.external?"noopener noreferrer":undefined} role="menuitem"
-               onClick={()=>{setOpen(false);onItemClick&&onItemClick();}}
-               style={{display:"flex",flexDirection:"column",gap:1,padding:"9px 12px",borderRadius:8,textDecoration:"none"}}
-               onMouseEnter={(e)=>e.currentTarget.style.background="rgba(232,151,26,.12)"}
-               onMouseLeave={(e)=>e.currentTarget.style.background="transparent"}>
-              <span style={{fontSize:".65rem",fontWeight:700,letterSpacing:1.5,textTransform:"uppercase",color:G}}>{p.label}</span>
-              <span style={{fontSize:".85rem",color:"var(--sp-text)"}}>{p.value}</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-function Nav() {
-  const [open,setOpen]=useState(false);
-  const [sc,setSc]=useState(false);
-  const navigate = useNavigate();
-  useEffect(()=>{
-    const fn=()=>setSc(scrollY>8);
-    addEventListener("scroll",fn);return()=>removeEventListener("scroll",fn);
-  },[]);
-
-  // "Home" -> "/", "About" -> "/about" via router;
-  // "Services"/"Clients"/"Programs" scroll within this same page (already here)
-  const go=(id)=>{
-    if(id==="/"){ navigate("/"); }
-    else if(id==="/about"){ navigate("/about"); }
-    else if(id){ document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); }
-    setOpen(false);
-  };
-  const links=[["Home","/"],["About","/about"],["Services","overview"],["Clients","clients"],["Programs","programs"]];
-  return(<>
-    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:sc?"var(--sp-nav-scrolled)":"var(--sp-nav)",backdropFilter:"blur(12px)",borderBottom:`1px solid ${BORD}`,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 48px",height:64,transition:"background .3s"}}>
-      <a href="/" style={{display:"flex",alignItems:"center",gap:10,textDecoration:"none"}} onClick={(e)=>{e.preventDefault();navigate("/");}}>
-        <img src={logo} alt="Forfra Solutions" className="brand-logo" />
-        <span style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.15rem",letterSpacing:2,textTransform:"uppercase",color:"var(--sp-text)"}}>FORFRA<span style={{color:"var(--sp-text)",fontWeight:800,fontSize:"1.15rem",letterSpacing:2,marginLeft:6}}>SOLUTIONS</span></span>
-      </a>
-      <ul className="dn" id="dnav" style={{display:"flex",gap:34,listStyle:"none"}}>
-        {links.map(([l,id])=><li key={l}><button className="nbtn" onClick={()=>go(id)}>{l}</button></li>)}
-      </ul>
-      <span className="dn" id="dcta"><ContactDropdown triggerClass="ncta" /></span>
-      <button onClick={()=>setOpen(o=>!o)} aria-label="Menu" style={{display:"none",flexDirection:"column",gap:5,background:"none",border:"none",cursor:"pointer",padding:4}} className="dfl" id="hambtn">
-        {[0,1,2].map(i=><span key={i} style={{display:"block",width:22,height:2,background:"var(--sp-text)",borderRadius:2}}/>)}
-      </button>
-    </nav>
-    {open&&<div style={{position:"fixed",top:64,left:0,right:0,zIndex:99,background:"var(--sp-page)",padding:"20px 28px 28px",display:"flex",flexDirection:"column",gap:0,borderBottom:`1px solid ${BORD}`}}>
-      {links.map(([l,id])=><button key={l} className="moba" onClick={()=>go(id)}>{l}</button>)}
-      <div style={{marginTop:16}}><ContactDropdown triggerClass="ncta" onItemClick={()=>setOpen(false)} /></div>
-    </div>}
-    <style>{`@media(min-width:961px){#dnav{display:flex!important}#dcta{display:block!important}#hambtn{display:none!important}}`}</style>
-  </>);
-}
-
-/* ══════════════════════════════════════════
    HERO
 ══════════════════════════════════════════ */
 function Hero() {
+  const { tr } = useLanguage();
   return(
     <section className="hpad" style={{minHeight:"100vh",background:"var(--sp-hero)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"120px 48px 80px",position:"relative",overflow:"hidden",zIndex:1}}>
-      <h1 className="au1" style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(3.6rem,9vw,7.4rem)",lineHeight:.95,letterSpacing:-1,textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20}}>
-        DETECT. PROTECT. EVOLVE.
+      <h1 className="au1" style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",lineHeight:.95,letterSpacing:-1,textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20}}>
+        {tr("DETECT. PROTECT. EVOLVE.")}
       </h1>
       <p className="au2" style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(1rem,2.2vw,1.5rem)",letterSpacing:-.3,textTransform:"uppercase",color:BODY,width:"min(1000px, 92vw)",margin:"0 auto"}}>
-        EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
+        {tr("EVERY THREAT.")} <span style={{color:G}}>{tr("ONE PARTNER.")}</span>
       </p>
       <p className="au3" style={{fontFamily:"'Inter',sans-serif",fontWeight:400,fontSize:"1.05rem",color:BODY,maxWidth:560,margin:"28px auto 0",lineHeight:1.7}}>
-        Comprehensive forensic, security, and investigation solutions — court-ready, legally defensible, and backed by ISO-certified expertise.
+        {tr("Comprehensive forensic, security, and investigation solutions — court-ready, legally defensible, and backed by ISO-certified expertise.")}
       </p>
       <div className="au4" style={{display:"flex",flexWrap:"wrap",gap:10,justifyContent:"center",marginTop:44}}>
-        {PILLS.map(p=><button key={p.id} className="hpill" onClick={()=>document.getElementById(p.id)?.scrollIntoView({behavior:"smooth"})}>{p.label}</button>)}
+        {PILLS.map(p=><button key={p.id} className="hpill" onClick={()=>document.getElementById(p.id)?.scrollIntoView({behavior:"smooth"})}>{tr(p.label)}</button>)}
       </div>
       <div className="au5" style={{position:"absolute",bottom:32,left:"50%",transform:"translateX(-50%)",display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
-        <span style={{color:"rgba(var(--sp-fg-rgb), .45)",fontFamily:"'Inter',sans-serif",fontSize:".68rem",letterSpacing:3,textTransform:"uppercase"}}>Scroll</span>
+        <span style={{color:"rgba(var(--sp-fg-rgb), .45)",fontFamily:"'Inter',sans-serif",fontSize:".68rem",letterSpacing:3,textTransform:"uppercase"}}>{tr("Scroll")}</span>
         <div className="pulse" style={{width:1,height:48,background:`linear-gradient(to bottom,${G},transparent)`}}/>
       </div>
     </section>
@@ -355,6 +272,7 @@ function Hero() {
    SERVICE CARD
 ══════════════════════════════════════════ */
 function SvcCard({d}) {
+  const { tr } = useLanguage();
   const ref=useRef(null);
   useEffect(()=>{
     const el=ref.current;if(!el)return;
@@ -367,9 +285,9 @@ function SvcCard({d}) {
       <div className="sc" onClick={()=>document.getElementById(d.id)?.scrollIntoView({behavior:"smooth"})}
         style={{background:CBKG,border:`1px solid ${BORD}`,borderRadius:12,padding:"36px 30px 32px",cursor:"pointer"}}>
         <span className="sc-num" style={{position:"absolute",top:18,right:24,fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"3.5rem",color:"rgba(var(--sp-fg-rgb), .04)",lineHeight:1,pointerEvents:"none",transition:"color .35s"}}>{d.num}</span>
-        <span style={{fontFamily:"'Inter',sans-serif",fontSize:".65rem",fontWeight:700,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:8,display:"block"}}>{d.sub}</span>
-        <h3 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.45rem",textTransform:"uppercase",letterSpacing:.5,color:"var(--sp-text)",marginBottom:14,lineHeight:1.15}}>{d.title}</h3>
-        <p style={{fontSize:".88rem",color:BODY,lineHeight:1.65,marginBottom:24}}>{d.body}</p>
+        <span style={{fontFamily:"'Inter',sans-serif",fontSize:".65rem",fontWeight:700,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:8,display:"block"}}>{tr(d.sub)}</span>
+        <h3 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.45rem",textTransform:"uppercase",letterSpacing:.5,color:"var(--sp-text)",marginBottom:14,lineHeight:1.15}}>{tr(d.title)}</h3>
+        <p style={{fontSize:".88rem",color:BODY,lineHeight:1.65,marginBottom:24}}>{tr(d.body)}</p>
         <span className="sc-arr" style={{color:G,fontSize:"1.2rem",display:"inline-block",transition:"transform .25s"}}>→</span>
       </div>
     </div>
@@ -380,6 +298,7 @@ function SvcCard({d}) {
    DETAIL SECTION
 ══════════════════════════════════════════ */
 function Detail({d}) {
+  const { tr } = useLanguage();
   const vizRef =useReveal(d.flip?"rvr":"rvl");
   const conRef =useReveal(d.flip?"rvl":"rvr");
   const Visual=(
@@ -390,35 +309,35 @@ function Detail({d}) {
               never "merges" with the caption below. */}
           
           <div style={{padding:"22px 26px",textAlign:"left",background:CBKG}}>
-            {d.cert&&<span style={{background:G,color:"#000",fontSize:".65rem",fontWeight:800,letterSpacing:2,textTransform:"uppercase",padding:"5px 14px",borderRadius:3,display:"inline-block",marginBottom:10}}>{d.cert}</span>}
-            <h4 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.25rem",textTransform:"uppercase",color:"var(--sp-text)"}}>{d.vt}</h4>
-            <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6}}>{d.vb}</p>
+            {d.cert&&<span style={{background:G,color:"#000",fontSize:".65rem",fontWeight:800,letterSpacing:2,textTransform:"uppercase",padding:"5px 14px",borderRadius:3,display:"inline-block",marginBottom:10}}>{tr(d.cert)}</span>}
+            <h4 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.25rem",textTransform:"uppercase",color:"var(--sp-text)"}}>{tr(d.vt)}</h4>
+            <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6}}>{tr(d.vb)}</p>
           </div>
         </div>
       ) : (
         <div className="floaty" style={{background:CBKG,border:`1px solid ${BORD}`,borderRadius:16,padding:"52px 40px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",gap:16,minHeight:300,position:"relative",overflow:"hidden"}}>
           <div style={{position:"absolute",inset:0,background:"radial-gradient(circle at 50% 0%,rgba(232,151,26,.08) 0%,transparent 65%)"}}/>
-          {d.cert&&<span style={{background:G,color:"#000",fontFamily:"'Inter',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:2,textTransform:"uppercase",padding:"5px 14px",borderRadius:3,position:"relative"}}>{d.cert}</span>}
-          <h4 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.25rem",textTransform:"uppercase",color:"var(--sp-text)",position:"relative"}}>{d.vt}</h4>
-          <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6,position:"relative",maxWidth:240}}>{d.vb}</p>
+          {d.cert&&<span style={{background:G,color:"#000",fontFamily:"'Inter',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:2,textTransform:"uppercase",padding:"5px 14px",borderRadius:3,position:"relative"}}>{tr(d.cert)}</span>}
+          <h4 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.25rem",textTransform:"uppercase",color:"var(--sp-text)",position:"relative"}}>{tr(d.vt)}</h4>
+          <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6,position:"relative",maxWidth:240}}>{tr(d.vb)}</p>
         </div>
       )}
     </div>
   );
   const Content=(
     <div ref={conRef}>
-      <span style={{fontFamily:"'Inter',sans-serif",fontSize:".76rem",fontWeight:800,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:14,display:"inline-block",background:"rgba(232,151,26,.12)",border:"1px solid rgba(232,151,26,.35)",borderRadius:999,padding:"6px 16px"}}>{d.eyebrow}</span>
-      <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2.1rem,3.6vw,3.2rem)",textTransform:"uppercase",lineHeight:1.04,color:"var(--sp-text)",marginBottom:16,position:"relative",display:"inline-block",paddingBottom:14}}>
-        {d.hw}<br/>
-        <span style={{color:G}}>{d.hg.split("\n").map((l,i,a)=><span key={i}>{l}{i<a.length-1&&<br/>}</span>)}</span>
+      <span style={{fontFamily:"'Inter',sans-serif",fontSize:".76rem",fontWeight:800,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:14,display:"inline-block",background:"rgba(232,151,26,.12)",border:"1px solid rgba(232,151,26,.35)",borderRadius:999,padding:"6px 16px"}}>{tr(d.eyebrow)}</span>
+      <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",textTransform:"uppercase",lineHeight:1.04,color:"var(--sp-text)",marginBottom:16,position:"relative",display:"inline-block",paddingBottom:14}}>
+        {tr(d.hw)}<br/>
+        <span style={{color:G}}>{d.hg.split("\n").map((l,i,a)=><span key={i}>{tr(l)}{i<a.length-1&&<br/>}</span>)}</span>
         <span style={{position:"absolute",left:0,bottom:0,width:60,height:4,borderRadius:999,background:`linear-gradient(90deg, ${G}, #c47d0e)`,boxShadow:"0 0 14px rgba(232,151,26,.55)"}}/>
       </h2>
-      <p style={{fontFamily:"'Inter',sans-serif",fontSize:".95rem",color:BODY,lineHeight:1.75,marginBottom:28}}>{d.body}</p>
+      <p style={{fontFamily:"'Inter',sans-serif",fontSize:".95rem",color:BODY,lineHeight:1.75,marginBottom:28}}>{tr(d.body)}</p>
       <ul style={{listStyle:"none",display:"flex",flexDirection:"column",gap:11}}>
         {d.feats.map((f,i)=>(
           <li key={i} style={{display:"flex",alignItems:"flex-start",gap:12,fontSize:".9rem",color:BODY,lineHeight:1.55}}>
             <span style={{flexShrink:0,width:6,height:6,background:G,borderRadius:"50%",marginTop:7}}/>
-            {f}
+            {tr(f)}
           </li>
         ))}
       </ul>
@@ -445,7 +364,9 @@ function Rev({children,style={}}) {
    PAGE
 ══════════════════════════════════════════ */
 export default function ServicesPage() {
+  const { tr } = useLanguage();
   const { isLight } = useSiteTheme();
+  const { hash } = useLocation();
 
   useEffect(()=>{
     const s=document.createElement("style");
@@ -453,6 +374,17 @@ export default function ServicesPage() {
     document.head.appendChild(s);
     return()=>document.head.removeChild(s);
   },[]);
+
+  // Reliably scroll to the right section when arriving here via a
+  // "/services#clients" (or similar) link from another page.
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.replace("#", "");
+    const t = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+    return () => clearTimeout(t);
+  }, [hash]);
 
   const cardsRef  =useStagger();
   const clientsRef=useStagger();
@@ -479,15 +411,15 @@ export default function ServicesPage() {
 
   return(
     <div style={{...themeVars,background:"var(--sp-page)",minHeight:"100vh",position:"relative",transition:"background .4s"}}>
-      <Nav/>
+      <Navbar showHome hideServices />
       <Hero/>
 
       {/* OVERVIEW */}
       <section id="overview" className="sp" style={{background:"var(--sp-page)",padding:"100px 48px",position:"relative",zIndex:1}}>
         <Rev style={{maxWidth:1300,margin:"0 auto 64px"}}>
-          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2rem,4.2vw,3.4rem)",textTransform:"uppercase",lineHeight:1.1,color:"var(--sp-text)",marginBottom:10}}>OUR SERVICES</h2>
+          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",textTransform:"uppercase",lineHeight:1.1,color:"var(--sp-text)",marginBottom:10}}>{tr("OUR SERVICES")}</h2>
           <p style={{fontFamily:"'Inter',sans-serif",fontWeight:700,fontSize:"clamp(.95rem,2vw,1.3rem)",textTransform:"uppercase",color:BODY,width:"min(700px, 90vw)"}}>
-            EVERY THREAT. <span style={{color:G}}>ONE PARTNER.</span>
+            {tr("EVERY THREAT.")} <span style={{color:G}}>{tr("ONE PARTNER.")}</span>
           </p>
         </Rev>
         <div ref={cardsRef} className="g1" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20,maxWidth:1300,margin:"0 auto"}}>
@@ -500,7 +432,7 @@ export default function ServicesPage() {
         {STATS.map(s=>(
           <div key={s.label} style={{textAlign:"center"}}>
             <div style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2.8rem",color:"#000",lineHeight:1}}>{s.num}</div>
-            <div style={{fontFamily:"'Inter',sans-serif",fontSize:".72rem",fontWeight:700,letterSpacing:3,textTransform:"uppercase",color:"rgba(0,0,0,.65)",marginTop:4}}>{s.label}</div>
+            <div style={{fontFamily:"'Inter',sans-serif",fontSize:".72rem",fontWeight:700,letterSpacing:3,textTransform:"uppercase",color:"rgba(0,0,0,.65)",marginTop:4}}>{tr(s.label)}</div>
           </div>
         ))}
       </div>
@@ -512,8 +444,8 @@ export default function ServicesPage() {
       <section id="clients" className="sp" style={{background:"var(--sp-page)",padding:"100px 48px",position:"relative",zIndex:1}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <Rev style={{marginBottom:56}}>
-            <span style={{fontFamily:"'Inter',sans-serif",fontSize:".75rem",fontWeight:700,letterSpacing:4,textTransform:"uppercase",color:G,marginBottom:12,display:"block"}}>WHO WE SERVE</span>
-            <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2.4rem,5vw,4.2rem)",textTransform:"uppercase",color:"var(--sp-text)"}}>OUR <span style={{color:G}}>CLIENTS</span></h2>
+            <span style={{fontFamily:"'Inter',sans-serif",fontSize:"1.45rem",fontWeight:700,letterSpacing:4,textTransform:"uppercase",color:"#0D2F7F",marginBottom:12,display:"block"}}>{tr("WHO WE SERVE")}</span>
+            <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",textTransform:"uppercase",color:"var(--sp-text)"}}>{tr("OUR")} <span style={{color:G}}>{tr("CLIENTS")}</span></h2>
             <div style={{width:60,height:4,background:`linear-gradient(90deg, ${G}, #c47d0e)`,borderRadius:999,boxShadow:"0 0 14px rgba(232,151,26,.55)",marginTop:18}}/>
           </Rev>
           <div ref={clientsRef} className="g1" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))",gap:20}}>
@@ -527,12 +459,12 @@ export default function ServicesPage() {
                     <span style={{display:"flex",alignItems:"center",justifyContent:"center",width:34,height:34,borderRadius:9,background:"rgba(232,151,26,.12)",color:G,flexShrink:0}}>
                       <Icon size={17}/>
                     </span>
-                    <h4 style={{fontFamily:"'Inter',sans-serif",fontSize:".85rem",fontWeight:700,letterSpacing:2,textTransform:"uppercase",color:"var(--sp-text)",lineHeight:1.3}}>{c.title}</h4>
+                    <h4 style={{fontFamily:"'Inter',sans-serif",fontSize:".85rem",fontWeight:700,letterSpacing:2,textTransform:"uppercase",color:"var(--sp-text)",lineHeight:1.3}}>{tr(c.title)}</h4>
                   </div>
                   <ul style={{listStyle:"none",display:"flex",flexDirection:"column",gap:9}}>
                     {c.items.map(item=>(
                       <li key={item} style={{color:BODY,fontSize:".85rem",paddingLeft:16,position:"relative",lineHeight:1.4}}>
-                        <span style={{position:"absolute",left:0,top:".55em",width:5,height:5,borderRadius:"50%",background:G}}/>{item}
+                        <span style={{position:"absolute",left:0,top:".55em",width:5,height:5,borderRadius:"50%",background:G}}/>{tr(item)}
                       </li>
                     ))}
                   </ul>
@@ -547,28 +479,28 @@ export default function ServicesPage() {
       <section id="programs" className="sp" style={{background:"var(--sp-alt)",padding:"100px 48px",position:"relative",zIndex:1}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <Rev style={{marginBottom:56}}>
-            <span style={{fontFamily:"'Inter',sans-serif",fontSize:".75rem",fontWeight:700,letterSpacing:4,textTransform:"uppercase",color:G,marginBottom:12,display:"block"}}>AWARENESS PROGRAMS</span>
-            <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2.4rem,5vw,4.2rem)",textTransform:"uppercase",color:"var(--sp-text)",lineHeight:1}}>
-              EDUCATION IS THE <span style={{color:G}}>FIRST DEFENSE.</span>
+            <span style={{fontFamily:"'Inter',sans-serif",fontSize:"1.45rem",fontWeight:700,letterSpacing:4,textTransform:"uppercase",color:G,marginBottom:12,display:"block"}}>{tr("AWARENESS PROGRAMS")}</span>
+            <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",textTransform:"uppercase",color:"var(--sp-text)",lineHeight:1}}>
+              {tr("EDUCATION IS THE")} <span style={{color:G}}>{tr("FIRST DEFENSE.")}</span>
             </h2>
             <div style={{width:60,height:4,background:`linear-gradient(90deg, ${G}, #c47d0e)`,borderRadius:999,boxShadow:"0 0 14px rgba(232,151,26,.55)",margin:"18px 0 20px"}}/>
-            <p style={{fontFamily:"'Inter',sans-serif",fontSize:".95rem",color:BODY,lineHeight:1.75,maxWidth:560}}>We extend our expertise beyond investigations into proactive crime prevention through structured awareness programs.</p>
+            <p style={{fontFamily:"'Inter',sans-serif",fontSize:".95rem",color:BODY,lineHeight:1.75,maxWidth:560}}>{tr("We extend our expertise beyond investigations into proactive crime prevention through structured awareness programs.")}</p>
           </Rev>
           <div ref={progsRef} className="g1" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:24}}>
             {PROGRAMS.map(p=>(
               <div key={p.title}>
                 <div className="prog" style={{background:CBKG,border:`1px solid ${BORD}`,borderRadius:12,overflow:"hidden",transition:"transform .3s,border-color .3s,box-shadow .3s"}}>
-                  <div style={{padding:"32px 30px 28px",borderBottom:`1px solid ${BORD}`,background:`linear-gradient(135deg,${CBKG} 0%,rgba(17,29,64,.5) 100%)`,position:"relative"}}>
+                  <div style={{padding:"32px 30px 28px",borderBottom:`1px solid ${BORD}`,background:CBKG,position:"relative"}}>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:2,background:G}}/>
-                    <h3 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.4rem",textTransform:"uppercase",color:"var(--sp-text)",marginBottom:8}}>{p.title}</h3>
-                    <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6}}>{p.sub}</p>
+                    <h3 style={{fontFamily:"'Inter',sans-serif",fontWeight:800,fontSize:"1.25rem",textTransform:"uppercase",color:"var(--sp-text)",marginBottom:8}}>{tr(p.title)}</h3>
+                    <p style={{fontSize:".85rem",color:BODY,lineHeight:1.6}}>{tr(p.sub)}</p>
                   </div>
                   <div style={{padding:"24px 30px"}}>
                     <ul style={{listStyle:"none",display:"flex",flexDirection:"column",gap:9}}>
                       {p.items.map(item=>(
                         <li key={item} style={{display:"flex",gap:10,alignItems:"flex-start",fontSize:".85rem",color:BODY,lineHeight:1.5}}>
                           <span style={{flexShrink:0,width:5,height:5,background:G,borderRadius:"50%",marginTop:7}}/>
-                          {item}
+                          {tr(item)}
                         </li>
                       ))}
                     </ul>
@@ -584,14 +516,14 @@ export default function ServicesPage() {
       <section id="contact" className="sp" style={{padding:"110px 48px",background:"var(--sp-page)",textAlign:"center",position:"relative",zIndex:1,overflow:"hidden"}}>
         <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:600,height:600,background:"radial-gradient(circle,rgba(232,151,26,.07) 0%,transparent 65%)",pointerEvents:"none"}}/>
         <Rev>
-          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"clamp(2.6rem,5.4vw,4.8rem)",textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20,position:"relative"}}>
-            READY TO PROTECT<br/><span style={{color:G}}>WHAT MATTERS?</span>
+          <h2 style={{fontFamily:"'Inter',sans-serif",fontWeight:900,fontSize:"2rem",textTransform:"uppercase",color:"var(--sp-text)",marginBottom:20,position:"relative"}}>
+            {tr("READY TO PROTECT")}<br/><span style={{color:G}}>{tr("WHAT MATTERS?")}</span>
           </h2>
           <p style={{fontFamily:"'Inter',sans-serif",fontSize:".95rem",color:BODY,lineHeight:1.75,maxWidth:520,margin:"0 auto 40px",position:"relative"}}>
-            Whether you need digital forensics, fraud investigation, or document validation — our certified team delivers court-admissible solutions when it matters most.
+            {tr("Whether you need digital forensics, fraud investigation, or document validation — our certified team delivers court-admissible solutions when it matters most.")}
           </p>
           <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap",position:"relative"}}>
-            <a href="mailto:hello@forfrasolutions.com" className="bgold">Email Us</a>
+            <a href="mailto:hello@forfrasolutions.com" className="bgold">{tr("Email Us")}</a>
             <a href="tel:+919711015337" className="bgh">+91 97110 15337</a>
           </div>
         </Rev>
@@ -599,7 +531,6 @@ export default function ServicesPage() {
 
       {/* FOOTER */}
       <footer style={{background:"var(--sp-footer)",borderTop:`1px solid ${BORD}`,padding:"28px 48px",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12,position:"relative",zIndex:1}}>
-        <p style={{color:"rgba(var(--sp-fg-rgb), .45)",fontSize:".8rem"}}>© 2025 Forfra Solutions. ISO 9001:2015 &amp; ISO 27001:2022 Certified.</p>
         <div style={{display:"flex",gap:24}}>
           <a href="mailto:hello@forfrasolutions.com" className="flink">hello@forfrasolutions.com</a>
           <a href="https://www.forfrasolutions.com" target="_blank" rel="noopener noreferrer" className="flink">forfrasolutions.com</a>

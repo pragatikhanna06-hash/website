@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Siren, ShieldAlert, AlertTriangle, Send, Loader2, ExternalLink,
   CheckCircle2, User, Phone, Mail, MapPin, Calendar, FileText,
-  ArrowLeft, Info, PhoneCall, Monitor, Banknote, ShoppingBag,
+  Info, PhoneCall, Monitor, Banknote, ShoppingBag,
   Building2, Landmark, UserSearch, RotateCcw, Radar,
 } from "lucide-react";
 import { sendFormToWhatsApp } from "../utils/whatsapp";
@@ -53,6 +53,8 @@ const CATEGORIES = [
       { name: "Cyber Crime Helpline: 1930", url: "https://cybercrime.gov.in/" },
       { name: "Cyber & Multi Agency Centre (CyMAC), MHA", url: "https://www.mha.gov.in/en/commoncontent/cyber-multi-agency-centre-cymac" },
       { name: "CERT-In (Indian Computer Emergency Response Team)", url: "https://www.cert-in.org.in/" },
+      { name: "StopNCII.org — Morphing / Deepfake Photo & Video Removal", url: "https://stopncii.org/" },
+      { name: "Deepfake Video & Photo Reporting (National Cyber Crime Portal)", url: "https://cybercrime.gov.in/" },
     ],
   },
   {
@@ -75,7 +77,7 @@ const CATEGORIES = [
     govLinks: [
       { name: "RBI Sachet Portal (unregulated schemes & fraud)", url: "https://sachet.rbi.org.in/" },
       { name: "RBI Complaint Management System (Banking Ombudsman)", url: "https://cms.rbi.org.in/" },
-      { name: "SEBI SCORES (investment & securities fraud)", url: "https://scores.sebi.gov.in/" },
+      { name: "SEBI SCORES (investment & securities fraud)", url: "https://scores.gov.in/" },
       { name: "IRDAI Bima Bharosa (insurance complaints)", url: "https://bimabharosa.irdai.gov.in/" },
     ],
   },
@@ -88,7 +90,7 @@ const CATEGORIES = [
       { name: "National Consumer Helpline", url: "https://consumerhelpline.gov.in/" },
       { name: "National Consumer Disputes Redressal Commission", url: "https://ncdrc.nic.in/" },
       { name: "e-Daakhil (file a consumer case online)", url: "https://edaakhil.nic.in/" },
-      { name: "State Consumer Commission Directory", url: "https://ncdrc.nic.in/statelist.html" },
+      { name: "State Consumer Commission Directory", url: "https://ncdrc.nic.in/" },
     ],
   },
   {
@@ -122,41 +124,41 @@ const CATEGORIES = [
     govLinks: [
       { name: "Digital Police Portal (national)", url: "https://digitalpolice.gov.in/" },
       { name: "Andhra Pradesh Police", url: "https://www.appolice.gov.in/" },
-      { name: "Arunachal Pradesh Police", url: "http://arunpol.nic.in/" },
+      { name: "Arunachal Pradesh Police", url: "https://arunpol.nic.in/" },
       { name: "Assam Police", url: "https://police.assam.gov.in/" },
-      { name: "Bihar Police", url: "http://biharpolice.bih.nic.in/" },
-      { name: "Chhattisgarh Police", url: "http://cgpolice.gov.in/" },
+      { name: "Bihar Police", url: "https://biharpolice.bih.nic.in/" },
+      { name: "Chhattisgarh Police", url: "https://cgpolice.gov.in/" },
       { name: "Goa Police", url: "https://citizen.goapolice.gov.in/" },
       { name: "Gujarat Police", url: "https://police.gujarat.gov.in/" },
-      { name: "Haryana Police", url: "http://haryanapoliceonline.gov.in/" },
-      { name: "Himachal Pradesh Police", url: "http://citizenportal.hppolice.gov.in:8080/citizen/login.htm" },
-      { name: "Jharkhand Police", url: "http://www.jhpolice.gov.in/" },
+      { name: "Haryana Police", url: "https://haryanapoliceonline.gov.in/" },
+      { name: "Himachal Pradesh Police", url: "https://citizenportal.hppolice.gov.in:8080/citizen/login.htm" },
+      { name: "Jharkhand Police", url: "https://www.jhpolice.gov.in/" },
       { name: "Karnataka State Police", url: "https://www.ksp.gov.in/" },
-      { name: "Kerala Police", url: "http://keralapolice.org/" },
-      { name: "Madhya Pradesh Police", url: "http://www.mppolice.gov.in/en" },
-      { name: "Maharashtra Police", url: "http://mahapolice.gov.in/" },
-      { name: "Manipur Police", url: "http://www.manipurpolice.gov.in/" },
-      { name: "Meghalaya Police", url: "http://megpolice.gov.in/" },
+      { name: "Kerala Police", url: "https://keralapolice.org/" },
+      { name: "Madhya Pradesh Police", url: "https://www.mppolice.gov.in/en" },
+      { name: "Maharashtra Police", url: "https://mahapolice.gov.in/" },
+      { name: "Manipur Police", url: "https://www.manipurpolice.gov.in/" },
+      { name: "Meghalaya Police", url: "https://megpolice.gov.in/" },
       { name: "Mizoram Police", url: "https://police.mizoram.gov.in/" },
-      { name: "Nagaland Police", url: "http://nagapol.gov.in/" },
-      { name: "Odisha Police", url: "http://www.odishapolice.gov.in/" },
-      { name: "Punjab Police", url: "http://www.punjabpolice.gov.in/" },
-      { name: "Rajasthan Police", url: "http://police.rajasthan.gov.in/" },
-      { name: "Sikkim Police", url: "http://sikkimpolice.nic.in/" },
-      { name: "Tamil Nadu Police", url: "http://www.tnpolice.gov.in/" },
-      { name: "Telangana Police", url: "http://www.telangana.gov.in/" },
-      { name: "Tripura Police", url: "http://www.tripurapolice.gov.in/" },
+      { name: "Nagaland Police", url: "https://nagapol.gov.in/" },
+      { name: "Odisha Police", url: "https://www.odishapolice.gov.in/" },
+      { name: "Punjab Police", url: "https://www.punjabpolice.gov.in/" },
+      { name: "Rajasthan Police", url: "https://police.rajasthan.gov.in/" },
+      { name: "Sikkim Police", url: "https://sikkimpolice.nic.in/" },
+      { name: "Tamil Nadu Police", url: "https://www.tnpolice.gov.in/" },
+      { name: "Telangana Police", url: "https://www.telangana.gov.in/" },
+      { name: "Tripura Police", url: "https://www.tripurapolice.gov.in/" },
       { name: "Uttarakhand Police", url: "https://uttarakhandpolice.uk.gov.in/" },
       { name: "Uttar Pradesh Police", url: "https://uppolice.gov.in/" },
-      { name: "West Bengal Police", url: "http://wbpolice.gov.in/" },
-      { name: "Andaman & Nicobar Police", url: "http://police.andaman.gov.in/index.php/en" },
-      { name: "Chandigarh Police", url: "http://chandigarhpolice.gov.in/" },
-      { name: "Delhi Police", url: "http://delhipolice.nic.in/" },
+      { name: "West Bengal Police", url: "https://wbpolice.gov.in/" },
+      { name: "Andaman & Nicobar Police", url: "https://police.andaman.gov.in/index.php/en" },
+      { name: "Chandigarh Police", url: "https://chandigarhpolice.gov.in/" },
+      { name: "Delhi Police", url: "https://delhipolice.gov.in/" },
       { name: "Dadra & Nagar Haveli and Daman & Diu Police", url: "https://police.ddd.gov.in/" },
       { name: "Lakshadweep Police", url: "https://lakshadweeppolice.gov.in/" },
       { name: "Puducherry Police", url: "https://police.py.gov.in/" },
-      { name: "Jammu & Kashmir Police", url: "http://www.jkpolice.gov.in/" },
-      { name: "Ladakh Police", url: "http://police.ladakh.gov.in/" },
+      { name: "Jammu & Kashmir Police", url: "https://www.jkpolice.gov.in/" },
+      { name: "Ladakh Police", url: "https://police.ladakh.gov.in/" },
     ],
   },
   {
@@ -168,6 +170,11 @@ const CATEGORIES = [
       { name: "Track the Missing Child Portal", url: "https://www.trackthemissingchild.gov.in/" },
       { name: "Digital Police — Missing Person Search", url: "https://digitalpolice.gov.in/" },
       { name: "CHILDLINE India (Helpline: 1098)", url: "https://www.childlineindia.org/" },
+      { name: "Delhi Police", url: "https://delhipolice.gov.in/" },
+      { name: "Delhi Police ZIPNET — Missing Persons", url: "https://zipnet.delhipolice.gov.in/Victims/MissingPersons" },
+      { name: "India.gov.in — Search Missing Person", url: "https://www.india.gov.in/services/details/search-missing-person" },
+      { name: "Khoji — Missing Person Portal", url: "https://khoji.in/" },
+      { name: "Lautna — Missing Person Portal", url: "https://www.lautna.org/" },
     ],
   },
 ];
@@ -399,7 +406,7 @@ export default function ReportCrimePage() {
           margin-bottom: 1.4rem;
         }
         .rc-hero h1 {
-          font-size: clamp(2.6rem, 7vw, 5.2rem);
+          font-size: 2rem;
           line-height: 1.02;
           letter-spacing: 0.01em;
           margin-bottom: 1.2rem;
@@ -460,7 +467,7 @@ export default function ReportCrimePage() {
           padding: 2.6rem 2.2rem;
         }
         .rc-form-head { margin-bottom: 2rem; text-align: center; }
-        .rc-form-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 0.6rem; }
+        .rc-form-head h2 { font-size: clamp(1.8rem, 4vw, 2rem); margin-bottom: 0.6rem; }
         .rc-form-head p { color: rgba(51,64,79,0.75); font-size: 0.94rem; }
 
         .rc-grid {
@@ -535,7 +542,7 @@ export default function ReportCrimePage() {
           display: flex; align-items: center; justify-content: center;
           color: ${GOLD};
         }
-        .rc-processing h3 { font-size: 2.05rem; margin-bottom: 0.6rem; }
+        .rc-processing h3 { font-size: 2rem; margin-bottom: 0.6rem; }
         .rc-processing p { color: rgba(51,64,79,0.75); font-size: 0.95rem; min-height: 1.4em; }
 
         /* ---------- RESULTS ---------- */
@@ -552,7 +559,7 @@ export default function ReportCrimePage() {
           color: #4ade80;
           margin-bottom: 1.2rem;
         }
-        .rc-results-head h2 { font-size: clamp(1.9rem, 4.2vw, 2.8rem); margin-bottom: 0.6rem; }
+        .rc-results-head h2 { font-size: clamp(1.9rem, 4.2vw, 2rem); margin-bottom: 0.6rem; }
         .rc-results-head p { color: rgba(51,64,79,0.75); max-width: 620px; margin: 0 auto; font-size: 0.96rem; line-height: 1.65; }
 
         .rc-disclaimer {
@@ -653,14 +660,11 @@ export default function ReportCrimePage() {
 
       {/* TOP BAR */}
       <div className="rc-topbar">
-        <Link to="/" className="rc-back">
-          <ArrowLeft size={16} /> {tr("Back")}
-        </Link>
+        <div className="rc-topbar-brand">
+          <img src={logo} alt="Forfra Solutions" className="brand-logo" />
+          FORFRA <span>SOLUTIONS</span>
+        </div>
         <div className="rc-topbar-right">
-          <div className="rc-topbar-brand">
-            <img src={logo} alt="Forfra Solutions" className="brand-logo" />
-            FORFRA <span>SOLUTIONS</span>
-          </div>
           <LangToggle />
         </div>
       </div>

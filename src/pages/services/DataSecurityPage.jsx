@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  ShieldCheck, Scale, Landmark, Briefcase, ArrowRight, CheckCircle2, Quote, Building2, Lock, KeyRound, Fingerprint, HardDrive,
+  ShieldCheck, Scale, Landmark, Briefcase, CheckCircle2, Quote, Building2, Lock, KeyRound, Fingerprint, HardDrive, Mail, Phone,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
-import LanguageToggle from "../LanguageToggle";
-import logo from "../../assets/logo.png";
+import Navbar from "../../SiteNavbar";
 
 /* ----------------------------------------------------------------------
    FORFRA SOLUTIONS — DATA SECURITY PAGE
@@ -167,13 +165,11 @@ export default function DataSecurityPage() {
   const CLIENT_TYPES = CLIENT_TYPES_META.map((m, i) => ({ ...m, label: ds.clientTypes[i] }));
   const WHY_POINTS = ds.whyPoints;
 
-  const [navSolid, setNavSolid] = useState(false);
   const [scrollPct, setScrollPct] = useState(0);
   const SignatureIcon = Lock;
 
   useEffect(() => {
     const onScroll = () => {
-      setNavSolid(window.scrollY > 40);
       const h = document.documentElement;
       const pct = (h.scrollTop || document.body.scrollTop) / ((h.scrollHeight || document.body.scrollHeight) - h.clientHeight);
       setScrollPct(Math.min(1, Math.max(0, pct || 0)) * 100);
@@ -205,44 +201,6 @@ export default function DataSecurityPage() {
           font-family: 'Fraunces', Georgia, serif;
         }
 
-        /* ---------- NAV ---------- */
-        .fa-nav {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 18px 5vw;
-          transition: background .4s ease, padding .4s ease, box-shadow .4s ease;
-          background: transparent;
-        }
-        .fa-nav.solid {
-          background: rgba(234,245,253,0.92);
-          backdrop-filter: blur(10px);
-          padding: 12px 5vw;
-          box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-        }
-        .fa-nav-brand { display:flex; align-items:center; gap:10px; color:#0D2F7F; font-weight:700; letter-spacing:0.04em; }
-        .fa-nav-logo {
-          width:34px; height:34px; border-radius:50%;
-          object-fit: cover; flex-shrink: 0;
-        }
-        .fa-nav-links { display:flex; gap:28px; }
-        .fa-nav-links a {
-          color: rgba(13,47,127,0.75); text-decoration:none; font-size:13.5px;
-          letter-spacing:0.03em; font-weight:500; position:relative; padding-bottom:4px;
-          transition: color .25s ease;
-        }
-        .fa-nav-links a::after {
-          content:''; position:absolute; left:0; bottom:0; width:0; height:1.5px;
-          background: var(--gold); transition: width .3s ease;
-        }
-        .fa-nav-links a:hover { color:#0D2F7F; }
-        .fa-nav-links a:hover::after { width:100%; }
-        .fa-nav-cta {
-          background: var(--gold); color: var(--navy-deep); border:none;
-          padding: 9px 18px; border-radius: 4px; font-weight:700; font-size:13px;
-          letter-spacing:0.02em; cursor:pointer; transition: transform .25s ease, box-shadow .25s ease;
-        }
-        .fa-nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216,169,59,0.35); }
-        @media (max-width: 880px){ .fa-nav-links{ display:none; } }
 
         /* ---------- HERO ---------- */
         .fa-hero {
@@ -319,7 +277,7 @@ export default function DataSecurityPage() {
           text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:14px;
         }
         .fa-kicker::before { content:''; width:28px; height:2px; background: var(--gold); display:inline-block; }
-        .fa-h2 { font-size: clamp(1.9rem, 3.2vw, 2.7rem); font-weight:600; color: var(--navy-deep); max-width:760px; margin:0 0 18px; line-height:1.15; }
+        .fa-h2 { font-size: clamp(1.9rem, 3.2vw, 2rem); font-weight:600; color: var(--navy-deep); max-width:760px; margin:0 0 18px; line-height:1.15; }
         .fa-sub { color:#5a6072; font-size:1.02rem; line-height:1.75; max-width:640px; }
 
         /* ---------- INTRO / DEFINITION PANEL ---------- */
@@ -390,7 +348,7 @@ export default function DataSecurityPage() {
           background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 18px);
         }
         .fa-ind-head { position:relative; z-index:1; }
-        .fa-ind-head .fa-kicker { color: var(--gold-soft); }
+        .fa-ind-head .fa-kicker { color: #0D2F7F; font-size: 1.45rem !important; }
         .fa-ind-head .fa-h2 { color:#0D2F7F; }
         .fa-ind-head .fa-sub { color: rgba(51,64,79,0.7); }
         .fa-ind-grid {
@@ -419,7 +377,7 @@ export default function DataSecurityPage() {
           background: radial-gradient(circle, rgba(216,169,59,0.22), transparent 70%);
           right:-100px; top:-120px;
         }
-        .fa-cta h3 { color:#0D2F7F; font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin:0 0 10px; max-width:480px; position:relative; z-index:1;}
+        .fa-cta h3 { color:#0D2F7F; font-size: clamp(1.5rem, 2.6vw, 2rem); margin:0 0 10px; max-width:480px; position:relative; z-index:1;}
         .fa-cta p { color: rgba(51,64,79,0.75); margin:0; max-width:440px; position:relative; z-index:1; }
         .fa-cta-actions { display:flex; gap:14px; flex-wrap:wrap; position:relative; z-index:1; }
         .fa-cta-contact { display:flex; flex-direction:column; gap:8px; color: rgba(51,64,79,0.9); font-size:0.92rem; }
@@ -432,7 +390,7 @@ export default function DataSecurityPage() {
 
         /* ---------- SCROLL PROGRESS ---------- */
         .fa-progress {
-          position: fixed; top:0; left:0; right:0; height:3px; z-index:60;
+          position: fixed; top:0; left:0; right:0; height:3px; z-index:1001;
           background: linear-gradient(90deg, var(--gold), var(--gold-soft));
           transform-origin: left; transform: scaleX(0);
           box-shadow: 0 0 12px rgba(216,169,59,0.6);
@@ -581,23 +539,7 @@ export default function DataSecurityPage() {
       {/* SCROLL PROGRESS */}
       <div className="fa-progress" style={{ transform: `scaleX(${scrollPct / 100})` }} />
 
-      {/* NAV */}
-      <nav className={`fa-nav ${navSolid ? "solid" : ""}`}>
-        <Link to="/" className="fa-nav-brand" style={{ textDecoration: "none" }}>
-          <img src={logo} alt="Forfra Solutions" className="brand-logo" />
-          FORFRA SOLUTIONS
-        </Link>
-        <div className="fa-nav-links" style={{ alignItems: "center" }}>
-          <Link to="/">{sc.navHome}</Link>
-          <a href="#about">{sc.navAbout}</a>
-          <a href="#services">{sc.navServices}</a>
-          <a href="#why">{sc.navWhy}</a>
-          <a href="#clients">{sc.navClients}</a>
-          <a href="#contact">{sc.navContact}</a>
-          <LanguageToggle />
-        </div>
-        <Link to="/" className="fa-nav-cta">{ds.navCta}</Link>
-      </nav>
+      <Navbar showHome />
 
       {/* HERO */}
       <header className="fa-hero">
@@ -618,11 +560,6 @@ export default function DataSecurityPage() {
         <p className="lede">
           {ds.heroLede}
         </p>
-        <div className="fa-hero-actions">
-          <a href="mailto:hello@forfrasolutions.com" className="fa-btn-primary">
-            {ds.heroBtnPrimary} <ArrowRight size={17} />
-          </a>
-        </div>
         <div className="fa-hero-stats">
           <StatCounter value={2} suffix="" label={ds.stats[0].label} />
           <StatCounter value={6} suffix="" label={ds.stats[1].label} />
@@ -751,9 +688,11 @@ export default function DataSecurityPage() {
             </p>
           </div>
           <div className="fa-cta-actions">
-            <a href="mailto:hello@forfrasolutions.com" className="fa-btn-primary">
-              {ds.ctaBtn} <ArrowRight size={17} />
-            </a>
+            <div className="fa-cta-contact">
+              <a href="mailto:hello@forfrasolutions.com"><Mail size={16} /> hello@forfrasolutions.com</a>
+              <a href="tel:+919711015337"><Phone size={16} /> +91 97110 15337</a>
+              <a href="tel:+918982307608"><Phone size={16} /> +91 89823 07608</a>
+            </div>
           </div>
         </section>
       </Reveal>

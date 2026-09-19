@@ -18,7 +18,6 @@ export default function BookLawyerPage() {
             <div className="brand-name">Nyay<span>Shield</span></div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <Link className="back-link" to="/">{tr("← Back")}</Link>
             <LangToggle />
           </div>
         </div>
