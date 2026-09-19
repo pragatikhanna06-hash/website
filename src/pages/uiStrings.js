@@ -548,6 +548,8 @@ export const uiStrings = {
   "justice": "न्याय",
   "— united.": "— एक साथ।",
   "Forfra Solutions Brochure": "Forfra Solutions ब्रोशर",
+  "Brochure": "ब्रोशर",
+  "Product": "प्रोडक्ट",
   "Who We Are?": "हम कौन हैं?",
   "Forfra Solutions is a multidisciplinary hub of forensic, cyber, and risk management experts with experience across Income Tax, GST, CBI, Police, ED, and other agencies.": "Forfra Solutions फॉरेंसिक, साइबर और जोखिम प्रबंधन विशेषज्ञों का एक बहु-विषयक केंद्र है, जिनके पास आयकर, GST, CBI, पुलिस, ED और अन्य एजेंसियों का अनुभव है।",
   "We deliver trusted solutions in digital forensics, fraud investigation, data security, and forensic education.": "हम डिजिटल फॉरेंसिक्स, धोखाधड़ी जांच, डेटा सुरक्षा और फॉरेंसिक शिक्षा में भरोसेमंद समाधान प्रदान करते हैं।",

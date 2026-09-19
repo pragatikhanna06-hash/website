@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 import { useLanguage } from "./pages/LanguageContext";
 import logo from "./assets/logo.png";
+// Bundled by Vite (lives in src/assets) so the URL is always valid — no dependency on
+// the public/ folder or on the host's SPA fallback, which would serve the homepage instead.
+import brochurePdf from "./assets/forfra-solutions-brochure.pdf";
 
 /* ══════════════════════════════════════════════════════════════════
    SHARED SITE NAVBAR
@@ -147,6 +150,18 @@ export default function Navbar({ showHome = false, hideServices = false }) {
             </a>
           </li>
         ))}
+
+        {/* Product link — opens the company brochure (PDF) in a new tab */}
+        <li>
+          <a
+            href={brochurePdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+          >
+            {tr("Product")}
+          </a>
+        </li>
 
         <li>
           <a

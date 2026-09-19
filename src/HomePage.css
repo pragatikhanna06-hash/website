@@ -550,6 +550,22 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   line-height: 1.15 !important;
 }
 
+/* ── homepage hero (matches the approved design) ─────────────────────
+   Badge sits on its own line above a large, two-line heading; the
+   subtitle is not shown. Scoped to .hero--nyay so the standalone
+   NyayShield page keeps its own sizing. */
+.hero--nyay .quick-actions-head .eyebrow {
+  display: flex !important;
+  width: fit-content;
+  margin: 0 auto 16px !important;
+}
+.hero--nyay .quick-actions-head h1 {
+  font-size: clamp(30px, 7.5vw, 3.15rem) !important;
+  line-height: 1.15 !important;
+  white-space: normal !important;
+  padding-bottom: 16px;
+}
+
 /* controls that sit next to the hamburger on small screens */
 .navbar-mobile-controls {
   display: none;
@@ -1719,6 +1735,87 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   .cap-panels { min-height: auto; padding: 1.8rem 1.6rem; }
   .cap-panel { position: relative; transform: none; }
   .cap-panel:not(.cap-panel--active) { display: none; }
+}
+
+/* ── navbar: collapse to the hamburger menu on small laptops / tablets ──
+   With the extra Product link there isn't enough room for every link
+   and button in one row below ~1150px (Apply Now / Contact Us would wrap
+   and the language toggle would be pushed off-screen), so the compact
+   menu starts here instead of at 900px. Only navbar rules live in this
+   block; the rest of the page keeps its own 900px breakpoint below. */
+@media (max-width: 1150px) {
+  .navbar-inner { padding: 0 1rem; }
+
+  .brand-logo { width: 26px; height: 26px; }
+  .brand-name, .brand-sub { font-size: 0.98rem; letter-spacing: 0.02em; }
+  .navbar-brand { gap: 0.4rem; }
+
+  .navbar-mobile-controls { gap: 0.5rem; }
+  .lang-toggle--compact {
+    padding: 0.24rem 0.5rem;
+    font-size: 0.68rem;
+    gap: 0.22rem;
+  }
+  .hamburger { width: 34px; height: 34px; }
+  .hamburger span { width: 19px; }
+
+  .navbar-links {
+    margin-left: 0;
+    padding-left: 0;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: rgba(var(--bg-rgb), 0.98);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(232,151,26,0.15);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--trans-slow), padding var(--trans-slow);
+  }
+  .navbar-links::before { display: none; }
+  .navbar-links--open { max-height: 560px; padding: 0.5rem 0 1.25rem; }
+  .navbar-links li { border-bottom: 1px solid rgba(var(--fg-rgb), 0.06); }
+  .navbar-links li:last-child,
+  .navbar-links li:nth-last-child(2) { border-bottom: none; }
+  .navbar-links a {
+    display: block;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  .navbar-links li:not(:last-child):not(:nth-last-child(2)) > a::after { display: none; }
+
+  .nav-cta {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 0.85rem auto 0;
+    text-align: center;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  .contact-dd-wrap {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 0.85rem auto 0;
+  }
+  .contact-dd-trigger { width: 100%; }
+  .contact-dd-menu {
+    position: static;
+    margin-top: 8px;
+    box-shadow: none;
+    border: 1px solid rgba(var(--fg-rgb), 0.08);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .navbar-lang-item { display: none; }
+
+  .hamburger { display: flex; }
+  .navbar-mobile-controls { display: flex; }
 }
 
 /* below this width, the nav collapses to the hamburger menu */
