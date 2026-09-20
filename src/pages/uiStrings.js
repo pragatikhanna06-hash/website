@@ -313,8 +313,8 @@ export const uiStrings = {
   "Here are the official government authorities for every major crime category. Find the one that matches your situation.":
     "यहाँ हर प्रमुख अपराध श्रेणी के लिए आधिकारिक सरकारी प्राधिकरण हैं। अपनी स्थिति से मेल खाने वाला चुनें।",
   "This is not an FIR filing system.": "यह एक एफआईआर दाखिल करने की प्रणाली नहीं है।",
-  "The details you shared were sent to our team over WhatsApp so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call":
-    "आपने जो विवरण साझा किए, वे हमारी टीम को व्हाट्सएप पर भेज दिए गए हैं ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थिति के लिए, कॉल करें",
+  "The details you shared were sent to our team by email so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call":
+    "आपने जो विवरण साझा किए, वे हमारी टीम को ईमेल पर भेज दिए गए हैं ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थिति के लिए, कॉल करें",
   "(India's national emergency number) immediately, or visit your nearest police station.":
     "(भारत का राष्ट्रीय आपातकालीन नंबर) तुरंत, या अपने नज़दीकी पुलिस स्टेशन पर जाएं।",
   Recommended: "अनुशंसित",
@@ -324,6 +324,9 @@ export const uiStrings = {
 
   // ReportCrimePage.jsx — CATEGORIES (title / desc)
   "Cyber Crime": "साइबर अपराध",
+  "Cyber Crime & Deepfake": "साइबर अपराध और डीपफेक",
+  "Hacking, online fraud, phishing, identity theft, deepfakes or morphed photos & videos, social media harassment, or any internet-based crime.":
+    "हैकिंग, ऑनलाइन धोखाधड़ी, फ़िशिंग, पहचान की चोरी, डीपफेक या मॉर्फ़ की गई फ़ोटो और वीडियो, सोशल मीडिया उत्पीड़न, या कोई भी इंटरनेट-आधारित अपराध।",
   "Hacking, online fraud, phishing, identity theft, social media harassment, or any internet-based crime.":
     "हैकिंग, ऑनलाइन धोखाधड़ी, फ़िशिंग, पहचान की चोरी, सोशल मीडिया उत्पीड़न, या कोई भी इंटरनेट-आधारित अपराध।",
   "Women's Safety & Harassment": "महिला सुरक्षा और उत्पीड़न",
@@ -674,6 +677,10 @@ export const uiStrings = {
   "Call": "कॉल करें",
   "FIR Number": "FIR नंबर",
   "Submit your details through Whatsapp": "अपनी जानकारी WhatsApp के माध्यम से भेजें",
+  "Submit your details": "अपना विवरण जमा करें",
+  "Sending…": "भेजा जा रहा है…",
+  "We couldn't send your details right now. Please try again in a moment.": "हम अभी आपका विवरण नहीं भेज पाए। कृपया थोड़ी देर बाद फिर कोशिश करें।",
+  "Or send them by email instead": "या इसके बजाय ईमेल से भेजें",
   "A criminal defence lawyer has been assigned to your case": "आपके केस के लिए एक आपराधिक बचाव वकील नियुक्त किया गया है",
   "A lawyer has been matched to your case": "आपके केस के लिए एक वकील मिला दिया गया है",
   "Evidence fades fast — ": "सबूत तेज़ी से मिट जाते हैं — ",

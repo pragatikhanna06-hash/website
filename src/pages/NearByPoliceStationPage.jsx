@@ -4,6 +4,7 @@ import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
 import { Phone, MapPin } from "lucide-react";
 import "./NearByPoliceStationPage.css";
+import ForfraBrand from "./ForfraBrand";
 
 /* NOTE: This is intentionally static, illustrative data — no live
    geolocation, no third-party maps API, no tracking. Swap STATIONS
@@ -24,13 +25,7 @@ export default function NearbyPoliceStationPage() {
     <div className="home-root">
       <nav className="topbar">
         <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-          <div className="brand">
-            <svg className="brand-mark" viewBox="0 0 48 48" fill="none">
-              <path d="M24 4L6 12v10c0 11 7.6 19.6 18 22 10.4-2.4 18-11 18-22V12L24 4z" stroke="#c9a227" strokeWidth="2" fill="rgba(201,162,39,0.08)" />
-              <path d="M24 14v20M17 20l7-4 7 4M17 20c0 3-2 6-4 6h8c-2 0-4-3-4-6M31 20c0 3-2 6-4 6h8c-2 0-4-3-4-6" stroke="#c9a227" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <div className="brand-name">Nyay<span>Shield</span></div>
-          </div>
+          <ForfraBrand />
           <LangToggle />
         </div>
       </nav>

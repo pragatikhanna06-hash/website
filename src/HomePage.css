@@ -302,6 +302,13 @@ h1, h2, h3 { color: var(--heading); font-family: var(--ff-display); }
   flex-shrink: 0;
   filter: drop-shadow(0 2px 6px rgba(232,151,26,0.25));
 }
+/* The site theme hides every <img>; the Forfra logo in the navbar must
+   always show, so this is pinned with a more specific selector. */
+.navbar .navbar-brand .brand-logo {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 
 .brand-name {
   font-family: var(--ff-nav);

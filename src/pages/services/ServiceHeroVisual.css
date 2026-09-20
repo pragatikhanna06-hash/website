@@ -1,0 +1,112 @@
+/* ── Service pages: professional hero visual (replaces the radar circles) ──
+   Desktop  : framed photo pinned to the right of the hero, text column is
+              narrowed so nothing runs underneath it.
+   ≤ 1080px : the visual drops below the hero text as a wide banner.        */
+
+header.fa-hero { --fa-hv-w: clamp(300px, 30vw, 440px); }
+
+.fa-hv {
+  position: absolute;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--fa-hv-w);
+  aspect-ratio: 440 / 528;
+  z-index: 1;
+  animation: fa-hv-in 0.9s 0.2s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* brand-gold outline, offset behind the photo */
+.fa-hv::before {
+  content: "";
+  position: absolute;
+  inset: 18px -18px -18px 18px;
+  border: 2px solid rgba(245, 180, 0, 0.7);
+  border-radius: 22px;
+  z-index: 0;
+}
+
+/* soft navy dot-grid accent, top-left */
+.fa-hv::after {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: -26px;
+  width: 110px;
+  height: 110px;
+  background-image: radial-gradient(rgba(13, 47, 127, 0.28) 1.6px, transparent 1.7px);
+  background-size: 14px 14px;
+  z-index: 0;
+}
+
+.fa-hv-art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0D2F7F;
+  box-shadow:
+    0 30px 60px -14px rgba(13, 47, 127, 0.38),
+    0 8px 22px rgba(13, 47, 127, 0.14);
+}
+.fa-hv-art svg { display: block; width: 100%; height: 100%; }
+
+/* service icon badge, overlapping the photo's lower-left edge */
+.fa-hv-badge {
+  position: absolute;
+  z-index: 2;
+  left: -24px;
+  bottom: 40px;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #08215C;
+  color: #F5B400;
+  border: 3px solid #fff;
+  box-shadow: 0 14px 28px rgba(8, 33, 92, 0.35);
+}
+
+@keyframes fa-hv-in {
+  from { opacity: 0; transform: translateY(-46%); }
+  to   { opacity: 1; transform: translateY(-50%); }
+}
+
+/* keep the hero text (and the stats rule) clear of the visual */
+@media (min-width: 1081px) {
+  header.fa-hero { padding-right: calc(5vw + var(--fa-hv-w) + 64px); }
+}
+
+/* tablets / phones: visual becomes a banner under the text */
+@media (max-width: 1080px) {
+  .fa-hv {
+    position: relative;
+    order: 10;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: min(100%, 400px);
+    aspect-ratio: 440 / 528;
+    margin: 44px auto 0;
+    animation-name: fa-hv-in-static;
+  }
+  .fa-hv::before { inset: 12px -10px -12px 10px; border-radius: 18px; }
+  .fa-hv::after { left: -14px; top: -14px; width: 84px; height: 84px; }
+  .fa-hv-art { border-radius: 16px; }
+  .fa-hv-badge { left: 14px; bottom: -22px; width: 50px; height: 50px; border-radius: 14px; }
+  @keyframes fa-hv-in-static {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+@media (max-width: 480px) {
+  .fa-hv { margin-top: 36px; width: min(92%, 400px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-hv { animation: none; }
+}

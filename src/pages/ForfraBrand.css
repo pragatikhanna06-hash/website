@@ -1,0 +1,31 @@
+/* Forfra Solutions brand in NyayShield top bars */
+.fsb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: #23262B;
+  -webkit-tap-highlight-color: transparent;
+}
+/* the site theme hides every <img>; this class-level rule re-allows the logo */
+.fsb .fsb-logo {
+  display: inline-block !important;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(232, 151, 26, 0.25));
+}
+.fsb .fsb-name {
+  font-family: "Inter", "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1.28rem;
+  letter-spacing: 0.06em;
+  color: #23262B;
+  line-height: 1;
+}
+@media (max-width: 520px) {
+  .fsb { gap: 0.4rem; }
+  .fsb .fsb-logo { width: 28px; height: 28px; }
+  .fsb .fsb-name { font-size: 1rem; letter-spacing: 0.03em; }
+}

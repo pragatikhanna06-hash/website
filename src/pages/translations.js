@@ -501,7 +501,7 @@ export const translations = {
     reportCrime: {
       backToHome: "Back to Home",
       categories: [
-        { title: "Cyber Crime", desc: "Hacking, online fraud, phishing, identity theft, social media harassment, or any internet-based crime." },
+        { title: "Cyber Crime & Deepfake", desc: "Hacking, online fraud, phishing, identity theft, deepfakes or morphed photos & videos, social media harassment, or any internet-based crime." },
         { title: "Women's Safety & Harassment", desc: "Harassment, domestic violence, stalking, or any crime against women." },
         { title: "Financial & Banking Fraud", desc: "Unauthorised transactions, loan scams, UPI fraud, or suspicious banking activity." },
         { title: "Consumer Fraud", desc: "Fake products, defective goods, unfair trade practices, or e-commerce scams." },
@@ -559,7 +559,7 @@ export const translations = {
         matchedSuffix: "case. We've highlighted the right authority below — you can also browse all categories.",
         noMatch: "Here are the official government authorities for every major crime category. Find the one that matches your situation.",
         disclaimerBold: "This is not an FIR filing system.",
-        disclaimerRest: "The details you shared were sent to our team over WhatsApp so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call",
+        disclaimerRest: "The details you shared were sent to our team by email so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call",
         emergencyNumber: "112",
         disclaimerEnd: "(India's national emergency number) immediately, or visit your nearest police station.",
         recommended: "Recommended",
@@ -1420,7 +1420,7 @@ export const translations = {
     reportCrime: {
       backToHome: "होम पर वापस जाएँ",
       categories: [
-        { title: "साइबर अपराध", desc: "हैकिंग, ऑनलाइन धोखाधड़ी, फ़िशिंग, पहचान की चोरी, सोशल मीडिया उत्पीड़न, या कोई भी इंटरनेट-आधारित अपराध।" },
+        { title: "साइबर अपराध और डीपफेक", desc: "हैकिंग, ऑनलाइन धोखाधड़ी, फ़िशिंग, पहचान की चोरी, डीपफेक या मॉर्फ़ की गई फ़ोटो और वीडियो, सोशल मीडिया उत्पीड़न, या कोई भी इंटरनेट-आधारित अपराध।" },
         { title: "महिला सुरक्षा और उत्पीड़न", desc: "उत्पीड़न, घरेलू हिंसा, पीछा करना, या महिलाओं के खिलाफ़ कोई भी अपराध।" },
         { title: "वित्तीय और बैंकिंग धोखाधड़ी", desc: "अनधिकृत लेन-देन, ऋण घोटाले, यूपीआई धोखाधड़ी, या संदिग्ध बैंकिंग गतिविधि।" },
         { title: "उपभोक्ता धोखाधड़ी", desc: "नकली उत्पाद, दोषपूर्ण सामान, अनुचित व्यापार प्रथाएं, या ई-कॉमर्स घोटाले।" },
@@ -1478,7 +1478,7 @@ export const translations = {
         matchedSuffix: "केस जैसा लगता है। हमने नीचे सही अथॉरिटी को हाइलाइट किया है — आप सभी श्रेणियां भी ब्राउज़ कर सकते हैं।",
         noMatch: "यहाँ हर प्रमुख अपराध श्रेणी के लिए आधिकारिक सरकारी अथॉरिटी हैं। वह चुनें जो आपकी स्थिति से मेल खाती हो।",
         disclaimerBold: "यह एक एफ़आईआर दाखिल करने की प्रणाली नहीं है।",
-        disclaimerRest: "आपने जो विवरण साझा किए वे हमारी टीम को WhatsApp पर भेजे गए ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थितियों के लिए, तुरंत",
+        disclaimerRest: "आपने जो विवरण साझा किए वे हमारी टीम को ईमेल पर भेजे गए ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थितियों के लिए, तुरंत",
         emergencyNumber: "112",
         disclaimerEnd: "(भारत का राष्ट्रीय आपातकालीन नंबर) पर कॉल करें, या अपने नज़दीकी पुलिस स्टेशन जाएं।",
         recommended: "अनुशंसित",

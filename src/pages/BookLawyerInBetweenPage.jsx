@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import "./BookLawyerInBetweenPage.css";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
-import { sendFormToWhatsApp } from "../utils/whatsapp";
+import { useEmailSubmit } from "../utils/useEmailSubmit";
+import FormSubmitError from "./FormSubmitError";
+import ForfraBrand from "./ForfraBrand";
 
 const LAWYER_POOL = [
   "Adv. R. Menon — Mid-Case Transition Specialist",
@@ -32,9 +34,11 @@ export default function BookLawyerInBetweenPage() {
   const [stage, setStage] = useState("");
   const [caseDesc, setCaseDesc] = useState("");
   const [match, setMatch] = useState(null);
+  const { sending, error, mailto, submit } = useEmailSubmit();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (sending) return;
     // DEMO ONLY — replace with a real matching API call.
     const seed = hashString(email + phone + caseDesc + stage);
     const newMatch = {
@@ -42,9 +46,7 @@ export default function BookLawyerInBetweenPage() {
       etaHours: 3 + (seed % 12),
       bookingId: "NS-MC-" + String(seed % 100000).padStart(5, "0"),
     };
-    setMatch(newMatch);
-
-    sendFormToWhatsApp("Book a Lawyer (Mid-Case) — NyayShield", [
+    const ok = await submit("Book a Lawyer (Mid-Case) — NyayShield", [
       ["Name", name],
       ["Email", email],
       ["Phone Number", phone],
@@ -55,19 +57,14 @@ export default function BookLawyerInBetweenPage() {
       ["Case Description", caseDesc],
       ["Booking ID", newMatch.bookingId],
     ]);
+    if (ok) setMatch(newMatch);
   };
 
   return (
     <div className="home-root">
       <nav className="topbar">
         <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-          <div className="brand">
-            <svg className="brand-mark" viewBox="0 0 48 48" fill="none">
-              <path d="M24 4L6 12v10c0 11 7.6 19.6 18 22 10.4-2.4 18-11 18-22V12L24 4z" stroke="#c9a227" strokeWidth="2" fill="rgba(201,162,39,0.08)" />
-              <path d="M24 14v20M17 20l7-4 7 4M17 20c0 3-2 6-4 6h8c-2 0-4-3-4-6M31 20c0 3-2 6-4 6h8c-2 0-4-3-4-6" stroke="#c9a227" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <div className="brand-name">Nyay<span>Shield</span></div>
-          </div>
+          <ForfraBrand />
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <LangToggle />
           </div>
@@ -123,7 +120,8 @@ export default function BookLawyerInBetweenPage() {
               <label htmlFor="mcdesc">{tr("Briefly Describe the Case")}</label>
               <textarea id="mcdesc" value={caseDesc} onChange={(e) => setCaseDesc(e.target.value)} placeholder={tr("What's the case about, and where does it stand?")} />
             </div>
-            <button type="submit" className="submit-btn gold">{tr("Submit your details through Whatsapp")}</button>
+            <FormSubmitError show={error} mailto={mailto} />
+            <button type="submit" className="submit-btn gold" disabled={sending}>{sending ? tr("Sending…") : tr("Submit your details")}</button>
             <p className="form-note">{tr("Confidential. Free, demo booking flow — no charges, no obligation.")}</p>
           </form>
 

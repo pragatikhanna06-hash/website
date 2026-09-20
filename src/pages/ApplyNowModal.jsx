@@ -153,7 +153,7 @@ export default function ApplyNowModal({ isOpen, onClose }) {
       ["Experience", form.experience],
       ["Message", form.message],
       ["Resume", resumeFile ? `${resumeFile.name} (will be shared separately)` : "Not attached"],
-    ]);
+    ], undefined, { attachments: resumeFile ? [resumeFile] : [] });
 
     setSubmitted(true);
   };

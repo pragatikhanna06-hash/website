@@ -77,6 +77,27 @@ p,
   font-size: 2rem !important;
 }
 
+/* services pages: the "WHY ORGANISATIONS CHOOSE FORFRA" and "WHO WE SERVE"
+   kicker headings must look identical — same size, same colour — on every
+   /services/* page (both sections share .fa-kicker inside .fa-why and
+   .fa-ind-head, so one rule here covers all 8 service pages).
+   The "body" prefix raises specificity so this beats each page's own
+   inline <style> (which is injected later in the document). */
+body .fa-why .fa-kicker,
+body .fa-ind-head .fa-kicker {
+  font-size: 1.45rem !important;
+  color: #0D2F7F !important;
+}
+/* small screens: scale both down together so the long "Why organisations
+   choose Forfra" line wraps to 2 lines instead of 3 — still identical */
+@media (max-width: 640px) {
+  body .fa-why .fa-kicker,
+  body .fa-ind-head .fa-kicker {
+    font-size: 1.05rem !important;
+    letter-spacing: 0.1em !important;
+  }
+}
+
 /* yellow accent for emphasised words / underline bars */
 em, [class*="accent"] {
   color: #F5B400 !important;

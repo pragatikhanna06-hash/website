@@ -6,7 +6,8 @@ import {
   Info, PhoneCall, Monitor, Banknote, ShoppingBag,
   Building2, Landmark, UserSearch, RotateCcw, Radar,
 } from "lucide-react";
-import { sendFormToWhatsApp } from "../utils/whatsapp";
+import { useEmailSubmit } from "../utils/useEmailSubmit";
+import FormSubmitError from "./FormSubmitError";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
 import logo from "../assets/logo.png";
@@ -45,8 +46,8 @@ const PAGE_BG = "#FFFFFF";
 const CATEGORIES = [
   {
     id: "cyber",
-    title: "Cyber Crime",
-    desc: "Hacking, online fraud, phishing, identity theft, social media harassment, or any internet-based crime.",
+    title: "Cyber Crime & Deepfake",
+    desc: "Hacking, online fraud, phishing, identity theft, deepfakes or morphed photos & videos, social media harassment, or any internet-based crime.",
     icon: Monitor,
     govLinks: [
       { name: "National Cyber Crime Reporting Portal", url: "https://cybercrime.gov.in/" },
@@ -230,6 +231,7 @@ const EMPTY_FORM = {
 
 export default function ReportCrimePage() {
   const { tr } = useLanguage();
+  const { sending, error, mailto, submit } = useEmailSubmit();
   const [step, setStep] = useState("intro"); // intro | form | processing | results
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
@@ -273,12 +275,12 @@ export default function ReportCrimePage() {
     return Object.keys(er).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (sending || !validate()) return;
 
     const matchedCategory = CATEGORIES.find((c) => c.id === form.crimeType);
-    sendFormToWhatsApp("New Crime Report — NyayShield", [
+    const ok = await submit("New Crime Report — NyayShield", [
       ["Name", form.name],
       ["Phone", form.phone],
       ["Email", form.email],
@@ -288,7 +290,8 @@ export default function ReportCrimePage() {
       ["Description", form.description],
     ]);
 
-    setStep("processing");
+    // only move on once the email was really accepted; otherwise stay on the form and show the error
+    if (ok) setStep("processing");
   };
 
   const resetAll = () => {
@@ -798,8 +801,9 @@ export default function ReportCrimePage() {
                 </div>
 
                 <div className="rc-submit-row">
-                  <button type="submit" className="rc-btn-primary">
-                    <Send size={17} /> {tr("Submit & Find Authorities")}
+                  <FormSubmitError show={error} mailto={mailto} />
+                  <button type="submit" className="rc-btn-primary" disabled={sending}>
+                    <Send size={17} /> {sending ? tr("Sending…") : tr("Submit & Find Authorities")}
                   </button>
                 </div>
               </form>
@@ -843,7 +847,7 @@ export default function ReportCrimePage() {
               <PhoneCall size={20} />
               <p>
                 <strong>{tr("This is not an FIR filing system.")}</strong>{" "}
-                {tr("The details you shared were sent to our team over WhatsApp so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call")}{" "}
+                {tr("The details you shared were sent to our team by email so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call")}{" "}
                 <strong>112</strong> {tr("(India's national emergency number) immediately, or visit your nearest police station.")}
               </p>
             </Reveal>

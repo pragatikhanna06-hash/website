@@ -6,6 +6,7 @@ import "./pages/NyayShieldPage.css"; // adjust this path to wherever NyayShieldP
 import { useLanguage } from "./pages/LanguageContext";
 import logo from "./assets/logo.png";
 import Navbar from "./SiteNavbar";
+import NyayShieldBadge from "./pages/NyayShieldBadge";
 // useSiteTheme import removed — theme toggle retired, site stays on brochure light theme.
 // All photo imports removed — theme now matches the brochure (no images).
 
@@ -73,7 +74,7 @@ function HeroSection() {
         <section className="quick-actions">
           <div className="wrap">
             <div className="quick-actions-head">
-              <div className="eyebrow" style={{ justifyContent: "center" }}>{t.hero.eyebrow}</div>
+              <NyayShieldBadge label={t.hero.eyebrow} />
               <h1>{t.hero.title}</h1>
             </div>
 

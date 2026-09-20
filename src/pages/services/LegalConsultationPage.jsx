@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
 import Navbar from "../../SiteNavbar";
+import ServiceHeroVisual from "./ServiceHeroVisual";
 
 /* ----------------------------------------------------------------------
    FORFRA SOLUTIONS — LEGAL CONSULTATION PAGE
@@ -108,17 +109,13 @@ const CLIENT_TYPES_META = [
   { icon: Landmark },
 ];
 
-function ScanRadar() {
+function HeroVisual() {
   return (
-    <div className="fa-radar" aria-hidden="true">
-      <div className="fa-radar-ring r1" />
-      <div className="fa-radar-ring r2" />
-      <div className="fa-radar-ring r3" />
-      <div className="fa-radar-sweep" />
-      <div className="fa-radar-core">
-        <Gavel size={20} />
-      </div>
-    </div>
+    <ServiceHeroVisual
+      variant="legal"
+      label="Illustration: scales of justice, gavel and legal document"
+      Icon={Gavel}
+    />
   );
 }
 
@@ -544,16 +541,7 @@ export default function LegalConsultationPage() {
         <div className="fa-hero-grid" />
         <div className="fa-hero-glow" />
         <Particles count={24} />
-        <ScanRadar />
-        <div className="fa-gavel-strike">
-          <div className="fa-gavel-ring" />
-          <svg className="fa-gavel-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M14 13l-7.5 7.5a1.5 1.5 0 01-2.1-2.1L12 11" />
-            <path d="M16.5 5.5l3 3" />
-            <path d="M9.5 12.5l-5-5 4-4 5 5" />
-            <path d="M14.5 7.5l4-4 3 3-4 4z" />
-          </svg>
-        </div>
+        <HeroVisual />
         <h1 className="fa-eyebrow">
           <Scale size={14} className="fa-spin-slow" /> {lc.heroEyebrow}
         </h1>

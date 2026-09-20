@@ -1,3 +1,5 @@
+import { sendFormToEmail } from "./email";
+
 // // ── whatsapp.js ───────────────────────────────────────────────────────────
 // // Sends form submissions to WhatsApp using the free wa.me deep-link — no
 // // backend, no API key, no WhatsApp Business API subscription needed.
@@ -94,7 +96,8 @@ export const WHATSAPP_BUSINESS_NUMBER = "919711015337"; // replace with your rea
 
 /**
  * Builds a WhatsApp deep-link and opens it in a new tab, pre-filled with the
- * submitted form's data.
+ * submitted form's data — and also emails the same data to the business
+ * mail id (BUSINESS_EMAIL in config.js) via ./email.js.
  *
  * @param {string} title - Heading shown at the top of the WhatsApp message,
  *   e.g. "New Report a Crime Submission".
@@ -102,8 +105,15 @@ export const WHATSAPP_BUSINESS_NUMBER = "919711015337"; // replace with your rea
  *   pairs. Empty/undefined values are skipped automatically.
  * @param {string} [number] - Optional override for the destination number,
  *   defaults to WHATSAPP_BUSINESS_NUMBER.
+ * @param {{attachments?: File[]}} [extras] - Optional extras; `attachments`
+ *   are attached to the email copy only (WhatsApp links cannot carry files).
  */
-export function sendFormToWhatsApp(title, fields, number = WHATSAPP_BUSINESS_NUMBER) {
+export function sendFormToWhatsApp(title, fields, number = WHATSAPP_BUSINESS_NUMBER, extras = {}) {
+  // Every submission is ALSO emailed to the business mail id (see ./email.js).
+  // Fire-and-forget: it never blocks or breaks the WhatsApp hand-off below.
+  // extras.attachments — optional File[] (e.g. a resume) to attach to the email.
+  sendFormToEmail(title, fields, extras.attachments);
+
   const lines = [`*${title}*`, ""];
 
   fields.forEach(([label, value]) => {

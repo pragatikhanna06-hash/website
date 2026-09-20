@@ -1,0 +1,20 @@
+/* NyayShield badge: logo mark + navy/gold two-tone wordmark in a pill.
+   Selectors are deliberately more specific than the .home-root .eyebrow
+   pill rules so they win without touching those shared styles. */
+.home-root .eyebrow.ns-badge {
+  gap: 10px;
+  padding: 7px 20px 7px 12px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF6E0 100%);
+  border: 1px solid rgba(232, 151, 26, 0.6);
+  box-shadow: 0 6px 18px rgba(232, 151, 26, 0.18);
+  color: #0D2F7F;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem !important;
+  line-height: 1;
+}
+.ns-badge .ns-badge-mark { flex-shrink: 0; display: block; }
+.ns-badge .ns-badge-word { display: inline-flex; align-items: baseline; gap: 0.4em; }
+.ns-badge .ns-badge-nyay { color: #0D2F7F; }
+.ns-badge .ns-badge-shield { color: #E8971A; }
+/* the old gold dot bullet is replaced by the logo mark */
+.ns-badge::before, .home-root .eyebrow.ns-badge::before { content: none !important; display: none !important; }

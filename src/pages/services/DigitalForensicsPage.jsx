@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
 import Navbar from "../../SiteNavbar";
+import ServiceHeroVisual from "./ServiceHeroVisual";
 
 /* ----------------------------------------------------------------------
    FORFRA SOLUTIONS — DIGITAL FORENSICS PAGE
@@ -108,18 +109,13 @@ const CLIENT_TYPES_META = [
     { icon: UserCheck },
   ];
 
-function ScanRadar() {
-  const Icon = Monitor;
+function HeroVisual() {
   return (
-    <div className="fa-radar" aria-hidden="true">
-      <div className="fa-radar-ring r1" />
-      <div className="fa-radar-ring r2" />
-      <div className="fa-radar-ring r3" />
-      <div className="fa-radar-sweep" />
-      <div className="fa-radar-core">
-        <Icon size={20} />
-      </div>
-    </div>
+    <ServiceHeroVisual
+      variant="digital-forensics"
+      label="Illustration: device hex dump and hashed chain of custody"
+      Icon={Monitor}
+    />
   );
 }
 
@@ -546,11 +542,7 @@ export default function DigitalForensicsPage() {
         <div className="fa-hero-grid" />
         <div className="fa-hero-glow" />
         <Particles count={24} />
-        <ScanRadar />
-        <div className="fa-gavel-strike">
-          <div className="fa-gavel-ring" />
-          <SignatureIcon className="fa-gavel-icon" />
-        </div>
+        <HeroVisual />
         <h1 className="fa-eyebrow">
           <SignatureIcon size={14} className="fa-spin-slow" /> {df.heroEyebrow}
         </h1>

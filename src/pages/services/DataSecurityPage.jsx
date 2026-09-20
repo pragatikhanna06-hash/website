@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
 import Navbar from "../../SiteNavbar";
+import ServiceHeroVisual from "./ServiceHeroVisual";
 
 /* ----------------------------------------------------------------------
    FORFRA SOLUTIONS — DATA SECURITY PAGE
@@ -108,18 +109,13 @@ const CLIENT_TYPES_META = [
   { icon: HardDrive },
 ];
 
-function ScanRadar() {
-  const Icon = Lock;
+function HeroVisual() {
   return (
-    <div className="fa-radar" aria-hidden="true">
-      <div className="fa-radar-ring r1" />
-      <div className="fa-radar-ring r2" />
-      <div className="fa-radar-ring r3" />
-      <div className="fa-radar-sweep" />
-      <div className="fa-radar-core">
-        <Icon size={20} />
-      </div>
-    </div>
+    <ServiceHeroVisual
+      variant="data-security"
+      label="Illustration: layered vault with shield and lock"
+      Icon={Lock}
+    />
   );
 }
 
@@ -546,11 +542,7 @@ export default function DataSecurityPage() {
         <div className="fa-hero-grid" />
         <div className="fa-hero-glow" />
         <Particles count={24} />
-        <ScanRadar />
-        <div className="fa-gavel-strike">
-          <div className="fa-gavel-ring" />
-          <SignatureIcon className="fa-gavel-icon" />
-        </div>
+        <HeroVisual />
         <h1 className="fa-eyebrow">
           <SignatureIcon size={14} className="fa-spin-slow" /> {ds.heroEyebrow}
         </h1>
