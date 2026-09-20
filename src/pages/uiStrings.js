@@ -681,6 +681,7 @@ export const uiStrings = {
   "Sending…": "भेजा जा रहा है…",
   "We couldn't send your details right now. Please try again in a moment.": "हम अभी आपका विवरण नहीं भेज पाए। कृपया थोड़ी देर बाद फिर कोशिश करें।",
   "Or send them by email instead": "या इसके बजाय ईमेल से भेजें",
+  "Send by email": "ईमेल से भेजें",
   "A criminal defence lawyer has been assigned to your case": "आपके केस के लिए एक आपराधिक बचाव वकील नियुक्त किया गया है",
   "A lawyer has been matched to your case": "आपके केस के लिए एक वकील मिला दिया गया है",
   "Evidence fades fast — ": "सबूत तेज़ी से मिट जाते हैं — ",

@@ -1,12 +1,15 @@
 // ── useEmailSubmit.js ─────────────────────────────────────────────────────
-// Email-only form submission with a visible "sending" and "error" state.
+// Email-only form submission for the NyayShield booking / report forms.
 //
-// Used by the NyayShield booking / report forms. Unlike sendFormToWhatsApp()
-// (which is fire-and-forget), this WAITS for the server so a form is only
-// treated as submitted when the email was really accepted. If sending fails,
-// `error` becomes true and `mailto` holds a ready-made mailto: link (subject +
-// all the details) so the visitor can still reach the team from their own mail
-// app instead of losing what they typed.
+// 1. The yellow submit button posts the form to this site's own email function
+//    (/api/submit-form). If the email is accepted → `submit()` resolves true
+//    and the page shows its "submitted" screen.
+// 2. If the server can't send it (e.g. email settings not configured yet, or the
+//    network is down) the visitor's own email app is opened automatically with
+//    the subject and all the details pre-filled to the business mail id, so they
+//    just press Send. `error` becomes true so the form can show a small
+//    "Send by email" link to open that email again.
+//    Nothing they typed is lost either way.
 
 import { useCallback, useState } from "react";
 import { sendFormToEmail } from "./email";
@@ -21,6 +24,16 @@ function buildMailto(title, fields) {
     .join("\n")
     .slice(0, MAX_BODY);
   return `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
+// Opens the visitor's email app exactly like tapping a mailto: link.
+function openMailApp(href) {
+  const a = document.createElement("a");
+  a.href = href;
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 /**
@@ -38,8 +51,10 @@ export function useEmailSubmit() {
     const ok = await sendFormToEmail(title, fields);
     setSending(false);
     if (!ok) {
-      setMailto(buildMailto(title, fields));
+      const href = buildMailto(title, fields);
+      setMailto(href);
       setError(true);
+      openMailApp(href); // fall back to the visitor's own email app
     }
     return ok;
   }, []);
