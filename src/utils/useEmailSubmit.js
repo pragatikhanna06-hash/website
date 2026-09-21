@@ -1,29 +1,58 @@
 // ── useEmailSubmit.js ─────────────────────────────────────────────────────
-// Email-only form submission for the NyayShield booking / report forms.
+// Submit handler for the NyayShield booking / report forms.
 //
-// 1. The yellow submit button posts the form to this site's own email function
-//    (/api/submit-form). If the email is accepted → `submit()` resolves true
-//    and the page shows its "submitted" screen.
-// 2. If the server can't send it (e.g. email settings not configured yet, or the
-//    network is down) the visitor's own email app is opened automatically with
-//    the subject and all the details pre-filled to the business mail id, so they
-//    just press Send. `error` becomes true so the form can show a small
-//    "Send by email" link to open that email again.
-//    Nothing they typed is lost either way.
+// When the visitor presses the yellow submit button an email compose window
+// opens with a ready-to-send message: To = the business mail id, subject and ALL
+// the details (Booking ID first) already filled in. They just press Send.
+// The page moves on to the next part / booking ID at the same moment.
+//
+//   1. The visitor's email app is opened (mailto:) — this is what phones and
+//      most computers with Outlook / Mail / Gmail-as-default do.
+//   2. If nothing takes over within a moment (a computer with no email app set up),
+//      Gmail's compose window opens in a new tab instead, with the same message.
+//
+// No server, SMTP settings or third-party service is needed.
 
-import { useCallback, useState } from "react";
-import { sendFormToEmail } from "./email";
+import { useCallback } from "react";
 import { BUSINESS_EMAIL } from "../config";
 
-const MAX_BODY = 1500; // keep the mailto: link within what mail apps accept
+const MAX_URL = 1900;      // whole mailto: link — longer links are rejected by some mail apps
+const FALLBACK_MS = 1500;  // how long to wait for an email app before opening Gmail
 
-function buildMailto(title, fields) {
-  const body = fields
+// Builds the same message for mailto: and Gmail, cut so the mailto: link stays within MAX_URL.
+function buildMessage(title, fields) {
+  const rows = fields
     .filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
-    .map(([label, value]) => `${label}: ${value}`)
-    .join("\n")
-    .slice(0, MAX_BODY);
-  return `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+    .map(([label, value]) => [String(label), String(value)]);
+  // the Booking ID goes first so it can never be cut off
+  rows.sort((a, b) => (b[0] === "Booking ID") - (a[0] === "Booking ID"));
+
+  const head = `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(title)}&body=`;
+  let body = "";
+  for (const [label, value] of rows) {
+    const line = `${label}: ${value}\n`;
+    if ((head + encodeURIComponent(body + line)).length <= MAX_URL) {
+      body += line;
+      continue;
+    }
+    // this line doesn't fit completely: keep as much of it as possible, then stop
+    let cut = line;
+    while (cut.length > 12 && (head + encodeURIComponent(body + cut + "…")).length > MAX_URL) {
+      cut = cut.slice(0, Math.floor(cut.length * 0.9));
+    }
+    body += cut.trimEnd() + "…\n";
+    break;
+  }
+  body = body.trimEnd();
+
+  return {
+    mailto: head + encodeURIComponent(body),
+    gmail:
+      "https://mail.google.com/mail/?view=cm&fs=1" +
+      `&to=${encodeURIComponent(BUSINESS_EMAIL)}` +
+      `&su=${encodeURIComponent(title)}` +
+      `&body=${encodeURIComponent(body)}`,
+  };
 }
 
 // Opens the visitor's email app exactly like tapping a mailto: link.
@@ -36,28 +65,36 @@ function openMailApp(href) {
   document.body.removeChild(a);
 }
 
+function openCompose({ mailto, gmail }) {
+  // When an email app opens, the browser window loses focus / is hidden.
+  let tookOver = false;
+  const mark = () => { tookOver = true; };
+  const onVisibility = () => { if (document.hidden) tookOver = true; };
+  window.addEventListener("blur", mark);
+  window.addEventListener("pagehide", mark);
+  document.addEventListener("visibilitychange", onVisibility);
+
+  openMailApp(mailto);
+
+  setTimeout(() => {
+    window.removeEventListener("blur", mark);
+    window.removeEventListener("pagehide", mark);
+    document.removeEventListener("visibilitychange", onVisibility);
+    if (tookOver || document.hidden) return; // an email app is open — nothing more to do
+    window.open(gmail, "_blank", "noopener"); // no email app: compose in Gmail on the web
+  }, FALLBACK_MS);
+}
+
 /**
- * @returns {{ sending: boolean, error: boolean, mailto: string,
- *   submit: (title: string, fields: Array<[string, string|undefined]>) => Promise<boolean> }}
+ * @returns {{ submit: (title: string, fields: Array<[string, string|undefined]>) => boolean }}
  */
 export function useEmailSubmit() {
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
-  const [mailto, setMailto] = useState("");
-
-  const submit = useCallback(async (title, fields) => {
-    setSending(true);
-    setError(false);
-    const ok = await sendFormToEmail(title, fields);
-    setSending(false);
-    if (!ok) {
-      const href = buildMailto(title, fields);
-      setMailto(href);
-      setError(true);
-      openMailApp(href); // fall back to the visitor's own email app
-    }
-    return ok;
+  // Call this directly inside the submit handler (a user click) so the browser
+  // allows the email window to open.
+  const submit = useCallback((title, fields) => {
+    openCompose(buildMessage(title, fields));
+    return true;
   }, []);
 
-  return { sending, error, mailto, submit };
+  return { submit };
 }

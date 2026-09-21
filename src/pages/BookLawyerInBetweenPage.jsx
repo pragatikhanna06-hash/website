@@ -4,7 +4,6 @@ import "./BookLawyerInBetweenPage.css";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
 import { useEmailSubmit } from "../utils/useEmailSubmit";
-import FormSubmitError from "./FormSubmitError";
 import ForfraBrand from "./ForfraBrand";
 
 const LAWYER_POOL = [
@@ -34,11 +33,10 @@ export default function BookLawyerInBetweenPage() {
   const [stage, setStage] = useState("");
   const [caseDesc, setCaseDesc] = useState("");
   const [match, setMatch] = useState(null);
-  const { sending, error, mailto, submit } = useEmailSubmit();
+  const { submit } = useEmailSubmit();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (sending) return;
     // DEMO ONLY — replace with a real matching API call.
     const seed = hashString(email + phone + caseDesc + stage);
     const newMatch = {
@@ -46,7 +44,10 @@ export default function BookLawyerInBetweenPage() {
       etaHours: 3 + (seed % 12),
       bookingId: "NS-MC-" + String(seed % 100000).padStart(5, "0"),
     };
-    const ok = await submit("Book a Lawyer (Mid-Case) — NyayShield", [
+    // show the assigned result / booking ID right away and open the ready-to-send email
+    setMatch(newMatch);
+
+    submit("Book a Lawyer (Mid-Case) — NyayShield", [
       ["Name", name],
       ["Email", email],
       ["Phone Number", phone],
@@ -57,7 +58,6 @@ export default function BookLawyerInBetweenPage() {
       ["Case Description", caseDesc],
       ["Booking ID", newMatch.bookingId],
     ]);
-    if (ok) setMatch(newMatch);
   };
 
   return (
@@ -120,8 +120,7 @@ export default function BookLawyerInBetweenPage() {
               <label htmlFor="mcdesc">{tr("Briefly Describe the Case")}</label>
               <textarea id="mcdesc" value={caseDesc} onChange={(e) => setCaseDesc(e.target.value)} placeholder={tr("What's the case about, and where does it stand?")} />
             </div>
-            <FormSubmitError show={error} mailto={mailto} />
-            <button type="submit" className="submit-btn gold" disabled={sending}>{sending ? tr("Sending…") : tr("Submit your details")}</button>
+            <button type="submit" className="submit-btn gold">{tr("Submit your details by mail")}</button>
             <p className="form-note">{tr("Confidential. Free, demo booking flow — no charges, no obligation.")}</p>
           </form>
 

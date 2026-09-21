@@ -51,8 +51,9 @@ h1, h2, h3, h4,
 }
 
 h1 { font-size: 2rem !important; }
-h2 { font-size: 2rem !important; }
-h3 { font-size: clamp(1.3rem, 2.4vw, 1.9rem) !important; }
+/* h2 = main heading, h3 = sub heading — sizes come from the HEADING SCALE block below */
+h2 { font-size: var(--hd-main) !important; }
+h3 { font-size: var(--hd-sub) !important; }
 
 /* content: every page's body copy (hero subtext, descriptions, card text)
    was set to a different size (12px–16px) in its own stylesheet. Force
@@ -67,35 +68,72 @@ p,
   line-height: 1.6 !important;
 }
 
-/* services pages: "OUR ... SERVICES" kicker bigger, the big heading
-   below it ("Five layers, one uncompromising vault" etc.) smaller —
-   applies to every /services/* page since they share .fa-kicker/.fa-h2 */
-.fa-kicker {
-  font-size: 16px !important;
+/* ══════════════════════════════════════════════════════════════════
+   HEADING SCALE — one system for the whole site
+   MAIN heading : the uppercase heading of a section
+                  (.section-eyebrow on the homepage, .fa-kicker on the
+                  service pages, and every h2)          → 28px  (22px on phones)
+   SUB heading  : the line(s) under it and card titles
+                  (.section-title on the homepage, .fa-h2 on the service
+                  pages, and every h3)                  → 22px  (18px on phones)
+   Every sub heading has the SAME size, font, weight and colour (navy) in every
+   section on every page, and is always smaller than a main heading.
+   The extra "body" / doubled class raises specificity so this beats each
+   page's own rules and inline <style> blocks.
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --hd-main: 28px;
+  --hd-sub: 22px;
 }
-.fa-h2 {
-  font-size: 2rem !important;
+@media (max-width: 640px) {
+  :root {
+    --hd-main: 22px;
+    --hd-sub: 18px;
+  }
 }
 
-/* services pages: the "WHY ORGANISATIONS CHOOSE FORFRA" and "WHO WE SERVE"
-   kicker headings must look identical — same size, same colour — on every
-   /services/* page (both sections share .fa-kicker inside .fa-why and
-   .fa-ind-head, so one rule here covers all 8 service pages).
-   The "body" prefix raises specificity so this beats each page's own
-   inline <style> (which is injected later in the document). */
-body .fa-why .fa-kicker,
-body .fa-ind-head .fa-kicker {
-  font-size: 1.45rem !important;
+/* MAIN headings */
+body .section-eyebrow,
+body .fa-kicker.fa-kicker {
+  font-size: var(--hd-main) !important;
+}
+body .fa-kicker.fa-kicker {
+  letter-spacing: 0.12em !important;
+  color: #0D2F7F !important;   /* every service-page main heading (incl. "Why organisations choose Forfra" / "Who we serve") is the same navy */
+}
+
+/* SUB headings
+   (h3 uses :not(#_hd) — an id-strength selector — so that no card / panel /
+   program rule anywhere can keep an h3 at a different size or weight) */
+body h3:not(#_hd),
+body .section-title.section-title,
+body .fa-h2.fa-h2 {
+  font-family: "Poppins", sans-serif !important;
+  font-size: var(--hd-sub) !important;
+  font-weight: 700 !important;
   color: #0D2F7F !important;
 }
-/* small screens: scale both down together so the long "Why organisations
-   choose Forfra" line wraps to 2 lines instead of 3 — still identical */
-@media (max-width: 640px) {
-  body .fa-why .fa-kicker,
-  body .fa-ind-head .fa-kicker {
-    font-size: 1.05rem !important;
-    letter-spacing: 0.1em !important;
-  }
+body .section-title.section-title {
+  text-transform: uppercase;
+  line-height: 1.3 !important;
+}
+/* homepage "What makes us different" card titles are h4s — they are sub headings too */
+body .diff-card h4:not(#_hd) {
+  font-family: "Poppins", sans-serif !important;
+  font-size: var(--hd-sub) !important;
+  font-weight: 700 !important;
+  color: #0D2F7F !important;
+}
+/* the heading inside the homepage call-to-action box is a main heading */
+body .cta-box-title.cta-box-title {
+  font-size: var(--hd-main) !important;
+}
+
+/* no two-tone (grey + gold) sub headings any more: accent words take the heading colour */
+body .section-title em,
+body .fa-h2 em,
+body .fa-h2 span {
+  color: inherit !important;
 }
 
 /* yellow accent for emphasised words / underline bars */

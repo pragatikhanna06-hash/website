@@ -7,7 +7,6 @@ import {
   Building2, Landmark, UserSearch, RotateCcw, Radar,
 } from "lucide-react";
 import { useEmailSubmit } from "../utils/useEmailSubmit";
-import FormSubmitError from "./FormSubmitError";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
 import logo from "../assets/logo.png";
@@ -231,7 +230,7 @@ const EMPTY_FORM = {
 
 export default function ReportCrimePage() {
   const { tr } = useLanguage();
-  const { sending, error, mailto, submit } = useEmailSubmit();
+  const { submit } = useEmailSubmit();
   const [step, setStep] = useState("intro"); // intro | form | processing | results
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
@@ -275,12 +274,14 @@ export default function ReportCrimePage() {
     return Object.keys(er).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (sending || !validate()) return;
+    if (!validate()) return;
 
     const matchedCategory = CATEGORIES.find((c) => c.id === form.crimeType);
-    const ok = await submit("New Crime Report — NyayShield", [
+    // go to the next part straight away and open the ready-to-send email
+    setStep("processing");
+    submit("New Crime Report — NyayShield", [
       ["Name", form.name],
       ["Phone", form.phone],
       ["Email", form.email],
@@ -290,8 +291,6 @@ export default function ReportCrimePage() {
       ["Description", form.description],
     ]);
 
-    // only move on once the email was really accepted; otherwise stay on the form and show the error
-    if (ok) setStep("processing");
   };
 
   const resetAll = () => {
@@ -801,9 +800,8 @@ export default function ReportCrimePage() {
                 </div>
 
                 <div className="rc-submit-row">
-                  <FormSubmitError show={error} mailto={mailto} />
-                  <button type="submit" className="rc-btn-primary" disabled={sending}>
-                    <Send size={17} /> {sending ? tr("Sending…") : tr("Submit & Find Authorities")}
+                  <button type="submit" className="rc-btn-primary">
+                    <Send size={17} /> {tr("Submit & Find Authorities")}
                   </button>
                 </div>
               </form>
@@ -847,7 +845,7 @@ export default function ReportCrimePage() {
               <PhoneCall size={20} />
               <p>
                 <strong>{tr("This is not an FIR filing system.")}</strong>{" "}
-                {tr("The details you shared were sent to our team by email so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call")}{" "}
+                {tr("The details you shared were opened as an email to our team — please press Send in your email app so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call")}{" "}
                 <strong>112</strong> {tr("(India's national emergency number) immediately, or visit your nearest police station.")}
               </p>
             </Reveal>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FilePenLine, FileSearch2, FileCheck2 } from "lucide-react";
 import "./LegalDraftingPage.css";
 import { useEmailSubmit } from "../utils/useEmailSubmit";
-import FormSubmitError from "./FormSubmitError";
 import { useLanguage } from "./LanguageContext";
 import LangToggle from "./LangToggle";
 import ForfraBrand from "./ForfraBrand";
@@ -33,11 +32,10 @@ export default function LegalDraftingPage() {
   const [address, setAddress] = useState("");
   const [requirements, setRequirements] = useState("");
   const [match, setMatch] = useState(null);
-  const { sending, error, mailto, submit } = useEmailSubmit();
+  const { submit } = useEmailSubmit();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (sending) return;
     if (!docType) return;
     // DEMO ONLY — replace with a real matching API call.
     const seed = hashString(orgName + email + phone + docType);
@@ -46,7 +44,10 @@ export default function LegalDraftingPage() {
       etaHours: 4 + (seed % 20),
       bookingId: "NS-LD-" + String(seed % 100000).padStart(5, "0"),
     };
-    const ok = await submit("Legal / Corporate Drafting Request — NyayShield", [
+    // show the assigned result / booking ID right away and open the ready-to-send email
+    setMatch(newMatch);
+
+    submit("Legal / Corporate Drafting Request — NyayShield", [
       ["Document Type", docType],
       ["Name / Organization", orgName],
       ["Email", email],
@@ -55,7 +56,6 @@ export default function LegalDraftingPage() {
       ["Requirements", requirements],
       ["Booking ID", newMatch.bookingId],
     ]);
-    if (ok) setMatch(newMatch);
   };
 
   return (
@@ -133,8 +133,7 @@ export default function LegalDraftingPage() {
                 <label htmlFor="ldreq">{tr("What Should the Document Cover?")}</label>
                 <textarea id="ldreq" value={requirements} onChange={(e) => setRequirements(e.target.value)} placeholder={tr("Key terms, parties involved, purpose, deadlines, etc.")} />
               </div>
-              <FormSubmitError show={error} mailto={mailto} />
-              <button type="submit" className="submit-btn" disabled={sending}>{sending ? tr("Sending…") : tr("Request a Draft")}</button>
+              <button type="submit" className="submit-btn">{tr("Request a Draft")}</button>
               <p className="form-note">{tr("Confidential. Free, demo booking flow — no charges, no obligation.")}</p>
             </form>
 

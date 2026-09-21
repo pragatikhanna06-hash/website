@@ -313,8 +313,8 @@ export const uiStrings = {
   "Here are the official government authorities for every major crime category. Find the one that matches your situation.":
     "यहाँ हर प्रमुख अपराध श्रेणी के लिए आधिकारिक सरकारी प्राधिकरण हैं। अपनी स्थिति से मेल खाने वाला चुनें।",
   "This is not an FIR filing system.": "यह एक एफआईआर दाखिल करने की प्रणाली नहीं है।",
-  "The details you shared were sent to our team by email so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call":
-    "आपने जो विवरण साझा किए, वे हमारी टीम को ईमेल पर भेज दिए गए हैं ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थिति के लिए, कॉल करें",
+  "The details you shared were opened as an email to our team — please press Send in your email app so we can follow up — but they are not filed with police or any court. This tool only helps you find the correct official portal. For urgent, life-threatening emergencies, call":
+    "आपने जो विवरण साझा किए, वे हमारी टीम के लिए ईमेल के रूप में खुल गए हैं — कृपया अपने ईमेल ऐप में Send दबाएँ ताकि हम फॉलो-अप कर सकें — लेकिन वे पुलिस या किसी अदालत में दर्ज नहीं किए गए हैं। यह टूल केवल आपको सही आधिकारिक पोर्टल खोजने में मदद करता है। तत्काल, जानलेवा आपात स्थिति के लिए, कॉल करें",
   "(India's national emergency number) immediately, or visit your nearest police station.":
     "(भारत का राष्ट्रीय आपातकालीन नंबर) तुरंत, या अपने नज़दीकी पुलिस स्टेशन पर जाएं।",
   Recommended: "अनुशंसित",
@@ -678,6 +678,7 @@ export const uiStrings = {
   "FIR Number": "FIR नंबर",
   "Submit your details through Whatsapp": "अपनी जानकारी WhatsApp के माध्यम से भेजें",
   "Submit your details": "अपना विवरण जमा करें",
+  "Submit your details by mail": "अपना विवरण मेल से जमा करें",
   "Sending…": "भेजा जा रहा है…",
   "We couldn't send your details right now. Please try again in a moment.": "हम अभी आपका विवरण नहीं भेज पाए। कृपया थोड़ी देर बाद फिर कोशिश करें।",
   "Or send them by email instead": "या इसके बजाय ईमेल से भेजें",
